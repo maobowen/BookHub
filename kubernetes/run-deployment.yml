@@ -14,11 +14,11 @@ spec:
     spec:
       containers:
       - name: flask
-        image: <YOUR DOCKER USERNAME>/flask-template:v1
+        image: maobowen/bookhub-template:v1
         env:
         - name: APP_SETTINGS
           value: config.DevelopmentConfig
         - name: DATABASE_URL
-          value: postgresql://localhost/my_app_db
+          value: postgresql://localhost/bookhub_db
         ports:
         - containerPort: 5000
