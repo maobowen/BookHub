@@ -87,6 +87,43 @@
         <h2 id="msg"></h2>
       </section>
     </form>
+
+      {% if data %}
+      <div class="container justify-content-center" style="width:70%">
+        <div class="row justify-content-center">
+          {% for i in range(0, 3) %}
+            <div class="col-4">
+              <div class="card mb-4 shadow-sm">
+                <div class="card-body book">
+                  <img src = "{{ data[i]['id'] }}" alt = "{{ data[i]['title'] }}">
+                  {{ data[i]['title'] }}
+                  {{ data[i]['author'] }}
+                  {{ data[i]['rating'] }}
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="row justify-content-center">
+          {% for i in range(4, 6) %}
+            <div class="col-4">
+              <div class="card mb-4 shadow-sm">
+                <div class="card-body book">
+                  <div class="card-body book">
+                    <img src = "{{ data[i]['id'] }}" alt = "{{ data[i]['title'] }}">
+                    {{ data[i]['title'] }}
+                    {{ data[i]['author'] }}
+                    {{ data[i]['rating'] }}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+
+
+      {% endif %}
   </main>
 
   <footer class="text-muted">
