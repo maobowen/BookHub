@@ -30,3 +30,44 @@ socketio.init_app(app)
 @app.errorhandler(404)
 def not_found(error):
   return render_template("404.html"), 404
+
+
+from app.data import downloader
+import click
+from flask.cli import AppGroup
+
+data_cli = AppGroup("data")
+
+
+@data_cli.command("download-reviews")
+@click.option("--start-id", "-s", type=int, default=1, show_default=True, help='Start ID of Goodreads reviews.')
+@click.option("--end-id", "-e", type=int, default=1000000, show_default=True, help='End ID of Goodreads reviews.')
+@click.option("--start-counter", "-c", type=int, default=0, show_default=True, help='Start ID of review files.')
+def download_reviews(start_id=1, end_id=1000000, start_counter=0):
+    downloader.download_reviews(start_id, end_id, start_counter)
+
+
+@data_cli.command("clean-reviews")
+@click.option("--start-counter", "-c", type=int, default=0, show_default=True, help='Start ID of review files.')
+def clean_reviews(start_counter=0):
+    downloader.clean_reviews(start_counter)
+
+
+@data_cli.command("download-books")
+@click.option("--start-counter", "-c", type=int, default=0, show_default=True, help='Start ID of review files.')
+def download_books(start_counter=0):
+    downloader.download_books(start_counter)
+
+
+@data_cli.command("clean-books")
+@click.option("--start-counter", "-c", type=int, default=0, show_default=True, help='Start ID of book files.')
+def clean_books(start_counter=0):
+    downloader.clean_books(start_counter)
+
+
+@data_cli.command("merge")
+def merge():
+    downloader.merge()
+
+
+app.cli.add_command(data_cli)
