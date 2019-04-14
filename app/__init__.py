@@ -32,7 +32,7 @@ def not_found(error):
   return render_template("404.html"), 404
 
 
-from app.data import downloader
+from app.data import downloader, preprocessor
 import click
 from flask.cli import AppGroup
 
@@ -68,6 +68,11 @@ def clean_books(start_counter=0):
 @data_cli.command("merge")
 def merge():
     downloader.merge()
+
+
+@data_cli.command("calc-cos-sim-desc")
+def calc_cos_sim_desc():
+    preprocessor.calc_cos_sim_desc()
 
 
 app.cli.add_command(data_cli)
