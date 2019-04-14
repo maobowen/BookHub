@@ -68,21 +68,21 @@ function check(){
         if ((titles[i] !== "") && !(book_titles.includes(titles[i]))){
             console.log(i);
             check_valid = false;
-            var id = "#book_title_" + i;
-            $(id).css("border", "red");
-            $("#msg").innerHTML("Please choose book names in the suggestion");
-
+            var id = "#book_title_" + (1+i);
+            $(id).css("border-color", "red");
+            document.getElementById('msg').innerHTML = "Please choose book names in the suggestion";
         } else {
-            if (titles[i] !== ""){
-              console.log(book_dict[titles[i]][0]);
-              id_list = id_list + (book_dict[titles[i]][0]) + " ";
+            if(titles[i] !== ""){
+                console.log(book_dict[titles[i]][0]);
+                id_list = id_list + (book_dict[titles[i]][0]) + " ";
             }
         }
     }
 
-    if (check_valid && id_list !== ""){
+    if (check_valid && id_list !== "") {
         console.log(id_list);
-        $("#book_ids").value = id_list;
+        //$("#").value = id_list;
+        document.getElementById('book_ids').value = id_list;
         return true;
     } else {
         return false;
