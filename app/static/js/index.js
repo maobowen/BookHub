@@ -65,15 +65,16 @@ function check(){
 
 
     for (var i = 0; i < 5; i++){
+        var id = "#book_title_" + (1+i);
         if ((titles[i] !== "") && !(book_titles.includes(titles[i]))){
             console.log(i);
             check_valid = false;
-            var id = "#book_title_" + (1+i);
             $(id).css("border-color", "red");
             document.getElementById('msg').innerHTML = "Please choose book names in the suggestion";
         } else {
             if(titles[i] !== ""){
                 console.log(book_dict[titles[i]][0]);
+                $(id).css("border-color", "grey");
                 id_list = id_list + (book_dict[titles[i]][0]) + " ";
             }
         }
