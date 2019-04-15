@@ -89,6 +89,198 @@
     </form>
 
       {% if data %}
+
+      <div class="output" style="margin-top: -5%">
+          <div class="container justify-content-center" style="width:70%">
+          <div class="row">
+          {% for i in range(0, 4) %}
+          <div class="col" data-toggle="modal" data-target="{{ '#' + data[i]['id'] }}">
+              <!-- Modal -->
+              <div class="modal fade" id="{{ data[i]['id'] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="{{ data[i]['id'] + 'Title' }}">Reviews</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="container-sm">
+                      <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col">
+                        <div class="card mb-3 shadow-sm">
+                            <div class="card-body">
+                            <div class="text-center" style="margin-bottom: 10px;">
+                            <img class="card-img-top review-cover" src="{{ data[i]['url']}}" alt="book" style="width:50%; height:auto">
+                            </div> 
+                            <h5 class="card-title text-left">{{ data[i]['title'] }}</h5>
+                              <p class="card-text text-left">{{ data[i]['author'] }}</p>
+                              <p class="card-text text-left">{{ data[i]['rating'] }}</p>
+                              <div class="d-flex justify-content-between align-items-center">
+                              </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                            </div>
+                           </div>
+                        </div>
+                        </div>
+                        <div class="col-1"></div>
+                      </div>
+                      {% for j in len(data[i][‘reviews’]) %}
+                      <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col">
+                        <div class="card mb-3 shadow-sm">
+                            <div class="card-body">
+                            <p class="card-text text-left">
+                           {{ data[i][‘reviews’][j] }}
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                            </div>
+                           </div>
+                        </div>
+                        </div>
+                        <div class="col-1"></div>
+                      </div>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          </div>
+
+          <div class="row">
+              {% for i in range(0, 4) %}
+              <div class="col" data-toggle="modal" data-target="{{ '#' + data[i]['id'] }}">
+                  <!-- Modal -->
+                  <div class="modal fade" id="{{ data[i]['id'] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="{{ data[i]['id'] + 'Title' }}">Reviews</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <div class="container-sm">
+                          <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col">
+                            <div class="card mb-3 shadow-sm">
+                                <div class="card-body">
+                                <div class="text-center" style="margin-bottom: 10px;">
+                                <img class="card-img-top review-cover" src="{{ data[i]['url']}}" alt="book" style="width:50%; height:auto">
+                                </div> 
+                                <h5 class="card-title text-left">{{ data[i]['title'] }}</h5>
+                                  <p class="card-text text-left">{{ data[i]['author'] }}</p>
+                                  <p class="card-text text-left">{{ data[i]['rating'] }}</p>
+                                  <div class="d-flex justify-content-between align-items-center">
+                                  </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                </div>
+                               </div>
+                            </div>
+                            </div>
+                            <div class="col-1"></div>
+                          </div>
+                          {% for j in len(data[i][‘reviews’]) %}
+                          <div class="row">
+                            <div class="col-1"></div>
+                            <div class="col">
+                            <div class="card mb-3 shadow-sm">
+                                <div class="card-body">
+                                <p class="card-text text-left">
+                               {{ data[i][‘reviews’][j] }}
+                                </p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                </div>
+                               </div>
+                            </div>
+                            </div>
+                            <div class="col-1"></div>
+                          </div>
+                        </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              </div>
+
+              <div class="row">
+          {% for i in range(0, 4) %}
+          <div class="col" data-toggle="modal" data-target="{{ '#' + data[i]['id'] }}">
+              <!-- Modal -->
+              <div class="modal fade" id="{{ data[i]['id'] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="{{ data[i]['id'] + 'Title' }}">Reviews</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="container-sm">
+                      <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col">
+                        <div class="card mb-3 shadow-sm">
+                            <div class="card-body">
+                            <div class="text-center" style="margin-bottom: 10px;">
+                            <img class="card-img-top review-cover" src="{{ data[i]['url']}}" alt="book" style="width:50%; height:auto">
+                            </div> 
+                            <h5 class="card-title text-left">{{ data[i]['title'] }}</h5>
+                              <p class="card-text text-left">{{ data[i]['author'] }}</p>
+                              <p class="card-text text-left">{{ data[i]['rating'] }}</p>
+                              <div class="d-flex justify-content-between align-items-center">
+                              </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                            </div>
+                           </div>
+                        </div>
+                        </div>
+                        <div class="col-1"></div>
+                      </div>
+                      {% for j in len(data[i][‘reviews’]) %}
+                      <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col">
+                        <div class="card mb-3 shadow-sm">
+                            <div class="card-body">
+                            <p class="card-text text-left">
+                           {{ data[i][‘reviews’][j] }}
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                            </div>
+                           </div>
+                        </div>
+                        </div>
+                        <div class="col-1"></div>
+                      </div>
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          </div>
+          
+          </div>
+      </div>
+
       <div class="container justify-content-center" style="width:70%">
         <div class="row justify-content-center">
           {% for i in range(0, 3) %}
