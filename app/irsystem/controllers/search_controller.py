@@ -15,11 +15,6 @@ def get_books_id_title():
 	except Exception as e:
 		return str(e)
 
-
-@irsystem.route('/hello', methods=['POST'])
-def hello():
-	return request.form["book_ids"]
-
 @irsystem.route('/', methods=['GET'])
 def search():
 	query = request.args.get('search')
