@@ -48,7 +48,7 @@ def _get_recommended_books_detail(recommended_book_ids: list) -> list:
 		books = json.load(fin)
 	for book_id in recommended_book_ids:
 		book = {
-			"id": book_id,
+			"id": "id" + book_id,
 			"title": books[book_id]["title"],
 			"average_rating": float(books[book_id]["average_rating"]),
 			"image_url": books[book_id]["image_url"],
