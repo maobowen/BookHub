@@ -118,11 +118,11 @@
                         <div class="card mb-3 shadow-sm">
                             <div class="card-body">
                             <div class="text-center" style="margin-bottom: 10px;">
-                            <img class="card-img-top review-cover" src="{{ data[i]['url']}}" alt="book" style="width:50%; height:auto">
+                            <img class="card-img-top review-cover" src="{{ data[i]['image_url']}}" alt="book" style="width:50%; height:auto">
                             </div> 
                             <h5 class="card-title text-left">{{ data[i]['title'] }}</h5>
-                              <p class="card-text text-left">{{ data[i]['author'] }}</p>
-                              <p class="card-text text-left">{{ data[i]['rating'] }}</p>
+                              <p class="card-text text-left">{{ data[i]['authors'] }}</p>
+                              <p class="card-text text-left">{{ data[i]['average_rating'] }}</p>
                               <div class="d-flex justify-content-between align-items-center">
                               </div>
                             <div class="d-flex justify-content-between align-items-center">
@@ -158,11 +158,11 @@
                 </div>
               </div>
               <div class="card mb-3 shadow-sm">
-                  <img class="card-img-top" src="{{ data[i]['url'] }}" alt="book">
+                  <img class="card-img-top" src="{{ data[i]['image_url'] }}" alt="book">
                   <div class="card-body">
                   <h5 class="card-title">{{ data[i]['title'] }}</h5>
-                    <p class="card-text text-left">{{ 'Author:' + data[i]['author'] }}</p>
-                    <p class="card-text text-left">{{ 'Rating:' + data[i]['rating'] }}</p>
+                    <p class="card-text text-left">{{ 'Author:' + data[i]['authors'] }}</p>
+                    <p class="card-text text-left">{{ 'Rating:' + data[i]['average_rating'] }}</p>
                     <div class="d-flex justify-content-between align-items-center">
                   </div>
                  </div>
@@ -192,11 +192,11 @@
                             <div class="card mb-3 shadow-sm">
                                 <div class="card-body">
                                 <div class="text-center" style="margin-bottom: 10px;">
-                                <img class="card-img-top review-cover" src="{{ data[i]['url']}}" alt="book" style="width:50%; height:auto">
+                                <img class="card-img-top review-cover" src="{{ data[i]['image_url']}}" alt="book" style="width:50%; height:auto">
                                 </div> 
                                 <h5 class="card-title text-left">{{ data[i]['title'] }}</h5>
-                                  <p class="card-text text-left">{{ data[i]['author'] }}</p>
-                                  <p class="card-text text-left">{{ data[i]['rating'] }}</p>
+                                  <p class="card-text text-left">{{ data[i]['authors'] }}</p>
+                                  <p class="card-text text-left">{{ data[i]['average_rating'] }}</p>
                                   <div class="d-flex justify-content-between align-items-center">
                                   </div>
                                 <div class="d-flex justify-content-between align-items-center">
@@ -232,11 +232,11 @@
                     </div>
                   </div>
                   <div class="card mb-3 shadow-sm">
-                      <img class="card-img-top" src="{{ data[i]['url'] }}" alt="book">
+                      <img class="card-img-top" src="{{ data[i]['image_url'] }}" alt="book">
                       <div class="card-body">
                       <h5 class="card-title">{{ data[i]['title'] }}</h5>
-                        <p class="card-text text-left">{{ 'Author:' + data[i]['author'] }}</p>
-                        <p class="card-text text-left">{{ 'Rating:' + data[i]['rating'] }}</p>
+                        <p class="card-text text-left">{{ 'Author:' + data[i]['authors'] }}</p>
+                        <p class="card-text text-left">{{ 'Rating:' + data[i]['average_rating'] }}</p>
                         <div class="d-flex justify-content-between align-items-center">
                       </div>
                      </div>
