@@ -101,11 +101,11 @@
           {% for i in range(0, 4) %}
           <div class="col" data-toggle="modal" data-target="{{ '#' + data[i]['id'] }}">
               <!-- Modal -->
-              <div class="modal fade" id="{{ data[i]['id'] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+              <div class="modal fade" id="{{ data[i]['id'] }}" tabindex="-1" role="dialog" aria-labelledby="{{ data[i]['id'] + 'Title'}}" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="{{ data[i]['id'] + 'Title' }}">Reviews</h5>
+                      <h5 class="modal-title" id="{{ data[i]['id'] + 'Title'}}">Reviews</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -132,14 +132,14 @@
                         </div>
                         <div class="col-1"></div>
                       </div>
-                      {% for j in len(data[i]['reviews']) %}
+                      {% for review in data[i]['reviews'] %}
                       <div class="row">
                         <div class="col-1"></div>
                         <div class="col">
                         <div class="card mb-3 shadow-sm">
                             <div class="card-body">
                             <p class="card-text text-left">
-                           {{ data[i]['reviews'][j] }}
+                           {{ review }}
                             </p>
                             <div class="d-flex justify-content-between align-items-center">
                             </div>
@@ -156,6 +156,16 @@
                     </div>
                   </div>
                 </div>
+              </div>
+              <div class="card mb-3 shadow-sm">
+                  <img class="card-img-top" src="{{ data[i]['url'] }}" alt="book">
+                  <div class="card-body">
+                  <h5 class="card-title">{{ data[i]['title'] }}</h5>
+                    <p class="card-text text-left">{{ 'Author:' + data[i]['author'] }}</p>
+                    <p class="card-text text-left">{{ 'Rating:' + data[i]['rating'] }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                  </div>
+                 </div>
               </div>
           </div>
           {% endfor %}
@@ -196,14 +206,14 @@
                             </div>
                             <div class="col-1"></div>
                           </div>
-                          {% for j in len(data[i]['reviews']) %}
+                          {% for review in data[i]['reviews'] %}
                           <div class="row">
                             <div class="col-1"></div>
                             <div class="col">
                             <div class="card mb-3 shadow-sm">
                                 <div class="card-body">
                                 <p class="card-text text-left">
-                               {{ data[i]['reviews'][j] }}
+                               {{ review }}
                                 </p>
                                 <div class="d-flex justify-content-between align-items-center">
                                 </div>
@@ -220,6 +230,16 @@
                         </div>
                       </div>
                     </div>
+                  </div>
+                  <div class="card mb-3 shadow-sm">
+                      <img class="card-img-top" src="{{ data[i]['url'] }}" alt="book">
+                      <div class="card-body">
+                      <h5 class="card-title">{{ data[i]['title'] }}</h5>
+                        <p class="card-text text-left">{{ 'Author:' + data[i]['author'] }}</p>
+                        <p class="card-text text-left">{{ 'Rating:' + data[i]['rating'] }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                      </div>
+                     </div>
                   </div>
               </div>
               {% endfor %}
