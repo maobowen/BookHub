@@ -127,9 +127,11 @@ function delete_book(i){
 //function to update value in book field
 function update_book(i, title_inputed){
     var num = i.toString(), 
-    book_id = "#book_title_" + num
+    book_id = "#book_title_" + num, 
+    card = "#card_" + num
     //alert(book_id)
     $(book_id).text(title_inputed)
+    $(card).css("color", "#d3d3d3") 
 }
 
 //remove button function
