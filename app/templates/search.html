@@ -23,72 +23,74 @@
 
 <body>
   <main role="main">
-    <section class="jumbotron text-center" style="margin-top: -3%">
+    <section class="jumbotron text-center" style="margin-top: -3%; margin-bottom: 3%;">
       <div class="container">
-        <img class="w-25" src="{{ url_for('static', filename='img/icon.png') }}" style="margin-bottom: 5%">
-          <p class="lead text-muted">Welcome to BookHub! Input up to 5 book titles to get book recommendations!</p>
+        <img class="logo" src="{{ url_for('static', filename='img/icon.png') }}" style="margin-bottom: 5%">
+          <h5 class="lead">Welcome to BookHub! <br/>Input up to 5 book titles to get book recommendations!</h5>
       </div>
-    </section>
-
-    <form method="post" action="/" onsubmit="return validateMyForm();">
-      <input type="hidden" name="book_ids" id="book_ids" class="form-control hidden">
-      <div class="inputs" style="margin-top: -5%">
-        <div class="container justify-content-center" style="width:70%">
-          <div class="row justify-content-center">
-            {% for i in range(1, 4) %}
-            <div class="col-4">
-              <div class="card mb-4 shadow-sm">
-                <div class="card-body book">
-                  <!--<a href="#" class="btn btn-outline-secondary btn-sm editBtn">
-                    <span class="glyphicon glyphicon-align-left">Remove</span>
-                  </a>-->
-                  <div class="input-group justify-content-center">
-                    <div class="d-flex aligh-middle justify-content-center input_field">
-                      <input type="text" name="book_title_{{ i }}" id="book_title_{{ i }}" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-                    </div>
-                  </div>
-                </div>
-              </div>
+      <div class="container text-center w-50" style="margin-top: 2%;">
+          <div class="row">
+            <div class="col">
+            <input type="text" class="form-control" id="input_title" placeholder="Enter a book title here!" aria-label="book title" aria-describedby="clear_icon" sytle="width:95%;">
             </div>
-            {% endfor %}
+            <div class="text-left">
+                <button type="button" class="close" id="clear" onclick="clearInput()" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
           </div>
-
-          <div class="row justify-content-center">
-          {% for i in range(4, 6) %}
-            <div class="col-4">
-              <div class="card mb-4 shadow-sm">
-                <div class="card-body book">
-                   <!--<a href="#" class="btn btn-outline-secondary btn-sm editBtn">
-                    <span class="glyphicon glyphicon-align-left">Remove</span>
-                  </a>-->
-                  <div class="input-group justify-content-center">
-                    <div class="d-flex aligh-middle justify-content-center input_field">
-                      <input type="text" name="book_title_{{ i }}" id="book_title_{{ i }}" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {% endfor %}
           </div>
         </div>
-      </div>
+    </section>
 
-      <section class="jumbotron text-center" style="margin-top: -3%">
-        <!--<p>
-          <a href="#collapseExample" class="btn btn-secondary my-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Advanced Search V</a>
-        </p>
-        <div id="collapseExample" class="collapse container justify-content-center" style="width:70%;">
-          <div class="card card-body">
-            Placeholder
+    <section>
+        <form method="post" action="/" onsubmit="return validateMyForm();" onkeypress="return event.keyCode != 13;">
+          <input type="hidden" name="book_ids" id="book_ids" class="form-control hidden">
+          <div class="inputs" style="margin-top: -5%">
+            <div class="container justify-content-center" style="width:70%">
+            <h4>Books Inputed</h4>
+              <div class="row justify-content-center" style="margin-top:20px;">
+                {% for i in range(1, 6) %}
+                <div class="col">
+                    <div class="card mb-2 shadow-sm input_field" id="card_{{ i }}" style="border: 2px dashed lightgrey; color:lightgrey">
+                      <div class="card-body">
+                        <button type="button" class="close removeBtn" id="removeBtn_{{ i }}" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <!--<img class="addSign mx-auto d-block" id="addSign_{{ i }}" src="{{ url_for('static', filename='img/add-sign-dashed.png') }}">-->
+                          <div class="text-center" style="margin-top:5%;">
+                                <p class="title_text" id="title_placeholder_{{ i }}" style="display: inline-block;">Book Title</p>
+                                </br>
+                                <p class="title_text" id="book_title_{{ i }}" style="display: none;"></p>
+                          </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
           </div>
-        </div>-->
-        <p>
-          <button class="btn btn-secondary" type="submit">Get Recommendations!</button>
-        </p>
-        <h2 id="msg"></h2>
-      </section>
-    </form>
+    
+          <div class="jumbotron text-center">
+            <!--<p>
+              <a href="#collapseExample" class="btn btn-secondary my-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Advanced Search V</a>
+            </p>
+            <div id="collapseExample" class="collapse container justify-content-center" style="width:70%;">
+              <div class="card card-body">
+                Placeholder
+              </div>
+            </div>-->
+            <p>
+              <button class="btn btn-secondary" type="submit">Get Recommendations!</button>
+            </p>
+            <h4 id="msg"></h4>
+          </div>
+        </form>
+    </section>
+    
+    
 
       {% if data %}
     
@@ -176,17 +178,8 @@
       </div>
       
   </main>
-  <style>
-    .card-columns{
-      column-count: 4;
-    }
 
-    .jumbotron {
-      background-color:transparent !important; 
-    }
-  </style>
-
-  <footer class="text-muted">
+  <footer class="text-muted" style="margin-top: 3%;">
     <div class="container">
       <p class="float-right"><a href="#">Back to top</a></p>
       <p>&copy; 2019 Team {{ name }} ({{ netid }}).</p>

@@ -2,7 +2,13 @@
   height: 170px;
 }
 
-.editBtn {
+.title_text{
+  margin-top:5px;
+  text-align: center;
+}
+
+.removeBtn {
+  visibility: hidden;
   margin-left: 60%;
 }
 
@@ -11,9 +17,39 @@
 }
 
 .input_field {
-  margin-top: 10%;
+  height: 250px;
 }
 
 .hidden {
   visibility: hidden;
+}
+
+.addSign{
+  margin-top: 35px;
+  height: 112.5px;
+  width: auto;
+}
+
+.card-columns{
+  column-count: 4;
+}
+
+.jumbotron {
+  background-color:transparent !important; 
+}
+
+.btn-link{
+  color:#b3afaf;
+}
+
+#clear{
+  margin-left:auto;
+}
+
+#msg{
+  color: #ff0000;
+}
+
+.logo{
+  width:20%;
 }
