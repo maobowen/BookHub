@@ -73,9 +73,11 @@ def search():
 	data = []
 	if not session.get("version") in VERSIONS:
 		session["version"] = VERSIONS[-1]
-	version_query_string = request.args.get("v", default="latest", type=str)
+	version_query_string = request.args.get("v", type=str)
 	if version_query_string == "1":
 		session["version"] = VERSIONS[0]
+	elif version_query_string:
+		session["version"] = VERSIONS[-1]
 
 	if session["version"] == VERSIONS[0]:
 		if request.method == "POST":
