@@ -42,7 +42,7 @@ $('#book_title_1, #book_title_2, #book_title_3, #book_title_4, #book_title_5').t
     },
     {
       name: 'books',
-      source:books_suggestions
+      source: books_suggestions
       //source: books_suggestions.ttAdapter()   // suggestion engine is passed as the source
     });
 
@@ -65,7 +65,7 @@ function check(){
 
 
     for (var i = 0; i < 5; i++){
-        var id = "#book_title_" + (1+i);
+        var id = "#book_title_" + (1 + i);
         if ((titles[i] !== "") && !(book_titles.includes(titles[i]))){
             console.log(i);
             check_valid = false;

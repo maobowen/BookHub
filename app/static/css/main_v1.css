@@ -17,3 +17,11 @@
 .hidden {
   visibility: hidden;
 }
+
+.card-columns{
+  column-count: 4;
+}
+
+.jumbotron {
+  background-color:transparent !important;
+}

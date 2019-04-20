@@ -9,6 +9,7 @@ DATA_DIR = os.path.abspath(os.path.join(__file__, "..", "..", "..", "data", "mer
 MAX_COMPARED = 20
 MAX_RECOMMEND = 8
 MAX_REVIEWS = 5
+VERSIONS = [1, 2]
 
 
 @irsystem.route("/ajax/books/id-title", methods=["GET"])
@@ -70,11 +71,28 @@ def _get_recommended_books_detail(recommended_book_ids: list, request_book_ids: 
 @irsystem.route("/", methods=["GET", "POST"])
 def search():
 	data = []
-	if request.method == "POST":
-		request_book_ids = request.form.get("book_ids", "").split()
-		if len(request_book_ids) >= 1 and request_book_ids[0] != "":
-			recommended_book_ids = _get_cos_sim_desc(request_book_ids)
-			data = _get_recommended_books_detail(recommended_book_ids, request_book_ids)
+	if not session.get("version") in VERSIONS:
+		session["version"] = VERSIONS[-1]
+	version_query_string = request.args.get("v", default="latest", type=str)
+	if version_query_string == "1":
+		session["version"] = VERSIONS[0]
+
+	if session["version"] == VERSIONS[0]:
+		if request.method == "POST":
+			request_book_ids = request.form.get("book_ids", "").split()
+			if len(request_book_ids) >= 1 and request_book_ids[0] != "":
+				recommended_book_ids = _get_cos_sim_desc(request_book_ids)
+				data = _get_recommended_books_detail(recommended_book_ids, request_book_ids)
+		else:
+			data = []
+		return render_template('search_v1.html', name=project_name, netid=net_id, data=data)
+
 	else:
-		data = []
-	return render_template('search.html', name=project_name, netid=net_id, data=data)
+		if request.method == "POST":
+			request_book_ids = request.form.get("book_ids", "").split()
+			if len(request_book_ids) >= 1 and request_book_ids[0] != "":
+				recommended_book_ids = _get_cos_sim_desc(request_book_ids)
+				data = _get_recommended_books_detail(recommended_book_ids, request_book_ids)
+		else:
+			data = []
+		return render_template('search_v2.html', name=project_name, netid=net_id, data=data)

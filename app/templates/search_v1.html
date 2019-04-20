@@ -11,7 +11,7 @@
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js-bootstrap-css/1.2.1/typeaheadjs.min.css">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main_v1.css') }}">
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
       </div>
     </section>
 
-    <form method="post" action="/" onsubmit="return validateMyForm();">
+    <form method="post" action="/?v=1" onsubmit="return validateMyForm();">
       <input type="hidden" name="book_ids" id="book_ids" class="form-control hidden">
       <div class="inputs" style="margin-top: -5%">
         <div class="container justify-content-center" style="width:70%">
@@ -90,18 +90,17 @@
       </section>
     </form>
 
-      {% if data %}
-    
-      <div class="outputs" style="margin-top: -5%">
-          <div class="container justify-content-left" style="width:70%; margin-bottom: 8%">
-            <h1 class="display-5">Results</h1>
-          </div>
+    {% if data %}
+    <div class="outputs" style="margin-top: -5%">
+      <div class="container justify-content-left" style="width:70%; margin-bottom: 8%">
+        <h1 class="display-5">Results</h1>
+      </div>
 
       <div class="output_rows" style="margin-top: -5%">
-          <div class="container justify-content-center" style="width:70%">
+        <div class="container justify-content-center" style="width:70%">
           <div class="card-columns">
-          {% for i in range(0,8) %}
-          <div class="card" data-toggle="modal" data-target="{{ '#' + data[i]['id'] }}">
+            {% for i in range(0,8) %}
+            <div class="card" data-toggle="modal" data-target="{{ '#' + data[i]['id'] }}">
               <!-- Modal -->
               <div class="modal fade" id="{{ data[i]['id'] }}" tabindex="-1" role="dialog" aria-labelledby="{{ data[i]['id'] + 'Title'}}" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -114,42 +113,41 @@
                     </div>
                     <div class="modal-body">
                       <div class="container-sm">
-                      <div class="row">
-                        <div class="col-1"></div>
-                        <div class="col">
-                        <div class="card mb-3 shadow-sm">
-                            <div class="card-body">
-                            <div class="text-center" style="margin-bottom: 10px;">
-                            <img class="card-img-top review-cover" src="{{ data[i]['image_url']}}" alt="book" style="width:50%; height:auto">
-                            </div> 
-                            <h5 class="card-title text-left">{{ data[i]['title'] }}</h5>
-                              <p class="card-text text-left">{{ data[i]['authors'] }}</p>
-                              <p class="card-text text-left">{{ data[i]['average_rating'] }}</p>
-                              <div class="d-flex justify-content-between align-items-center">
+                        <div class="row">
+                          <div class="col-1"></div>
+                          <div class="col">
+                            <div class="card mb-3 shadow-sm">
+                              <div class="card-body">
+                                <div class="text-center" style="margin-bottom: 10px;">
+                                  <img class="card-img-top review-cover" src="{{ data[i]['image_url']}}" alt="book" style="width:50%; height:auto">
+                                </div>
+                                <h5 class="card-title text-left">{{ data[i]['title'] }}</h5>
+                                <p class="card-text text-left">{{ data[i]['authors'] }}</p>
+                                <p class="card-text text-left">{{ data[i]['average_rating'] }}</p>
+                                <div class="d-flex justify-content-between align-items-center"></div>
+                                <div class="d-flex justify-content-between align-items-center"></div>
                               </div>
-                            <div class="d-flex justify-content-between align-items-center">
                             </div>
-                           </div>
+                          </div>
+                          <div class="col-1"></div>
                         </div>
+
+                        {% for review in data[i]['reviews'] %}
+                        <div class="row">
+                          <div class="col-1"></div>
+                          <div class="col">
+                            <div class="card mb-3 shadow-sm">
+                              <div class="card-body">
+                                <p class="card-text text-left">
+                                  {{ review }}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-1"></div>
                         </div>
-                        <div class="col-1"></div>
+                        {% endfor %}
                       </div>
-                      {% for review in data[i]['reviews'] %}
-                      <div class="row">
-                        <div class="col-1"></div>
-                        <div class="col">
-                        <div class="card mb-3 shadow-sm">
-                            <div class="card-body">
-                            <p class="card-text text-left">
-                           {{ review }}
-                            </p>
-                           </div>
-                        </div>
-                        </div>
-                        <div class="col-1"></div>
-                      </div>
-                      {% endfor %}
-                    </div>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -157,34 +155,21 @@
                   </div>
                 </div>
               </div>
-                  <img class="card-img-top" src="{{ data[i]['image_url'] }}" alt="book">
-                  <div class="card-body">
-                  <h5 class="card-title">{{ data[i]['title'] }}</h5>
-                    <p class="card-text text-left">{{ 'Author:' + data[i]['authors'] }}</p>
-                    <p class="card-text text-left">{{ 'Rating:' + data[i]['average_rating'] }}</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                  </div>
-                 </div>
+              <img class="card-img-top" src="{{ data[i]['image_url'] }}" alt="book" />
+              <div class="card-body">
+                <h5 class="card-title">{{ data[i]['title'] }}</h5>
+                <p class="card-text text-left">{{ 'Author:' + data[i]['authors'] }}</p>
+                <p class="card-text text-left">{{ 'Rating:' + data[i]['average_rating'] }}</p>
+                <div class="d-flex justify-content-between align-items-center"></div>
+               </div>
+            </div>
+            {% endfor %}
           </div>
-          {% endfor %}
-          </div>
-          </div>
-          </div>
+        </div>
       </div>
-
-      {% endif %}
-      </div>
-      
+    </div>
+    {% endif %}
   </main>
-  <style>
-    .card-columns{
-      column-count: 4;
-    }
-
-    .jumbotron {
-      background-color:transparent !important; 
-    }
-  </style>
 
   <footer class="text-muted">
     <div class="container">
@@ -193,6 +178,6 @@
     </div>
   </footer>
 
-  <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/index_v1.js') }}"></script>
 </body>
 </html>
