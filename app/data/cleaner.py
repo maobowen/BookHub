@@ -221,7 +221,7 @@ def clean_books():
                     "url": books[original_book_id]["url"],
                     "authors": [],
                     "tags": [],
-                    "buy_link": books[original_book_id]["buy_links"]["buy_link"][0]["link"],
+                    "buy_link": "https://www.amazon.com/s?k=%s" % books[original_book_id]["isbn13"],
                 }
                 if has_no_image(cleaned_books[original_book_id]["image_url"]):
                     for dup_book_id in book_primary_id_id_map[original_book_id]:
