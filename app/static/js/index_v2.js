@@ -201,6 +201,7 @@ $(document).ready(function() {
         var obj = JSON.parse(id_title);
         Object.keys(obj).forEach(function(key) {
             if (obj[key] != ""){
+                next_empty_field = next_empty_field + 1
                 console.log(key);
                 add_book(key,obj[key])
             }
