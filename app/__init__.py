@@ -32,13 +32,15 @@ def not_found(error):
   return render_template("404.html"), 404
 
 
-from app.data import downloader, preprocessor
+# Add command line interface
+from app.data import downloader, cleaner, preprocessor
 import click
 from flask.cli import AppGroup
 
 data_cli = AppGroup("data")
 
 
+# Command line interface for downloader
 @data_cli.command("download-reviews")
 @click.option("--start-id", "-s", type=int, default=1, show_default=True, help='Start ID of Goodreads reviews.')
 @click.option("--end-id", "-e", type=int, default=1000000, show_default=True, help='End ID of Goodreads reviews.')
@@ -65,11 +67,28 @@ def clean_books(start_counter=0):
     downloader.clean_books(start_counter)
 
 
-@data_cli.command("merge")
-def merge():
+@data_cli.command("downloader-merge")
+def downloader_merge():
     downloader.merge()
 
 
+# Command line interface for cleaner
+@data_cli.command("cleaner-prepare")
+def cleaner_prepare():
+    cleaner.deduplicate_books_titles_by_edit_distance()
+    cleaner.filter_book_ids_by_ratings(threshold=3.7)
+    cleaner.filter_book_ids_by_most_reviews()
+    cleaner.count_book_tags()
+    cleaner.merge_book_ids()
+
+
+@data_cli.command("cleaner-clean")
+def cleaner_clean():
+    cleaner.clean_reviews()
+    cleaner.clean_books()
+
+
+# Command line interface for pre-processor
 @data_cli.command("calc-cos-sim-desc")
 def calc_cos_sim_desc():
     preprocessor.calc_cos_sim_desc()
