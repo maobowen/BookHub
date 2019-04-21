@@ -139,7 +139,8 @@ function update_book(i, title_inputed){
     card = "#card_" + num;
     //alert(book_id);
     $(book_id).text(title_inputed);
-    $(card).css("color", "#d3d3d3");
+    $(card).css("border", "2px solid #808080");
+    $(card).css("color", "#808080");
 }
 
 //remove button function
