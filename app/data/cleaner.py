@@ -3,6 +3,7 @@ from collections import defaultdict, OrderedDict
 import json
 import os
 import tqdm
+import urllib.parse
 
 MERGED_DATA_DIR = os.path.abspath(os.path.join(__file__, "..", "merged"))
 V2_DATA_DIR = os.path.abspath(os.path.join(__file__, "..", "v2"))
@@ -214,15 +215,20 @@ def clean_books():
             if new_book_id == int(original_book_id):
                 cleaned_books[original_book_id] = {
                     "title": books[original_book_id]["title"],
-                    "isbn13": books[original_book_id]["isbn13"],
+                    "isbn13": "",
                     "description": "" if not books[original_book_id]["description"] else BeautifulSoup(books[original_book_id]["description"], "lxml").text,
                     "image_url": books[original_book_id]["image_url"],
                     "average_rating": float(books[original_book_id]["average_rating"]),
                     "url": books[original_book_id]["url"],
                     "authors": [],
                     "tags": [],
-                    "buy_link": "https://www.amazon.com/s?k=%s" % books[original_book_id]["isbn13"],
+                    "buy_link": "",
                 }
+                if books[original_book_id]["isbn13"]:
+                    cleaned_books[original_book_id]["isbn13"] = books[original_book_id]["isbn13"]
+                elif books[original_book_id]["isbn"]:
+                    cleaned_books[original_book_id]["isbn13"] = books[original_book_id]["isbn"]
+
                 if has_no_image(cleaned_books[original_book_id]["image_url"]):
                     for dup_book_id in book_primary_id_id_map[original_book_id]:
                         if not has_no_image(books[str(dup_book_id)]["image_url"]):
@@ -243,6 +249,11 @@ def clean_books():
                         for subtag in subtags:
                             if subtag in tags and not subtag in cleaned_books[original_book_id]["tags"]:
                                 cleaned_books[original_book_id]["tags"].append(subtag)
+
+                if cleaned_books[original_book_id]["isbn13"]:
+                    cleaned_books[original_book_id]["buy_link"] = "https://www.amazon.com/s?k=%s" % cleaned_books[original_book_id]["isbn13"]
+                else:
+                    cleaned_books[original_book_id]["buy_link"] = "https://www.amazon.com/s?k=%s" % urllib.parse.quote_plus(cleaned_books[original_book_id]["title"])
 
                 title = cleaned_books[original_book_id]["title"]
                 book_title_id_map[title] = int(original_book_id)
