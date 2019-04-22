@@ -75,8 +75,8 @@ function check(){
             document.getElementById('msg').innerHTML = "Please choose book names available in the suggestions";
         } else {
             if(titles[i] !== ""){
-                console.log(book_dict[titles[i]][0]);
-                id_list = id_list + (book_dict[titles[i]][0]) + " ";
+                console.log(book_dict[titles[i]]);
+                id_list = id_list + (book_dict[titles[i]]) + " ";
             }
         }
     }
@@ -110,6 +110,7 @@ function add_book(i, title_inputed){
     $(book_id).text(title_inputed);
     $(book_id).css("display", "block");
     $(removeBtn).css("visibility", "visible");
+    $(card).css("color", "#ffffff")
 }
 
 //funciton to delete book field
@@ -124,6 +125,7 @@ function delete_book(i){
     $(book_id).text("");
     $(book_id).css("display", "none");
     $(removeBtn).css("visibility", "hidden");
+    $(card).css("color", "#ffffff")
 }
 
 //function to update value in book field
@@ -133,6 +135,7 @@ function update_book(i, title_inputed){
     card = "#card_" + num;
     //alert(book_id);
     $(book_id).text(title_inputed);
+    $(card).css("color", "#ffffff")
 }
 
 //remove button function
