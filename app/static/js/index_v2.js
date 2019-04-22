@@ -85,11 +85,11 @@ function check(){
         //alert(id_list);
         //$("#").value = id_list;
         document.getElementById('book_ids').value = id_list;
-        id_title_dict['1'] = book_t1
-        id_title_dict['2'] = book_t2
-        id_title_dict['3'] = book_t3
-        id_title_dict['4'] = book_t4
-        id_title_dict['5'] = book_t5
+        id_title_dict['1'] = book_t1;
+        id_title_dict['2'] = book_t2;
+        id_title_dict['3'] = book_t3;
+        id_title_dict['4'] = book_t4;
+        id_title_dict['5'] = book_t5;
         localStorage.setItem('id_title_dict', JSON.stringify(id_title_dict));
         return true;
     } else {
@@ -204,11 +204,11 @@ $('#input_title').keypress(function(event) {
 
 $(document).ready(function() {
     var id_title = localStorage.getItem('id_title_dict');
-    if ( id_title != null && id_title != ""){
+    if ( id_title != null && id_title !== ""){
         var obj = JSON.parse(id_title);
         Object.keys(obj).forEach(function(key) {
-            if (obj[key] != ""){
-                next_empty_field = next_empty_field + 1
+            if (obj[key] !== ""){
+                next_empty_field = next_empty_field + 1;
                 //console.log(key);
                 add_book(key,obj[key])
             }
