@@ -155,10 +155,11 @@ def search():
 	if request.method == "POST":
 		request_book_ids = request.form.get("book_ids", "").split()
 		if len(request_book_ids) >= 1 and request_book_ids[0] != "":
-			recommended_book_ids, recommended_book_scores = _get_recommendation(version_idx, request_book_ids)
 			if version_idx == 0:
+				recommended_book_ids = _get_recommendation(version_idx, request_book_ids)
 				data = _get_recommended_books_detail(version_idx, recommended_book_ids, request_book_ids, None)
 			else:
+				recommended_book_ids, recommended_book_scores = _get_recommendation(version_idx, request_book_ids)
 				data = _get_recommended_books_detail(version_idx, recommended_book_ids, None, recommended_book_scores)
 	else:
 		data = []
