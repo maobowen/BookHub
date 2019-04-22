@@ -1,15 +1,17 @@
-.book {
-  height: 170px;
+.title_text{
+  margin-top:5%;
+  text-align: center;
 }
 
-.title_text{
-  margin-top:5px;
+.placeholder_text{
+  margin-top:20%;
+  margin-left: 15%;
   text-align: center;
 }
 
 .removeBtn {
   visibility: hidden;
-  margin-left: 60%;
+  margin-right: -10%;
 }
 
 .add {
@@ -17,7 +19,11 @@
 }
 
 .input_field {
-  height: 250px;
+  border-style:none;
+  width:110%;
+  height: 255px;
+  background-size: 100% 100%;
+  background-image: url('../img/book.png');
 }
 
 .hidden {
@@ -51,5 +57,29 @@
 }
 
 .logo{
-  width:20%;
+  width:15%;
+}
+
+html, body{
+  position: relative;
+  width:100%;
+  height:100%;
+  background-size: 100% 100%;
+  background-image: url('../img/bg-9.jpg');
+  background-repeat: repeat-y;
+}
+
+.overlay:after {
+  position: absolute;
+  content:"";
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color:rgb(144, 221, 247);
+  opacity: 0.5;
+}
+
+h1, h4, h5{
+  color:#ffffff;
 }

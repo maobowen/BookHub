@@ -60,7 +60,9 @@ function check(){
         book_t5 = document.getElementById('book_title_5').innerText,
         check_valid = true,
         id_list = "",
-        titles = [book_t1, book_t2, book_t3, book_t4, book_t5];
+        titles = [book_t1, book_t2, book_t3, book_t4, book_t5], 
+        id_title_dict = {};
+
         //alert(titles);
         //console.log(book_titles.includes(titles[0]));
 
@@ -69,14 +71,12 @@ function check(){
         if ((titles[i] !== "") && !(book_titles.includes(titles[i]))){
             console.log(i);
             check_valid = false;
-            $(id).css("border-color", "red");
             $(id).css("color", "red");
             document.getElementById('msg').innerHTML = "Please choose book names available in the suggestions";
         } else {
             if(titles[i] !== ""){
-                console.log(book_dict[titles[i]][0]);
-                $(id).css("border-color", "grey");
-                id_list = id_list + (book_dict[titles[i]][0]) + " ";
+                console.log(book_dict[titles[i]]);
+                id_list = id_list + (book_dict[titles[i]]) + " ";
             }
         }
     }
@@ -85,6 +85,12 @@ function check(){
         //alert(id_list);
         //$("#").value = id_list;
         document.getElementById('book_ids').value = id_list;
+        id_title_dict['1'] = book_t1
+        id_title_dict['2'] = book_t2
+        id_title_dict['3'] = book_t3
+        id_title_dict['4'] = book_t4
+        id_title_dict['5'] = book_t5
+        localStorage.setItem('id_title_dict', JSON.stringify(id_title_dict));
         return true;
     } else {
         return false;
@@ -104,8 +110,7 @@ function add_book(i, title_inputed){
     $(book_id).text(title_inputed);
     $(book_id).css("display", "block");
     $(removeBtn).css("visibility", "visible");
-    $(card).css("border", "2px solid #808080");
-    $(card).css("color", "#808080");
+    $(card).css("color", "#ffffff")
 }
 
 //funciton to delete book field
@@ -120,8 +125,7 @@ function delete_book(i){
     $(book_id).text("");
     $(book_id).css("display", "none");
     $(removeBtn).css("visibility", "hidden");
-    $(card).css("border", "2px dashed #d3d3d3");
-    $(card).css("color", "#d3d3d3");
+    $(card).css("color", "#ffffff")
 }
 
 //function to update value in book field
@@ -131,7 +135,7 @@ function update_book(i, title_inputed){
     card = "#card_" + num;
     //alert(book_id);
     $(book_id).text(title_inputed);
-    $(card).css("color", "#d3d3d3");
+    $(card).css("color", "#ffffff")
 }
 
 //remove button function
@@ -171,18 +175,43 @@ function clearInput(){
     //document.getElementById("input_title").value = "";
 }
 
+//function to add a book title
+function addBookLogic(){
+    if (next_empty_field === 6 ){
+        document.getElementById('msg').innerHTML = "You can input up to 5 books";
+    } else {
+        var title_inputed = document.getElementById("input_title").value;
+        if (title_inputed !== ""){
+            add_book(next_empty_field, title_inputed);
+            clearInput();
+            next_empty_field++;
+        }
+    }
+}
+
+//clear the input when focus out
+$('#input_title').focusout(function() {
+    clearInput();
+});
+
 //press enter to add a book title
 $('#input_title').keypress(function(event) {
     if (event.keyCode === 13 || event.which === 13) {
-        if (next_empty_field === 6 ){
-            document.getElementById('msg').innerHTML = "You can input up to 5 books";
-        } else {
-            var title_inputed = document.getElementById("input_title").value;
-            if (title_inputed !== ""){
-                add_book(next_empty_field, title_inputed);
-                clearInput();
-                next_empty_field++;
+        addBookLogic();
+        clearInput();
+    }
+});
+
+$(document).ready(function() {
+    var id_title = localStorage.getItem('id_title_dict');
+    if ( id_title != null && id_title != ""){
+        var obj = JSON.parse(id_title);
+        Object.keys(obj).forEach(function(key) {
+            if (obj[key] != ""){
+                next_empty_field = next_empty_field + 1
+                //console.log(key);
+                add_book(key,obj[key])
             }
-        }
+        })
     }
 });
