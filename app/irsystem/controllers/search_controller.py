@@ -62,7 +62,7 @@ def _get_recommendation(version_idx: int, book_ids: list) -> list:
 					cos_sim_sums[i][similar_book_id] += top_k_cos_sim[i][similar_book_id]
 
 		cos_sim_avg = defaultdict(float)
-		ratio = [0.7, 0.3, 0]
+		ratio = [0.95, 0.05, 0.0]
 		for i in range(3):
 			for similar_book_id in cos_sim_sums[i]:
 				cos_sim_avg[similar_book_id] += ratio[i] * cos_sim_sums[i][similar_book_id]
