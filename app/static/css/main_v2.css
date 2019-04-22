@@ -61,25 +61,6 @@
 }
 
 html, body{
-  position: relative;
   width:100%;
   height:100%;
-  background-size: 100% 100%;
-  background-image: url('../img/bg-9.jpg');
-  background-repeat: repeat-y;
-}
-
-.overlay:after {
-  position: absolute;
-  content:"";
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background-color:rgb(144, 221, 247);
-  opacity: 0.5;
-}
-
-h1, h4, h5{
-  color:#ffffff;
 }
