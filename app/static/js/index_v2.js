@@ -110,7 +110,7 @@ function add_book(i, title_inputed){
     $(book_id).text(title_inputed);
     $(book_id).css("display", "block");
     $(removeBtn).css("visibility", "visible");
-    $(card).css("color", "#ffffff")
+    $(card).css("color", "#000000")
 }
 
 //funciton to delete book field
@@ -125,7 +125,7 @@ function delete_book(i){
     $(book_id).text("");
     $(book_id).css("display", "none");
     $(removeBtn).css("visibility", "hidden");
-    $(card).css("color", "#ffffff")
+    $(card).css("color", "#000000")
 }
 
 //function to update value in book field
@@ -135,7 +135,7 @@ function update_book(i, title_inputed){
     card = "#card_" + num;
     //alert(book_id);
     $(book_id).text(title_inputed);
-    $(card).css("color", "#ffffff")
+    $(card).css("color", "#000000")
 }
 
 //remove button function
