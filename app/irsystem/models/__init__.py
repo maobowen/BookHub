@@ -18,13 +18,18 @@ class Book(db.Model):
     tags = db.Column(db.Text)
     buy_link = db.Column(db.String(255))
     reviews = db.Column(db.Text)
+    cos_sim_desc = db.Column(db.Text)
+    cos_sim_tm_reviews = db.Column(db.Text)
+    cos_sim_tm_books = db.Column(db.Text)
 
     def __init__(self, id: int, title: str, isbn13="", description="", image_url="",
                  average_rating=0.0, url="", authors=[], tags=[], buy_link="",
-                 reviews=[]):
+                 reviews=[], cos_sim_desc={}, cos_sim_tm_reviews={},
+                 cos_sim_tm_books={}):
         db.Model.__init__(self, id=id, title=title, isbn13=isbn13, description=description, image_url=image_url,
                           average_rating=average_rating, url=url, authors=authors, tags=tags, buy_link=buy_link,
-                          reviews=reviews)
+                          reviews=reviews, cos_sim_desc=cos_sim_desc, cos_sim_tm_reviews=cos_sim_tm_reviews,
+                          cos_sim_tm_books=cos_sim_tm_books)
 
     def __repr__(self):
         return "<Book %s: %r>" % (self.id, self.title)

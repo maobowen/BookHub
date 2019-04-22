@@ -101,4 +101,16 @@ def calc_cos_sim_desc():
     preprocessor.calc_cos_sim_desc()
 
 
+@data_cli.command("calc-cos-sim-tm-reviews")
+def calc_cos_sim_tm_reviews():
+    from app.data import preprocessor
+    preprocessor.calc_cos_sim_tm_reviews()
+
+
+@data_cli.command("calc-cos-sim-tm-books")
+def calc_cos_sim_tm_books():
+    from app.data import preprocessor
+    preprocessor.calc_cos_sim_tm_books()
+
+
 app.cli.add_command(data_cli)

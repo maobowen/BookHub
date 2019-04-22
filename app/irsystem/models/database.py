@@ -8,6 +8,9 @@ def init_db():
     ALL_BOOKS_FILENAME = "books.json"
     ALL_REVIEWS_FILENAME = "reviews.json"
     BOOK_REVIEW_MAP_FILENAME = "book-review-map.json"
+    COS_SIM_DESC_FILENAME = "cos-sim-desc.json"
+    COS_SIM_TM_REVIEWS_FILENAME = "cos_sim_tm_reviews.json"
+    COS_SIM_TM_BOOKS_FILENAME = "cos_sim_tm_books.json"
 
     # Create tables
     print("Creating all database tables...")
@@ -22,6 +25,12 @@ def init_db():
         reviews = json.load(fin)
     with open(os.path.join(DATA_DIR, BOOK_REVIEW_MAP_FILENAME), "r") as fin:
         book_review_map = json.load(fin)
+    with open(os.path.join(DATA_DIR, COS_SIM_DESC_FILENAME), "r") as fin:
+        top_k_cos_sim_desc = json.load(fin)
+    with open(os.path.join(DATA_DIR, COS_SIM_TM_REVIEWS_FILENAME), "r") as fin:
+        top_k_cos_sim_tm_reviews = json.load(fin)
+    with open(os.path.join(DATA_DIR, COS_SIM_TM_BOOKS_FILENAME), "r") as fin:
+        top_k_cos_sim_tm_books = json.load(fin)
 
     for book_id in books:
         assert type(book_id) == str
@@ -47,6 +56,9 @@ def init_db():
             tags=json.dumps(books[book_id]["tags"]),
             buy_link=books[book_id]["buy_link"],
             reviews=json.dumps(book_reviews),
+            cos_sim_desc=json.dumps(top_k_cos_sim_desc[book_id]),
+            cos_sim_tm_reviews=json.dumps(top_k_cos_sim_tm_reviews[book_id]),
+            cos_sim_tm_books=json.dumps(top_k_cos_sim_tm_books[book_id]),
         ))
     db.session.commit()
 
