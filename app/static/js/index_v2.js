@@ -71,13 +71,11 @@ function check(){
         if ((titles[i] !== "") && !(book_titles.includes(titles[i]))){
             console.log(i);
             check_valid = false;
-            $(id).css("border-color", "red");
             $(id).css("color", "red");
             document.getElementById('msg').innerHTML = "Please choose book names available in the suggestions";
         } else {
             if(titles[i] !== ""){
                 console.log(book_dict[titles[i]][0]);
-                $(id).css("border-color", "grey");
                 id_list = id_list + (book_dict[titles[i]][0]) + " ";
             }
         }
@@ -112,8 +110,6 @@ function add_book(i, title_inputed){
     $(book_id).text(title_inputed);
     $(book_id).css("display", "block");
     $(removeBtn).css("visibility", "visible");
-    $(card).css("border", "2px solid #808080");
-    $(card).css("color", "#808080");
 }
 
 //funciton to delete book field
@@ -128,8 +124,6 @@ function delete_book(i){
     $(book_id).text("");
     $(book_id).css("display", "none");
     $(removeBtn).css("visibility", "hidden");
-    $(card).css("border", "2px dashed #d3d3d3");
-    $(card).css("color", "#d3d3d3");
 }
 
 //function to update value in book field
@@ -139,8 +133,6 @@ function update_book(i, title_inputed){
     card = "#card_" + num;
     //alert(book_id);
     $(book_id).text(title_inputed);
-    $(card).css("border", "2px solid #808080");
-    $(card).css("color", "#808080");
 }
 
 //remove button function
@@ -180,19 +172,30 @@ function clearInput(){
     //document.getElementById("input_title").value = "";
 }
 
+//function to add a book title
+function addBookLogic(){
+    if (next_empty_field === 6 ){
+        document.getElementById('msg').innerHTML = "You can input up to 5 books";
+    } else {
+        var title_inputed = document.getElementById("input_title").value;
+        if (title_inputed !== ""){
+            add_book(next_empty_field, title_inputed);
+            clearInput();
+            next_empty_field++;
+        }
+    }
+}
+
+//clear the input when focus out
+$('#input_title').focusout(function() {
+    clearInput();
+});
+
 //press enter to add a book title
 $('#input_title').keypress(function(event) {
     if (event.keyCode === 13 || event.which === 13) {
-        if (next_empty_field === 6 ){
-            document.getElementById('msg').innerHTML = "You can input up to 5 books";
-        } else {
-            var title_inputed = document.getElementById("input_title").value;
-            if (title_inputed !== ""){
-                add_book(next_empty_field, title_inputed);
-                clearInput();
-                next_empty_field++;
-            }
-        }
+        addBookLogic();
+        clearInput();
     }
 });
 
@@ -203,7 +206,7 @@ $(document).ready(function() {
         Object.keys(obj).forEach(function(key) {
             if (obj[key] != ""){
                 next_empty_field = next_empty_field + 1
-                console.log(key);
+                //console.log(key);
                 add_book(key,obj[key])
             }
         })
