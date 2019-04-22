@@ -11,6 +11,7 @@ def init_db():
     COS_SIM_DESC_FILENAME = "cos-sim-desc.json"
     COS_SIM_TM_REVIEWS_FILENAME = "cos_sim_tm_reviews.json"
     COS_SIM_TM_BOOKS_FILENAME = "cos_sim_tm_books.json"
+    JACCARD_SIM_TAGS_FILENAME = "jaccard_sim_tags.json"
 
     # Create tables
     print("Creating all database tables...")
@@ -31,6 +32,8 @@ def init_db():
         top_k_cos_sim_tm_reviews = json.load(fin)
     with open(os.path.join(DATA_DIR, COS_SIM_TM_BOOKS_FILENAME), "r") as fin:
         top_k_cos_sim_tm_books = json.load(fin)
+    with open(os.path.join(DATA_DIR, JACCARD_SIM_TAGS_FILENAME), "r") as fin:
+        top_k_j_sim_tags = json.load(fin)
 
     for book_id in books:
         assert type(book_id) == str
@@ -59,6 +62,7 @@ def init_db():
             cos_sim_desc=json.dumps(top_k_cos_sim_desc[book_id]),
             cos_sim_tm_reviews=json.dumps(top_k_cos_sim_tm_reviews[book_id]),
             cos_sim_tm_books=json.dumps(top_k_cos_sim_tm_books[book_id]),
+            jaccard_sim_tags=json.dumps(top_k_j_sim_tags[book_id]),
         ))
     db.session.commit()
 

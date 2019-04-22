@@ -8,8 +8,9 @@ var data = (function(){
             var titles = [];
             var dict = [];
             $.each(response, function(key, val){
-                titles.push(key);
-                dict[key] = val;
+                var new_key = key.replace(/\s{2,}/g, ' ');
+                titles.push(new_key);
+                dict[new_key] = val;
             });
             data = [titles, dict];
         }
@@ -17,13 +18,8 @@ var data = (function(){
     return data;
 })();
 
-//console.log(data);
-
 var book_titles = data[0];
 var book_dict = data[1];
-
-//console.log(book_dict);
-//console.log(book_titles);
 
 // init Bloodhound
 var books_suggestions = new Bloodhound({
@@ -31,6 +27,7 @@ var books_suggestions = new Bloodhound({
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     //prefetch: { url: './data/clean_title_data.json' }
     local: book_titles
+    //local: Object.keys(book_dict)
 });
 
 // init Typeahead
@@ -63,19 +60,15 @@ function check(){
         titles = [book_t1, book_t2, book_t3, book_t4, book_t5], 
         id_title_dict = {};
 
-        //alert(titles);
-        //console.log(book_titles.includes(titles[0]));
-
     for (var i = 0; i < 5; i++){
         var id = "#card_" + (1 + i);
         if ((titles[i] !== "") && !(book_titles.includes(titles[i]))){
-            console.log(i);
+        //if ((titles[i] !== "") && !(titles[i] in book_dict)){
             check_valid = false;
             $(id).css("color", "red");
             document.getElementById('msg').innerHTML = "Please choose book names available in the suggestions";
         } else {
             if(titles[i] !== ""){
-                console.log(book_dict[titles[i]]);
                 id_list = id_list + (book_dict[titles[i]]) + " ";
             }
         }
@@ -209,7 +202,6 @@ $(document).ready(function() {
         Object.keys(obj).forEach(function(key) {
             if (obj[key] !== ""){
                 next_empty_field = next_empty_field + 1;
-                //console.log(key);
                 add_book(key,obj[key])
             }
         })

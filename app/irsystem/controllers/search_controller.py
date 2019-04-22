@@ -14,6 +14,7 @@ MAX_COMPARED = 20
 MAX_RECOMMEND = 8
 MAX_REVIEWS = 5
 VERSIONS = [1, 2]
+N_FACTORS = 4
 
 
 def _set_version(request) -> int:
@@ -50,26 +51,33 @@ def _get_recommendation(version_idx: int, book_ids: list) -> list:
 
 	else:
 		request_books = Book.query.filter(Book.id.in_(book_ids)).all()
-		cos_sim_sums = [defaultdict(float) for _ in range(3)]
+		n_request_books = len(request_books)
+		sim_scores_sums = [defaultdict(float) for _ in range(N_FACTORS)]
 		for book in request_books:
-			top_k_cos_sim = [
+			top_k_sim_scores = [
 				json.loads(book.cos_sim_desc),
 				json.loads(book.cos_sim_tm_reviews),
 				json.loads(book.cos_sim_tm_books),
+				json.loads(book.jaccard_sim_tags),
 			]
-			for i in range(3):
-				for similar_book_id in top_k_cos_sim[i]:
-					cos_sim_sums[i][similar_book_id] += top_k_cos_sim[i][similar_book_id]
+			assert len(top_k_sim_scores) == N_FACTORS
+			for i in range(N_FACTORS):
+				for similar_book_id in top_k_sim_scores[i]:
+					sim_scores_sums[i][similar_book_id] += top_k_sim_scores[i][similar_book_id] / float(n_request_books)
 
-		cos_sim_avg = defaultdict(float)
-		ratio = [0.95, 0.05, 0.0]
-		for i in range(3):
-			for similar_book_id in cos_sim_sums[i]:
-				cos_sim_avg[similar_book_id] += ratio[i] * cos_sim_sums[i][similar_book_id]
+		sim_scores_avg = defaultdict(float)
+		ratio = [0.85, 0.05, 0.0, 0.1]
+		assert len(ratio) == N_FACTORS
+		for i in range(N_FACTORS):
+			for similar_book_id in sim_scores_sums[i]:
+				sim_scores_avg[similar_book_id] += ratio[i] * sim_scores_sums[i][similar_book_id]
 
-		result = sorted(cos_sim_avg, key=cos_sim_avg.get, reverse=True)[:MAX_RECOMMEND]
-		print(result)
-		return result
+		result = sorted(sim_scores_avg, key=sim_scores_avg.get, reverse=True)[:MAX_RECOMMEND]
+		result_scores = defaultdict(list)
+		for similar_book_id in result:
+			for i in range(N_FACTORS):
+				result_scores[similar_book_id].append(sim_scores_sums[i][similar_book_id])
+		return result, result_scores
 
 
 def _get_book_reviews(version_idx: int, book_id: str) -> list:
@@ -85,8 +93,10 @@ def _get_book_reviews(version_idx: int, book_id: str) -> list:
 		return review_texts[:MAX_RECOMMEND]
 
 
-def _get_recommended_books_detail(version_idx: int, recommended_book_ids: list, request_book_ids: list) -> list:
+def _get_recommended_books_detail(version_idx: int, recommended_book_ids: list, request_book_ids: list, recommended_book_scores: dict) -> list:
 	if version_idx == 0:
+		assert request_book_ids is not None
+		assert recommended_book_scores is None
 		recommended_books = []
 		with open(os.path.join(DATA_DIR[version_idx], "books.json"), "r") as fin:
 			books = json.load(fin)
@@ -110,6 +120,8 @@ def _get_recommended_books_detail(version_idx: int, recommended_book_ids: list, 
 		return recommended_books
 
 	else:
+		assert request_book_ids is None
+		assert recommended_book_scores is not None
 		recommended_books_object = Book.query.filter(Book.id.in_(recommended_book_ids)).all()
 		recommended_books = []
 		for book in recommended_books_object:
@@ -127,6 +139,10 @@ def _get_recommended_books_detail(version_idx: int, recommended_book_ids: list, 
 				"tags": ", ".join(json.loads(book.tags)),
 				"buy_link": book.buy_link,
 				"reviews": review_texts,
+				"cos_sim_desc": recommended_book_scores[str(book.id)][0],
+				"cos_sim_tm_reviews": recommended_book_scores[str(book.id)][1],
+				"cos_sim_tm_books": recommended_book_scores[str(book.id)][2],
+				"jaccard_sim_tags": recommended_book_scores[str(book.id)][3],
 			})
 		return recommended_books
 
@@ -139,8 +155,11 @@ def search():
 	if request.method == "POST":
 		request_book_ids = request.form.get("book_ids", "").split()
 		if len(request_book_ids) >= 1 and request_book_ids[0] != "":
-			recommended_book_ids = _get_recommendation(version_idx, request_book_ids)
-			data = _get_recommended_books_detail(version_idx, recommended_book_ids, request_book_ids)
+			recommended_book_ids, recommended_book_scores = _get_recommendation(version_idx, request_book_ids)
+			if version_idx == 0:
+				data = _get_recommended_books_detail(version_idx, recommended_book_ids, request_book_ids, None)
+			else:
+				data = _get_recommended_books_detail(version_idx, recommended_book_ids, None, recommended_book_scores)
 	else:
 		data = []
 
