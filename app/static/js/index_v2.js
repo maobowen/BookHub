@@ -1,7 +1,7 @@
 var data = (function(){
     var data;
     $.ajax({
-        url: "/ajax/books/id-title",
+        url: "/ajax/books/id-title?v=2",
         dataType: "json",
         async: false,
         success: function(response){
