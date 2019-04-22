@@ -162,3 +162,45 @@ def calc_cos_sim_tm_books():
     top_k_cos_sim = calc_cos_sim_vector(os.path.join(DATA_DIR, FIN_FILENAME))
     with open(os.path.join(DATA_DIR, FOUT_FILENAME), "w") as fout:
         json.dump(top_k_cos_sim, fout, indent=2)
+
+
+def calc_jaccard_sim_tags():
+    FIN_FILENAME = "books.json"
+    FOUT_FILENAME = "jaccard_sim_tags.json"
+
+    with open(os.path.join(DATA_DIR, FIN_FILENAME), "r") as fin:
+        books = json.load(fin)
+    print("Calculating Jaccard similarities.")
+    book_ids = list(books.keys())
+    n_books = len(book_ids)
+    j_sim_matrix = np.zeros((n_books, n_books))
+    for book1_index in tqdm.tqdm(range(n_books)):
+        book1_id = book_ids[book1_index]
+        book1_tags = books[book1_id]["tags"]
+        for book2_index in range(book1_index, n_books):
+            book2_id = book_ids[book2_index]
+            book2_tags = books[book2_id]["tags"]
+            numerator = len(set(book1_tags).intersection(book2_tags))
+            denominator = len(set(book1_tags).union(book2_tags))
+            j_sim_matrix[book1_index][book2_index] = 0.0 if denominator == 0 else float(numerator) / denominator
+            j_sim_matrix[book2_index][book1_index] = j_sim_matrix[book1_index][book2_index]
+
+    print("Picking top %d Jaccard similarities." % TOP_K)
+    top_k_j_sim = {}
+    for index in tqdm.tqdm(range(n_books)):
+        book_id = book_ids[index]
+        j_sim_row = j_sim_matrix[index, :]
+        top_k_indices = np.argsort(j_sim_row)[::-1][:TOP_K + 1]
+        top_k_j_sim[book_id] = {}
+        for target_index in top_k_indices:
+            if j_sim_row[target_index] == 0.0:
+                break
+            target_id = book_ids[target_index]
+            if target_id == book_id:
+                np.testing.assert_almost_equal(1.0, j_sim_row[target_index])
+                continue
+            top_k_j_sim[book_id][target_id] = j_sim_row[target_index]
+
+    top_k_j_sim = OrderedDict(sorted(top_k_j_sim.items(), key=lambda x: x[0]))
+    with open(os.path.join(DATA_DIR, FOUT_FILENAME), "w") as fout:
+        json.dump(top_k_j_sim, fout, indent=2)
