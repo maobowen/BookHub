@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ name }} - A smart book recommendation system.">
+  <meta name="author" content="Team {{ name }}">
+  <meta name="apple-mobile-web-app-title" content="{{ name }}">
+  <title>Bookhub - A smart book recommendation system</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js-bootstrap-css/1.2.1/typeaheadjs.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main_v1.css') }}">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.2.1/bloodhound.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.2.1/typeahead.jquery.min.js"></script>
+  
+</head>
+
+<body>
+  <main role="main">
+    <section class="jumbotron text-center" style="margin-top: -3%">
+      <div class="container">
+        <img class="w-25" src="{{ url_for('static', filename='img/icon.png') }}" style="margin-bottom: 5%">
+          <p class="lead text-muted">Welcome to BookHub! Input up to 5 book titles to get book recommendations!</p>
+      </div>
+    </section>
+
+    <form method="post" action="/?v=1" onsubmit="return validateMyForm();">
+      <input type="hidden" name="book_ids" id="book_ids" class="form-control hidden">
+      <div class="inputs" style="margin-top: -5%">
+        <div class="container justify-content-center" style="width:70%">
+          <div class="row justify-content-center">
+            {% for i in range(1, 4) %}
+            <div class="col-4">
+              <div class="card mb-4 shadow-sm">
+                <div class="card-body book">
+                  <!--<a href="#" class="btn btn-outline-secondary btn-sm editBtn">
+                    <span class="glyphicon glyphicon-align-left">Remove</span>
+                  </a>-->
+                  <div class="input-group justify-content-center">
+                    <div class="d-flex aligh-middle justify-content-center input_field">
+                      <input type="text" name="book_title_{{ i }}" id="book_title_{{ i }}" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+
+          <div class="row justify-content-center">
+          {% for i in range(4, 6) %}
+            <div class="col-4">
+              <div class="card mb-4 shadow-sm">
+                <div class="card-body book">
+                   <!--<a href="#" class="btn btn-outline-secondary btn-sm editBtn">
+                    <span class="glyphicon glyphicon-align-left">Remove</span>
+                  </a>-->
+                  <div class="input-group justify-content-center">
+                    <div class="d-flex aligh-middle justify-content-center input_field">
+                      <input type="text" name="book_title_{{ i }}" id="book_title_{{ i }}" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <section class="jumbotron text-center" style="margin-top: -3%">
+        <!--<p>
+          <a href="#collapseExample" class="btn btn-secondary my-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Advanced Search V</a>
+        </p>
+        <div id="collapseExample" class="collapse container justify-content-center" style="width:70%;">
+          <div class="card card-body">
+            Placeholder
+          </div>
+        </div>-->
+        <p>
+          <button class="btn btn-secondary" type="submit">Get Recommendations!</button>
+        </p>
+        <h2 id="msg"></h2>
+      </section>
+    </form>
+
+    {% if data %}
+    <div class="outputs" style="margin-top: -5%">
+      <div class="container justify-content-left" style="width:70%; margin-bottom: 8%">
+        <h1 class="display-5">Results</h1>
+      </div>
+
+      <div class="output_rows" style="margin-top: -5%">
+        <div class="container justify-content-center" style="width:70%">
+          <div class="card-columns">
+            {% for i in range(0,8) %}
+            <div class="card" data-toggle="modal" data-target="{{ '#' + data[i]['id'] }}">
+              <!-- Modal -->
+              <div class="modal fade" id="{{ data[i]['id'] }}" tabindex="-1" role="dialog" aria-labelledby="{{ data[i]['id'] + 'Title'}}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="{{ data[i]['id'] + 'Title'}}">Reviews</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="container-sm">
+                        <div class="row">
+                          <div class="col-1"></div>
+                          <div class="col">
+                            <div class="card mb-3 shadow-sm">
+                              <div class="card-body">
+                                <div class="text-center" style="margin-bottom: 10px;">
+                                  <img class="card-img-top review-cover" src="{{ data[i]['image_url']}}" alt="book" style="width:50%; height:auto">
+                                </div>
+                                <h5 class="card-title text-left">{{ data[i]['title'] }}</h5>
+                                <p class="card-text text-left">{{ data[i]['authors'] }}</p>
+                                <p class="card-text text-left">{{ data[i]['average_rating'] }}</p>
+                                <div class="d-flex justify-content-between align-items-center"></div>
+                                <div class="d-flex justify-content-between align-items-center"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-1"></div>
+                        </div>
+
+                        {% for review in data[i]['reviews'] %}
+                        <div class="row">
+                          <div class="col-1"></div>
+                          <div class="col">
+                            <div class="card mb-3 shadow-sm">
+                              <div class="card-body">
+                                <p class="card-text text-left">
+                                  {{ review }}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-1"></div>
+                        </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <img class="card-img-top" src="{{ data[i]['image_url'] }}" alt="book" />
+              <div class="card-body">
+                <h5 class="card-title">{{ data[i]['title'] }}</h5>
+                <p class="card-text text-left">{{ 'Author:' + data[i]['authors'] }}</p>
+                <p class="card-text text-left">{{ 'Rating:' + data[i]['average_rating'] }}</p>
+                <div class="d-flex justify-content-between align-items-center"></div>
+               </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </main>
+
+  <footer class="text-muted">
+    <div class="container">
+      <p class="float-right"><a href="#">Back to Top</a></p>
+      <p class="float-right pr-3">
+          Versions: Previous | <a href="/?v=2">Next</a> | <a href="/?v=latest">Latest</a>
+      </p>
+      <p>&copy; 2019 Team {{ name }} ({{ netid }}).</p>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/index_v1.js') }}"></script>
+</body>
+</html>

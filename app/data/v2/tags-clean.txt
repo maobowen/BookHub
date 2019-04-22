@@ -1,0 +1,50 @@
+fiction
+adult
+classics, classic
+history
+literature, lit, literary
+contemporary
+historical
+american, usa, america, united-states
+fantasy, magic
+philosophy
+biography, biographies, autobiography, bio, biographical
+adventure
+romance, love, relationships
+young-adult, youth, teen
+mystery, mysteries
+humor, funny, humour, comedy
+politics, political
+memoir, memoirs
+drama
+science
+religion, religious, theology, faith
+science-fiction, sci-fi, scifi, sf
+psychology
+british, uk
+women, feminism
+thriller, thrillers
+crime
+family
+childhood
+war
+short-stories
+europe
+culture, cultural
+suspense
+spirituality, spiritual
+sociology
+horror
+poetry
+travel
+non-fiction, nonfiction, non-fic, nonfic
+novels, novel
+art
+action
+inspirational
+paranormal, supernatural
+business
+anthology
+mythology
+friendship
+asia

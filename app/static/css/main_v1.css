@@ -1,0 +1,27 @@
+.book {
+  height: 170px;
+}
+
+.editBtn {
+  margin-left: 60%;
+}
+
+.add {
+  height: 50%;
+}
+
+.input_field {
+  margin-top: 10%;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.card-columns{
+  column-count: 4;
+}
+
+.jumbotron {
+  background-color:transparent !important;
+}
