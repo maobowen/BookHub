@@ -95,12 +95,12 @@
 
     {% if data %}
     <div class="outputs" style="margin-top: -5%">
-      <div class="container justify-content-left" style="width:70%; margin-bottom: 8%">
+      <div class="container justify-content-left" style="width:80%; margin-bottom: 8%">
         <h1 class="display-5">Results</h1>
       </div>
 
       <div class="output_rows" style="margin-top: -5%">
-        <div class="container justify-content-center" style="width:70%">
+        <div class="container justify-content-center" style="width:80%">
           <div class="card-columns">
             {% for i in range(0,8) %}
             <div class="card" data-toggle="modal" data-target="{{ '#' + data[i]['id'] }}">
@@ -127,6 +127,10 @@
                                 <h5 class="card-title text-left">{{ data[i]['title'] }}</h5>
                                 <p class="card-text text-left">{{ data[i]['authors'] }}</p>
                                 <p class="card-text text-left">{{ data[i]['average_rating'] }}</p>
+                                <h5 class="card-title text-left">cos_sim_desc: {{ data[i]['cos_sim_desc'] }}</h5>
+                                <p class="card-text text-left">cos_sim_tm_reviews: {{ data[i]['cos_sim_tm_reviews'] }}</p>
+                                <p class="card-text text-left">cos_sim_tm_books: {{ data[i]['cos_sim_tm_books'] }}</p>
+                                <p class="card-text text-left">jaccard_sim_tags: {{ data[i]['jaccard_sim_tags'] }}</p>
                                 <div class="d-flex justify-content-between align-items-center"></div>
                                 <div class="d-flex justify-content-between align-items-center"></div>
                               </div>
