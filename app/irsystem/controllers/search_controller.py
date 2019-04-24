@@ -9,11 +9,12 @@ net_id = "Minghao Li: ml922; Bowen Mao: bm644; Lauren Wong: lqw5; Lu Yang: ly298
 DATA_DIR = [
 	os.path.abspath(os.path.join(__file__, "..", "..", "..", "data", "merged")),
 	os.path.abspath(os.path.join(__file__, "..", "..", "..", "data", "v2")),
+	os.path.abspath(os.path.join(__file__, "..", "..", "..", "data", "v2")),
 ]
 MAX_COMPARED = 20
 MAX_RECOMMEND = 8
 MAX_REVIEWS = 5
-VERSIONS = [1, 2]
+VERSIONS = [1, 2, 3]
 N_FACTORS = 4
 
 
@@ -23,6 +24,8 @@ def _set_version(request) -> int:
 	version_query_string = request.args.get("v", type=str)
 	if version_query_string == "1":
 		session["version"] = VERSIONS[0]
+	elif version_query_string == "2":
+		session["version"] = VERSIONS[1]
 	elif version_query_string:
 		session["version"] = VERSIONS[-1]
 	return VERSIONS.index(session["version"])
@@ -166,5 +169,7 @@ def search():
 
 	if version_idx == 0:
 		return render_template('search_v1.html', name=project_name, netid=net_id, data=data)
-	else:
+	elif version_idx == 1:
 		return render_template('search_v2.html', name=project_name, netid=net_id, data=data)
+	else:
+		return render_template('search_v3.html', name=project_name, netid=net_id, data=data)
