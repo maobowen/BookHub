@@ -103,13 +103,13 @@
         <div class="container justify-content-center" style="width:80%">
           <div class="card-columns">
             {% for i in range(0,8) %}
-            <div class="card" data-toggle="modal" data-target="{{ '#' + data[i]['id'] }}">
+            <div class="card output-card" data-toggle="modal" data-target="{{ '#' + data[i]['id'] }}">
               <!-- Modal -->
               <div class="modal fade" id="{{ data[i]['id'] }}" tabindex="-1" role="dialog" aria-labelledby="{{ data[i]['id'] + 'Title'}}" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="{{ data[i]['id'] + 'Title'}}">Reviews</h5>
+                      <h5 class="modal-title" id="{{ data[i]['id'] + 'Title'}}">{{'Details of "' + data[i]['title'] + '"' }}</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -124,13 +124,14 @@
                                 <div class="text-center" style="margin-bottom: 10px;">
                                   <img class="card-img-top review-cover" src="{{ data[i]['image_url']}}" alt="book" style="width:50%; height:auto" />
                                 </div>
-                                <h5 class="card-title text-left">{{ data[i]['title'] }}</h5>
-                                <p class="card-text text-left">{{ data[i]['authors'] }}</p>
-                                <p class="card-text text-left">{{ data[i]['average_rating'] }}</p>
-                                <h5 class="card-title text-left">cos_sim_desc: {{ data[i]['cos_sim_desc'] }}</h5>
-                                <p class="card-text text-left">cos_sim_tm_reviews: {{ data[i]['cos_sim_tm_reviews'] }}</p>
-                                <p class="card-text text-left">cos_sim_tm_books: {{ data[i]['cos_sim_tm_books'] }}</p>
-                                <p class="card-text text-left">jaccard_sim_tags: {{ data[i]['jaccard_sim_tags'] }}</p>
+                                <h5 class="card-title text-left">{{'Title: ' + data[i]['title'] }}</h5>
+                                <p class="card-text text-left">{{'Author: ' + data[i]['authors'] }}</p>
+                                <p class="card-text text-left">{{'Goodreads Average Rating: ' + data[i]['average_rating'] }}</p>
+                                <p class="card-text text-left">Genres: placeholder</p>
+                                <h5 class="card-title text-left">cos_sim_desc: placeholder</h5>
+                                <p class="card-text text-left">cos_sim_tm_reviews: placeholder</p>
+                                <p class="card-text text-left">cos_sim_tm_books: placeholder</p>
+                                <p class="card-text text-left">jaccard_sim_tags: placeholder</p>
                                 <div class="d-flex justify-content-between align-items-center"></div>
                                 <div class="d-flex justify-content-between align-items-center"></div>
                               </div>
@@ -138,7 +139,8 @@
                           </div>
                           <div class="col-1"></div>
                         </div>
-                        {% for review in data[i]['reviews'] %}
+                        <h5 class="reviews-header">Goodreads User Reviews</h5>
+                        {% for review in data[i]['reviews'][0:3] %}
                         <div class="row">
                           <div class="col-1"></div>
                           <div class="col">
@@ -164,8 +166,8 @@
               <img class="card-img-top" src="{{ data[i]['image_url'] }}" alt="book" />
               <div class="card-body">
                 <h5 class="card-title">{{ data[i]['title'] }}</h5>
-                <p class="card-text text-left">{{ 'Author:' + data[i]['authors'] }}</p>
-                <p class="card-text text-left">{{ 'Rating:' + data[i]['average_rating'] }}</p>
+                <p class="card-text text-left">{{ 'Author: ' + data[i]['authors'] }}</p>
+                <p class="card-text text-left">{{ 'Rating: ' + data[i]['average_rating'] }}</p>
                 <div class="d-flex justify-content-between align-items-center"></div>
               </div>
             </div>
