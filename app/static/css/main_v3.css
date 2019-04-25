@@ -1,9 +1,14 @@
-.title_text{
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+.title_text {
   margin-top: 5%;
   text-align: center;
 }
 
-.placeholder_text{
+.placeholder_text {
   margin-top: 20%;
   margin-left: 15%;
   text-align: center;
@@ -30,13 +35,13 @@
   visibility: hidden;
 }
 
-.addSign{
+.addSign {
   margin-top: 35px;
   height: 112.5px;
   width: auto;
 }
 
-.card-columns{
+.card-columns {
   column-count: 4;
 }
 
@@ -44,35 +49,42 @@
   background-color: transparent !important;
 }
 
-.btn-link{
+.btn-link {
   color: #b3afaf;
 }
 
-#clear{
+#clear {
   margin-left: auto;
 }
 
-#msg{
+#msg {
   color: #ff0000;
 }
 
-.logo{
+.logo {
   width: 15%;
 }
 
-html, body{
-  width: 100%;
-  height: 100%;
-}
-
-.output-card{
+.output-card {
   cursor: pointer;
 }
 
-.modal{
+.modal {
   cursor: default;
 }
 
-.reviews-header{
+.reviews-header {
   text-align: center;
+}
+
+.book-rating {
+  padding: 0;
+}
+
+.card-text-image {
+  height: 15px;
+}
+
+.reviews-header-image {
+  height: 18px;
 }

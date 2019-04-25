@@ -103,7 +103,7 @@ function add_book(i, title_inputed){
     $(book_id).text(title_inputed);
     $(book_id).css("display", "block");
     $(removeBtn).css("visibility", "visible");
-    $(card).css("color", "#000000")
+    $(card).css("color", "#000000");
 }
 
 //funciton to delete book field
@@ -128,7 +128,7 @@ function update_book(i, title_inputed){
     card = "#card_" + num;
     //alert(book_id);
     $(book_id).text(title_inputed);
-    $(card).css("color", "#000000")
+    $(card).css("color", "#000000");
 }
 
 //remove button function
@@ -202,8 +202,17 @@ $(document).ready(function() {
         Object.keys(obj).forEach(function(key) {
             if (obj[key] !== ""){
                 next_empty_field = next_empty_field + 1;
-                add_book(key,obj[key])
+                add_book(key,obj[key]);
             }
         })
     }
+
+    // Update ratings
+    $(".book-rating").each(function(index) {
+        $(this).rateYo({
+            starWidth: "15px",
+            rating: $(this).data("source"),
+            readOnly: true
+        });
+    });
 });
