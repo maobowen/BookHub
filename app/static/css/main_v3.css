@@ -88,3 +88,34 @@ html, body {
 .reviews-header-image {
   height: 18px;
 }
+
+.tags span.primary {
+  background-color: #428BCA;
+  border-color: #357EBD; }
+
+.tags span.success {
+  background-color: #5CB85C;
+  border-color: #4CAE4C; }
+
+.tags span.info {
+  background-color: #5BC0DE;
+  border-color: #46B8DA; }
+
+.tags span.warning {
+  background-color: #F0AD4E;
+  border-color: #EEA236; }
+
+.tags span.danger {
+  background-color: #D9534F;
+  border-color: #D43F3A; }
+
+.tags span {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px;
+  color: white;
+  margin: 0 2px 4px 0;
+  padding: 2px 7px;
+  display: inline-block;
+}

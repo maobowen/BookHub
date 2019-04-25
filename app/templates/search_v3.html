@@ -104,6 +104,7 @@
       <div class="output_rows" style="margin-top: -5%">
         <div class="container justify-content-center" style="width:80%">
           <div class="card-columns">
+            {% set tag_styles = ["primary", "success", "info", "warning", "danger"] %}
             {% for i in range(8) %}
             <div class="card output-card" data-toggle="modal" data-target="{{ '#' + data[i]['id'] }}">
               <!-- Modal -->
@@ -134,7 +135,15 @@
                                   : {{ data[i]['average_rating'] }}
                                   <span class="book-rating" data-source="{{ data[i]['average_rating'] }}"></span>
                                 </p>
-                                <p class="card-text text-left">Genres: placeholder</p>
+                                <p class="card-text text-left tags">
+                                  Genres on
+                                  <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                                  :
+                                  {% set tags = data[i]["tags"].split(',') %}
+                                  {% for j in range(tags|length) %}
+                                  <span class="{{ tag_styles[j % (tag_styles|length)] }} text-white">{{ tags[j] }}</span>
+                                  {% endfor %}
+                                </p>
                                 <h5 class="card-title text-left">cos_sim_desc: placeholder</h5>
                                 <p class="card-text text-left">cos_sim_tm_reviews: placeholder</p>
                                 <p class="card-text text-left">cos_sim_tm_books: placeholder</p>
