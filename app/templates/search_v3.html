@@ -106,94 +106,7 @@
           <div class="card-columns">
             {% set tag_styles = ['primary', 'success', 'info', 'warning', 'danger'] %}
             {% for i in range(8) %}
-            <div class="card output-card" data-toggle="modal" data-target="{{ '#' + data[i]['id'] }}">
-              <!-- Modal -->
-              <div class="modal fade" id="{{ data[i]['id'] }}" tabindex="-1" role="dialog" aria-labelledby="{{ data[i]['id'] + 'Title'}}" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="{{ data[i]['id'] + 'title'}}">Details of <i>{{ data[i]['title'] }}</i></h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <div class="container-sm">
-                        <div class="row">
-                          <div class="col-1"></div>
-                          <div class="col">
-                            <div class="card mb-3 shadow-sm">
-                              <div class="card-body">
-                                <div class="text-center" style="margin-bottom: 10px;">
-                                  <img class="card-img-top review-cover" src="{{ data[i]['image_url']}}" alt="book" style="width:50%; height:auto" />
-                                </div>
-                                <h5 class="card-title text-left">{{ data[i]['title'] }}</h5>
-                                <p class="card-text text-left">Authors: {{ data[i]['authors'] }}</p>
-                                <p class="card-text text-left">
-                                  Rating on
-                                  <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
-                                  : {{ data[i]['average_rating'] }}
-                                  <span class="book-rating" data-source="{{ data[i]['average_rating'] }}"></span>
-                                </p>
-                                <p class="card-text text-left tags">
-                                  Genres on
-                                  <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
-                                  :
-                                  {% set tags = data[i]['tags'].split(',') %}
-                                  {% for j in range(tags|length) %}
-                                  <span class="{{ tag_styles[j % (tag_styles|length)] }} text-white">{{ tags[j] }}</span>
-                                  {% endfor %}
-                                </p>
-                                <p class="card-text text-left">ISBN: {{ data[i]['isbn13'] if data[i]['isbn13'] else 'Not available' }}</p>
-                                <p class="card-text text-left">View on:
-                                  <a class="btn" href="{{ data[i]['url'] }}" target="_blank">
-                                    <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
-                                  </a>
-                                  <a class="btn" href="{{ data[i]['buy_link'] }}" target="_blank">
-                                    <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/7/70/Amazon_logo_plain.svg" />
-                                  </a>
-                                  <a class="btn" href="https://google.com/search?q={{ data[i]['isbn13'] if data[i]['isbn13'] else (data[i]['title']|urlencode) }}" target="_blank">
-                                    <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" />
-                                  </a>
-                                </p>
-                                <h5 class="card-title text-left">cos_sim_desc: placeholder</h5>
-                                <p class="card-text text-left">cos_sim_tm_reviews: placeholder</p>
-                                <p class="card-text text-left">cos_sim_tm_books: placeholder</p>
-                                <p class="card-text text-left">jaccard_sim_tags: placeholder</p>
-                                <div class="d-flex justify-content-between align-items-center"></div>
-                                <div class="d-flex justify-content-between align-items-center"></div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-1"></div>
-                        </div>
-                        <h5 class="reviews-header">
-                          Reviews on
-                          <img class="reviews-header-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
-                        </h5>
-                        {% for review in data[i]['reviews'][0:3] %}
-                        <div class="row">
-                          <div class="col-1"></div>
-                          <div class="col">
-                            <div class="card mb-3 shadow-sm">
-                              <div class="card-body">
-                                <p class="card-text text-left">
-                                 {{ review }}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-1"></div>
-                        </div>
-                        {% endfor %}
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div class="card output-card" data-toggle="modal" data-target="{{ '#' + data[i]['id'] }}">              
               <img class="card-img-top" src="{{ data[i]['image_url'] }}" alt="book" />
               <div class="card-body">
                 <h5 class="card-title">{{ data[i]['title'] }}</h5>
@@ -203,6 +116,93 @@
                   <span class="book-rating" data-source="{{ data[i]['average_rating'] }}"></span>
                 </p>
                 <div class="d-flex justify-content-between align-items-center"></div>
+              </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="{{ data[i]['id'] }}" tabindex="-1" role="dialog" aria-labelledby="{{ data[i]['id'] + 'Title'}}" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="{{ data[i]['id'] + 'title'}}">Details of <i>{{ data[i]['title'] }}</i></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container-sm">
+                      <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col">
+                          <div class="card mb-3 shadow-sm">
+                            <div class="card-body">
+                              <div class="text-center" style="margin-bottom: 10px;">
+                                <img class="card-img-top review-cover" src="{{ data[i]['image_url']}}" alt="book" style="width:50%; height:auto" />
+                              </div>
+                              <h5 class="card-title text-left">{{ data[i]['title'] }}</h5>
+                              <p class="card-text text-left">Authors: {{ data[i]['authors'] }}</p>
+                              <p class="card-text text-left">
+                                Rating on
+                                <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                                : {{ data[i]['average_rating'] }}
+                                <span class="book-rating" data-source="{{ data[i]['average_rating'] }}"></span>
+                              </p>
+                              <p class="card-text text-left tags">
+                                Genres on
+                                <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                                :
+                                {% set tags = data[i]['tags'].split(',') %}
+                                {% for j in range(tags|length) %}
+                                <span class="{{ tag_styles[j % (tag_styles|length)] }} text-white">{{ tags[j] }}</span>
+                                {% endfor %}
+                              </p>
+                              <p class="card-text text-left">ISBN: {{ data[i]['isbn13'] if data[i]['isbn13'] else 'Not available' }}</p>
+                              <p class="card-text text-left">View on:
+                                <a class="btn" href="{{ data[i]['url'] }}" target="_blank">
+                                  <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                                </a>
+                                <a class="btn" href="{{ data[i]['buy_link'] }}" target="_blank">
+                                  <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/7/70/Amazon_logo_plain.svg" />
+                                </a>
+                                <a class="btn" href="https://google.com/search?q={{ data[i]['isbn13'] if data[i]['isbn13'] else (data[i]['title']|urlencode) }}" target="_blank">
+                                  <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" />
+                                </a>
+                              </p>
+                              <h5 class="card-title text-left">cos_sim_desc: placeholder</h5>
+                              <p class="card-text text-left">cos_sim_tm_reviews: placeholder</p>
+                              <p class="card-text text-left">cos_sim_tm_books: placeholder</p>
+                              <p class="card-text text-left">jaccard_sim_tags: placeholder</p>
+                              <div class="d-flex justify-content-between align-items-center"></div>
+                              <div class="d-flex justify-content-between align-items-center"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-1"></div>
+                      </div>
+                      <h5 class="reviews-header">
+                        Reviews on
+                        <img class="reviews-header-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                      </h5>
+                      {% for review in data[i]['reviews'][0:3] %}
+                      <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col">
+                          <div class="card mb-3 shadow-sm">
+                            <div class="card-body">
+                              <p class="card-text text-left">
+                               {{ review }}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-1"></div>
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
               </div>
             </div>
             {% endfor %}
