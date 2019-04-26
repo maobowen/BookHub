@@ -234,10 +234,11 @@ for (var i = 0; i < 8; i++) {
         // The data for our dataset
         data: {
             labels: [
-                "Average cosine similarity with tf-idf on book descriptions",
-                "Average cosine similarity with topic modeling on book reviews",
-                "Average cosine similarity with topic modeling on book descriptions",
-                "Average Jaccard similarity on book tags"],
+                ["Average cosine similarity", "with tf-idf on", "book descriptions"],
+                ["Average cosine similarity", "with topic modeling", "on book reviews"],
+                ["Average cosine similarity", "with topic modeling", "on book descriptions"],
+                ["Average Jaccard similarity", "on book tags"]
+            ],
             datasets: [{
                 label: _data[i]["title"],
                 backgroundColor: [
@@ -252,6 +253,7 @@ for (var i = 0; i < 8; i++) {
                     "rgb(75, 192, 192)"],
                 borderWidth: 1,
                 fill: false,
+                barThickness: 50,
                 data: [
                     _data[i]["cos_sim_desc"],
                     _data[i]["cos_sim_tm_reviews"],
