@@ -73,6 +73,10 @@ html, body {
   cursor: default;
 }
 
+.modal-dialog {
+  max-width: 600px;
+}
+
 .reviews-header {
   text-align: center;
 }
