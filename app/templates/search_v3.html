@@ -64,8 +64,8 @@
                     </button>
                     <!--<img class="addSign mx-auto d-block" id="addSign_{{ i }}" src="{{ url_for('static', filename='img/add-sign-dashed.png') }}">-->
                     <div class="text-center" style="margin-top:5%;">
-                      <p class="placeholder_text" id="title_placeholder_{{ i }}" style="display: inline-block;">Book Title</p>
-                        <br/>
+                      <p class="placeholder_text" id="title_placeholder_{{ i }}" style="display: inline-block;"><i>&lt;Book Title&gt;</i></p>
+                      <br/>
                       <p class="title_text" id="book_title_{{ i }}" style="display: none;"></p>
                     </div>
                     <div class="d-flex justify-content-between align-items-center"></div>
@@ -103,7 +103,7 @@
       </div>
 
       <div class="output_rows" style="margin-top: -5%">
-        <div class="container justify-content-center" style="width:80%">
+        <div class="container justify-content-center" style="width:80%;">
           <div class="card-columns">
             {% set tag_styles = ['primary', 'success', 'info', 'warning', 'danger'] %}
             {% for i in range(8) %}
@@ -137,7 +137,7 @@
                           <div class="card mb-3 shadow-sm">
                             <div class="card-body">
                               <div class="text-center" style="margin-bottom: 10px;">
-                                <img class="card-img-top review-cover" src="{{ data[i]['image_url']}}" alt="book" style="width:50%; height:auto" />
+                                <img class="card-img-top review-cover" src="{{ data[i]['image_url']}}" alt="book" />
                               </div>
                               <h5 class="card-title text-left">{{ data[i]['title'] }}</h5>
                               <p class="card-text text-left">Authors: {{ data[i]['authors'] }}</p>
@@ -180,7 +180,7 @@
                         Reviews on
                         <img class="reviews-header-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
                       </h5>
-                      {% for review in data[i]['reviews'][0:3] %}
+                      {% for review in data[i]['reviews'][0:5] %}
                       <div class="row">
                         <div class="col-1"></div>
                         <div class="col">
@@ -234,10 +234,10 @@ for (var i = 0; i < 8; i++) {
         // The data for our dataset
         data: {
             labels: [
-                ["Average cosine similarity", "with tf-idf on", "book descriptions"],
-                ["Average cosine similarity", "with topic modeling", "on book reviews"],
-                ["Average cosine similarity", "with topic modeling", "on book descriptions"],
-                ["Average Jaccard similarity", "on book tags"]
+                ["Average cosine similarity", " with tf-idf on", " book descriptions"],
+                ["Average cosine similarity", " with topic modeling", " on book reviews"],
+                ["Average cosine similarity", " with topic modeling", " on book descriptions"],
+                ["Average Jaccard similarity", " on book tags"]
             ],
             datasets: [{
                 label: _data[i]["title"],
@@ -264,9 +264,23 @@ for (var i = 0; i < 8; i++) {
         plugins: [ChartDataLabels],
         // Configuration options go here
         options: {
-            align: "end",
+            layout: {
+                padding: {
+                    right: 40
+                }
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        min: 0.0,
+                        max: 1.0
+                    }
+                }]
+            },
             plugins: {
                 datalabels: {
+                    align: 'right',
+                    anchor: 'end',
                     formatter: function(value, context) {
                         return value.toFixed(2);
                     }

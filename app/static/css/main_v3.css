@@ -27,7 +27,9 @@ html, body {
   border-style:none;
   width: 100%;
   height: 255px;
-  background-size: 100% 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
   background-image: url('../img/book.png');
 }
 
@@ -65,27 +67,36 @@ html, body {
   cursor: pointer;
 }
 
+/* Extra small devices (portrait phones, less than 576px) */
+.card-columns {
+  column-count: 1;
+}
+
+/* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
   .card-columns {
-      column-count: 2;
+    column-count: 2;
   }
 }
 
-@media (min-width: 638px) {
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
   .card-columns {
-      column-count: 2;
+    column-count: 3;
   }
 }
 
-@media (min-width: 975px) {
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
   .card-columns {
-      column-count: 3;
+    column-count: 4;
   }
 }
 
+/* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
   .card-columns {
-      column-count: 4;
+    column-count: 4;
   }
 }
 
@@ -95,6 +106,12 @@ html, body {
 
 .modal-dialog {
   max-width: 70%;
+}
+
+.review-cover {
+  width: 50%;
+  height: auto;
+  max-width: 250px;
 }
 
 .reviews-header {
