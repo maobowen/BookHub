@@ -41,10 +41,6 @@ html, body {
   width: auto;
 }
 
-.card-columns {
-  column-count: 4;
-}
-
 .jumbotron {
   background-color: transparent !important;
 }
@@ -67,6 +63,30 @@ html, body {
 
 .output-card {
   cursor: pointer;
+}
+
+@media (min-width: 576px) {
+  .card-columns {
+      column-count: 2;
+  }
+}
+
+@media (min-width: 638px) {
+  .card-columns {
+      column-count: 2;
+  }
+}
+
+@media (min-width: 975px) {
+  .card-columns {
+      column-count: 3;
+  }
+}
+
+@media (min-width: 1300px) {
+  .card-columns {
+      column-count: 4;
+  }
 }
 
 .modal {
