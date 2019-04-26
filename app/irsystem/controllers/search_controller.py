@@ -128,8 +128,12 @@ def _get_recommended_books_detail(version_idx: int, recommended_book_ids: list, 
 		recommended_books_object = Book.query.filter(Book.id.in_(recommended_book_ids)).all()
 		recommended_books = []
 		for book in recommended_books_object:
-			reviews = json.loads(book.reviews)
-			review_texts = [review["body"] for review in reviews]
+			if version_idx == 1:
+				reviews = json.loads(book.reviews)
+				review_texts = [review["body"] for review in reviews]
+			else:
+				review_texts = sorted(json.loads(book.reviews), key=lambda k: (-k["votes"], -k["rating"], -len(k["body"])))
+
 			recommended_books.append({
 				"id": "id" + str(book.id),
 				"title": book.title,

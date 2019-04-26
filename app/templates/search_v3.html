@@ -186,7 +186,9 @@
                         <div class="col">
                           <div class="card mb-3 shadow-sm">
                             <div class="card-body">
-                              <p class="card-text text-left">{{ review }}</p>
+                              <p class="card-text text-left">{{ review['body'] }}</p>
+                              <p class="card-text float-right"><span class="book-rating" data-source="{{ review['rating'] }}"></span></p>
+                              <p class="card-text text-left">&#x25B2;&nbsp;{{ review['votes'] }}</p>
                             </div>
                           </div>
                         </div>
