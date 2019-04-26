@@ -20,7 +20,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.2.1/bloodhound.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.2.1/typeahead.jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0"></script>
 </head>
 
 <body>
@@ -106,13 +107,13 @@
           <div class="card-columns">
             {% set tag_styles = ['primary', 'success', 'info', 'warning', 'danger'] %}
             {% for i in range(8) %}
-            <div class="card output-card" data-toggle="modal" data-target="{{ '#' + data[i]['id'] }}">
+            <div class="card output-card" data-toggle="modal" data-target="#{{ data[i]['id'] }}">
               <!-- Modal -->
-              <div class="modal fade" id="{{ data[i]['id'] }}" tabindex="-1" role="dialog" aria-labelledby="{{ data[i]['id'] + 'Title'}}" aria-hidden="true">
+              <div class="modal fade" id="{{ data[i]['id'] }}" tabindex="-1" role="dialog" aria-labelledby="{{ data[i]['id'] }}Title" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="{{ data[i]['id'] + 'title'}}">Details of <i>{{ data[i]['title'] }}</i></h5>
+                      <h5 class="modal-title" id="{{ data[i]['id']}}title">Details of <i>{{ data[i]['title'] }}</i></h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -156,10 +157,7 @@
                                     <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" />
                                   </a>
                                 </p>
-                                <h5 class="card-title text-left">cos_sim_desc: placeholder</h5>
-                                <p class="card-text text-left">cos_sim_tm_reviews: placeholder</p>
-                                <p class="card-text text-left">cos_sim_tm_books: placeholder</p>
-                                <p class="card-text text-left">jaccard_sim_tags: placeholder</p>
+                                <canvas id="{{ data[i]['id']}}-chart"></canvas>
                                 <div class="d-flex justify-content-between align-items-center"></div>
                                 <div class="d-flex justify-content-between align-items-center"></div>
                               </div>
@@ -177,9 +175,7 @@
                           <div class="col">
                             <div class="card mb-3 shadow-sm">
                               <div class="card-body">
-                                <p class="card-text text-left">
-                                 {{ review }}
-                                </p>
+                                <p class="card-text text-left">{{ review }}</p>
                               </div>
                             </div>
                           </div>
@@ -225,5 +221,59 @@
   </footer>
 
   <script src="{{ url_for('static', filename='js/index_v3.js') }}"></script>
+  {% if data %}
+  <script>
+// Only Chart.js code here
+Chart.plugins.unregister(ChartDataLabels);
+var _data = {{ data | safe }};
+for (var i = 0; i < 8; i++) {
+    var ctx = document.getElementById(_data[i]["id"] + "-chart").getContext("2d");
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: "horizontalBar",
+        // The data for our dataset
+        data: {
+            labels: [
+                "Average cosine similarity with tf-idf on book descriptions",
+                "Average cosine similarity with topic modeling on book reviews",
+                "Average cosine similarity with topic modeling on book descriptions",
+                "Average Jaccard similarity on book tags"],
+            datasets: [{
+                label: _data[i]["title"],
+                backgroundColor: [
+                    "rgba(255, 99, 132, 0.2)",
+                    "rgba(255, 159, 64, 0.2)",
+                    "rgba(255, 205, 86, 0.2)",
+                    "rgba(75, 192, 192, 0.2)"],
+                borderColor:[
+                    "rgb(255, 99, 132)",
+                    "rgb(255, 159, 64)",
+                    "rgb(255, 205, 86)",
+                    "rgb(75, 192, 192)"],
+                borderWidth: 1,
+                fill: false,
+                data: [
+                    _data[i]["cos_sim_desc"],
+                    _data[i]["cos_sim_tm_reviews"],
+                    _data[i]["cos_sim_tm_books"],
+                    _data[i]["jaccard_sim_tags"]]
+            }]
+        },
+        plugins: [ChartDataLabels],
+        // Configuration options go here
+        options: {
+            align: "end",
+            plugins: {
+                datalabels: {
+                    formatter: function(value, context) {
+                        return value.toFixed(2);
+                    }
+                }
+            }
+        }
+    });
+}
+  </script>
+  {% endif %}
 </body>
 </html>
