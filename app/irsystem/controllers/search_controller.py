@@ -40,6 +40,17 @@ def get_books_id_title():
 		return str(e)
 
 
+@irsystem.route("/ajax/tags", methods=["GET"])
+def get_tags():
+	version_idx = _set_version(request)
+	try:
+		with open(os.path.join(DATA_DIR[version_idx], "tags-clean.txt"), "r") as fin:
+			tags = [line.split(",")[0].strip() for line in fin if line]
+		return Response(json.dumps(tags),  mimetype="application/json")
+	except Exception as e:
+		return str(e)
+
+
 def _get_recommendation(version_idx: int, book_ids: list) -> list:
 	if version_idx == 0:
 		with open(os.path.join(DATA_DIR[version_idx], "cos-sim-desc.json"), "r") as fin:
