@@ -207,8 +207,8 @@ def search():
 					data, data2 = _get_recommended_books_detail(version_idx, recommended_book_ids, None, recommended_book_scores, preferred_genres=preferred_genres)
 
 	if version_idx == 0:
-		return render_template('search_v1.html', name=project_name, netid=net_id, data=data)
+		return render_template('search_v1.html', name=project_name, netid=net_id, data=data, data2=None)
 	elif version_idx == 1:
-		return render_template('search_v2.html', name=project_name, netid=net_id, data=data)
+		return render_template('search_v2.html', name=project_name, netid=net_id, data=data, data2=None)
 	else:
 		return render_template('search_v3.html', name=project_name, netid=net_id, data=data, data2=data2)
