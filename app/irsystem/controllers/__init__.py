@@ -1,7 +1,7 @@
 # Import flask deps
 from flask import request, render_template, \
 	flash, g, session, redirect, url_for, jsonify, abort, \
-	send_file
+	send_file, Response
 
 # For decorators around routes
 from functools import wraps 
