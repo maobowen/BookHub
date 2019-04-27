@@ -128,17 +128,17 @@
       </form>
     </section>
 
-    {% if data %}
+    {% set tag_styles = ['primary', 'success', 'info', 'warning', 'danger'] %}
+    {% set show_data2 = data|length < 8 and data2 %}
     <div class="outputs" style="margin-top: -5%">
-      <div class="container justify-content-left" style="width:80%; margin-bottom: 8%">
+      <div class="container justify-content-left" style="width:80%; margin-bottom: 0%">
         <h1 class="display-5">Results</h1>
       </div>
-
+      {% if data %}
       <div class="output_rows" style="margin-top: -5%">
         <div class="container justify-content-center" style="width:80%;">
           <div class="card-columns">
-            {% set tag_styles = ['primary', 'success', 'info', 'warning', 'danger'] %}
-            {% for i in range(8) %}
+            {% for i in range([data|length, 8]|min) %}
             <div class="card output-card" data-toggle="modal" data-target="#{{ data[i]['id'] }}">
               <img class="card-img-top" src="{{ data[i]['image_url'] }}" alt="book" />
               <div class="card-body">
@@ -239,9 +239,129 @@
           </div>
         </div>
       </div>
+      {% else %}
+      <div class="output_rows" style="margin-top: -5%">
+      <div class="container text-center" style="width:80%;">
+        <h5>We haven't found any book with the tags you are interested in</h5>
+      </div>
+      </div>
+      {% endif %}
     </div>
-    {% endif %}
+    
 
+    {% if show_data2 %}
+    <div class="output_rows" style="margin-top: -5%">
+      <div class="output_rows">
+      <div class="container text-center" style="width:80%;">
+      <h5>Here are some books missing the tags you are looking for, but you may still find them worth reading!</h5>
+      </div>
+      </div>
+      <div class="output_rows" style="margin-top: 5%">
+        <div class="container justify-content-center" style="width:80%;">
+          <div class="card-columns">
+      {% for i in range([data2|length, 8]|min) %}
+      <div class="card output-card" data-toggle="modal" data-target="#{{ data2[i]['id'] }}">
+        <img class="card-img-top" src="{{ data2[i]['image_url'] }}" alt="book" />
+        <div class="card-body">
+          <h5 class="card-title">{{ data2[i]['title'] }}</h5>
+          <p class="card-text text-left">Authors: {{ data2[i]['authors'] }}</p>
+          <p class="card-text text-left">
+            Rating: {{ data2[i]['average_rating'] }}
+            <span class="book-rating" data-source="{{ data2[i]['average_rating'] }}"></span>
+          </p>
+          <div class="d-flex justify-content-between align-items-center"></div>
+        </div>
+      </div>
+      <!-- Modal -->
+      <div class="modal fade" id="{{ data2[i]['id'] }}" tabindex="-1" role="dialog" aria-labelledby="{{ data2[i]['id'] }}title" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="{{ data2[i]['id'] }}title">Details of <i>{{ data2[i]['title'] }}</i></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="container-sm">
+                <div class="row">
+                  <div class="col-1"></div>
+                  <div class="col">
+                    <div class="card mb-3 shadow-sm">
+                      <div class="card-body">
+                        <div class="text-center" style="margin-bottom: 10px;">
+                          <img class="card-img-top review-cover" src="{{ data2[i]['image_url']}}" alt="book" />
+                        </div>
+                        <h5 class="card-title text-left">{{ data2[i]['title'] }}</h5>
+                        <p class="card-text text-left">Authors: {{ data2[i]['authors'] }}</p>
+                        <p class="card-text text-left">
+                          Rating on
+                          <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                          : {{ data2[i]['average_rating'] }}
+                          <span class="book-rating" data-source="{{ data2[i]['average_rating'] }}"></span>
+                        </p>
+                        <p class="card-text text-left tags">
+                          Genres on
+                          <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                          :
+                          {% set tags = data2[i]['tags'].split(',') %}
+                          {% for j in range(tags|length) %}
+                          <span class="{{ tag_styles[j % (tag_styles|length)] }} text-white">{{ tags[j] }}</span>
+                          {% endfor %}
+                        </p>
+                        <p class="card-text text-left">ISBN: {{ data2[i]['isbn13'] if data2[i]['isbn13'] else 'Not available' }}</p>
+                        <p class="card-text text-left">View on:
+                          <a class="btn" href="{{ data2[i]['url'] }}" target="_blank">
+                            <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                          </a>
+                          <a class="btn" href="{{ data2[i]['buy_link'] }}" target="_blank">
+                            <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/7/70/Amazon_logo_plain.svg" />
+                          </a>
+                          <a class="btn" href="https://google.com/search?q={{ data2[i]['isbn13'] if data2[i]['isbn13'] else (data2[i]['title']|urlencode) }}" target="_blank">
+                            <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" />
+                          </a>
+                        </p>
+                        <canvas id="{{ data2[i]['id']}}-chart"></canvas>
+                        <div class="d-flex justify-content-between align-items-center"></div>
+                        <div class="d-flex justify-content-between align-items-center"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-1"></div>
+                </div>
+                <h5 class="reviews-header">
+                  Reviews on
+                  <img class="reviews-header-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                </h5>
+                {% for review in data2[i]['reviews'][0:5] %}
+                <div class="row">
+                  <div class="col-1"></div>
+                  <div class="col">
+                    <div class="card mb-3 shadow-sm">
+                      <div class="card-body">
+                        <p class="card-text text-left">{{ review['body'] }}</p>
+                        <p class="card-text float-right"><span class="book-rating" data-source="{{ review['rating'] }}"></span></p>
+                        <p class="card-text text-left">&#x25B2;&nbsp;{{ review['votes'] }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-1"></div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      </div>
+      </div>
+      </div>
+      {% endif %}
+    </div>
   </main>
 
   <footer class="text-muted" style="margin-top: 3%;">

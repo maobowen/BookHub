@@ -180,7 +180,7 @@ def _get_recommended_books_detail(version_idx: int, recommended_book_ids: list, 
 				if not boolean_search_found:
 					recommended_books2.append(return_book)
 
-		if not do_boolean_search:
+		if version_idx == 1:
 			return recommended_books
 		else:
 			return recommended_books, recommended_books2
