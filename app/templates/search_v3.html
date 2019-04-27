@@ -9,12 +9,15 @@
   <meta name="apple-mobile-web-app-title" content="{{ name }}">
   <title>Bookhub - A smart book recommendation system</title>
 
+
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js-bootstrap-css/1.2.1/typeaheadjs.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main_v3.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@2.7.7/dist/tagify.min.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@2.9.7/dist/tagify.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.2.1/bloodhound.min.js"></script>
@@ -22,6 +25,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0"></script>
+
 </head>
 
 <body>
@@ -46,19 +50,51 @@
           <button type="button" id="addBook" onclick="addBookLogic()" class="btn btn-secondary">Add Book</button>
         </div>
       </div>
+      <div class="container text-center w-50" style="margin-top: 2%;">
+        <div class="row">
+          <div class="col">
+            <input name="tags" id="tags" class="" placeholder="write and press enter to add tags!" value='fiction, fantasy, history, fiction' autofocus data-blacklist='.NET,PHP' style="width:100%">
+        </div>
+      </div>
+      </div>
+      <div class="container text-center w-50" style="margin-top: 2%;">
+      <div class="row justify-content-center" style="margin-top: 2%;">
+        <button type="button" id="addBook" onclick="" class="btn btn-secondary tags--removeAllBtn">Remove all tags</button>
+      </div>
     </section>
 
     <section>
       <form method="post" action="/?v=3" onsubmit="return validateMyForm();" onkeypress="return event.keyCode !== 13;">
         <input type="hidden" name="book_ids" id="book_ids" class="form-control hidden">
+        <input type="hidden" name="tags_inputed" id="tags_inputed" class="form-control hidden">
         <div class="inputs" style="margin-top: -5%">
           <div class="container justify-content-center">
             <h4>Books Inputted</h4>
             <div class="row justify-content-center" style="margin-top:20px;">
-              {% for i in range(1, 6) %}
-              <div class="col">
-                <div class="card mb-2 input_field justify-content-center" id="card_{{ i }}">
-                  <div class="card-body" style="border-style: none; width:160px; height:240px">
+              {% for i in range(1, 4) %}
+              <div class="col-4">
+                <div class="card mb-2 input_field justify-content-center text-center" id="card_{{ i }}">
+                  <div class="card-body" style="border-style: none; height:240px">
+                    <button type="button" class="close removeBtn" id="removeBtn_{{ i }}" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <!--<img class="addSign mx-auto d-block" id="addSign_{{ i }}" src="{{ url_for('static', filename='img/add-sign-dashed.png') }}">-->
+                    <div class="text-center" style="margin-top:5%;">
+                      <p class="placeholder_text" id="title_placeholder_{{ i }}" style="display: inline-block;"><i>&lt;Book Title&gt;</i></p>
+                      <br/>
+                      <p class="title_text" id="book_title_{{ i }}" style="display: none;"></p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center"></div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            <div class="row justify-content-center" style="margin-top:20px;">
+              {% for i in range(4, 6) %}
+              <div class="col-4">
+                <div class="card mb-2 input_field justify-content-center text-center" id="card_{{ i }}">
+                  <div class="card-body" style="border-style: none; height:240px">
                     <button type="button" class="close removeBtn" id="removeBtn_{{ i }}" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>

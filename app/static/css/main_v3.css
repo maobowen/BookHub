@@ -4,19 +4,17 @@ html, body {
 }
 
 .title_text {
-  margin-top: 5%;
+  margin-top: 10%;
   text-align: center;
 }
 
 .placeholder_text {
   margin-top: 20%;
-  margin-left: 15%;
   text-align: center;
 }
 
 .removeBtn {
   visibility: hidden;
-  margin-right: -10%;
 }
 
 .add {
@@ -30,7 +28,7 @@ html, body {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url('../img/book.png');
+  background-image: url('../img/book_open.png');
 }
 
 .hidden {
