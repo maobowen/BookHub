@@ -13,11 +13,10 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js-bootstrap-css/1.2.1/typeaheadjs.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@2/dist/tagify.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main_v3.css') }}">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@2.7.7/dist/tagify.min.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@2.9.7/dist/tagify.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.2.1/bloodhound.min.js"></script>
@@ -25,6 +24,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@2/dist/tagify.min.js"></script>
 
 </head>
 
@@ -38,7 +38,7 @@
       <div class="container text-center w-50" style="margin-top: 2%;">
         <div class="row">
           <div class="col">
-            <input type="text" class="form-control" id="input_title" placeholder="Enter a book title here!" aria-label="book title" aria-describedby="clear_icon" sytle="width:95%;">
+            <input type="text" class="form-control" id="input_title" placeholder="Enter a book title here!" aria-label="book title" aria-describedby="clear_icon" sytle="width: 95%;">
           </div>
           <div class="text-left">
             <button type="button" class="close" id="clear" onclick="clearInput()" aria-label="Close">
@@ -53,17 +53,17 @@
       <p>
         <a href="#collapseExample" class="btn btn-secondary my-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Advanced Search &#x25be;</a>
       </p>
-      <div id="collapseExample" class="collapse container justify-content-center" style="width:70%;">
+      <div id="collapseExample" class="collapse container justify-content-center" style="width: 70%;">
         <div class="container text-center w-50" style="margin-top: 2%;">
           <div class="row">
             <div class="col">
-              <input name="tags" id="tags" class="" placeholder="write and press enter to add tags!" value="" autofocus data-blacklist="" style="width:100%">
+              <input name="tags" id="tags" class="" placeholder="Write and press enter to add genres!" value="" autofocus data-blacklist="" style="width: 100%">
           </div>
         </div>
         </div>
         <div class="container text-center w-50" style="margin-top: 2%;">
         <div class="row justify-content-center" style="margin-top: 2%;">
-          <button type="button" id="addBook" onclick="" class="btn btn-secondary tags--removeAllBtn">Remove all tags</button>
+          <button type="button" id="addBook" onclick="" class="btn btn-secondary tags--removeAllBtn">Remove all genres</button>
         </div>
         </div>
       </div>
@@ -76,7 +76,7 @@
         <div class="inputs" style="margin-top: -5%">
           <div class="container justify-content-center">
             <h4>Books Inputted</h4>
-            <div class="row justify-content-center" style="margin-top:20px;">
+            <div class="row justify-content-center" style="margin-top: 20px;">
               {% for i in range(1, 4) %}
               <div class="col-lg-4 col-md-4 col-sm-12">
                 <div class="card mb-2 input_field justify-content-center text-center" id="card_{{ i }}">
@@ -85,7 +85,7 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                     <!--<img class="addSign mx-auto d-block" id="addSign_{{ i }}" src="{{ url_for('static', filename='img/add-sign-dashed.png') }}">-->
-                    <div class="text-center" style="margin-top:5%;">
+                    <div class="text-center" style="margin-top: 5%;">
                       <p class="placeholder_text" id="title_placeholder_{{ i }}" style="display: inline-block;"><i>&lt;Book Title&gt;</i></p>
                       <br/>
                       <p class="title_text" id="book_title_{{ i }}" style="display: none;"></p>
@@ -96,7 +96,7 @@
               </div>
               {% endfor %}
             </div>
-            <div class="row justify-content-center" style="margin-top:20px;">
+            <div class="row justify-content-center" style="margin-top: 20px;">
               {% for i in range(4, 6) %}
               <div class="col-lg-4 col-md-4 col-sm-12">
                 <div class="card mb-2 input_field justify-content-center text-center" id="card_{{ i }}">
@@ -105,7 +105,7 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                     <!--<img class="addSign mx-auto d-block" id="addSign_{{ i }}" src="{{ url_for('static', filename='img/add-sign-dashed.png') }}">-->
-                    <div class="text-center" style="margin-top:5%;">
+                    <div class="text-center" style="margin-top: 5%;">
                       <p class="placeholder_text" id="title_placeholder_{{ i }}" style="display: inline-block;"><i>&lt;Book Title&gt;</i></p>
                       <br/>
                       <p class="title_text" id="book_title_{{ i }}" style="display: none;"></p>
@@ -131,12 +131,13 @@
     {% set tag_styles = ['primary', 'success', 'info', 'warning', 'danger'] %}
     {% set show_data2 = data|length < 8 and data2 %}
     <div class="outputs" style="margin-top: -5%">
-      {% if data %}
-      <div class="container justify-content-left" style="width:80%;">
+      {% if data or data2 %}
+      <div class="container justify-content-left" style="width: 80%;">
         <h1 class="display-5">Results</h1>
       </div>
+      {% if data %}
       <div class="output_rows" style="margin-top: 5%;">
-        <div class="container justify-content-center" style="width:80%;">
+        <div class="container justify-content-center" style="width: 80%;">
           <div class="card-columns">
             {% for i in range([data|length, 8]|min) %}
             <div class="card output-card" data-toggle="modal" data-target="#{{ data[i]['id'] }}">
@@ -239,26 +240,26 @@
           </div>
         </div>
       </div>
+      {% elif data2 %}
+      <div class="output_rows" style="margin-top: 3%">
+      <div class="container text-center" style="width: 80%;">
+        <img class="logo" src="{{ url_for('static', filename='img/sorry.jpg') }}" style="border-radius: 20%; margin-bottom: 10px"/>
+        <h5>Sorry, we didn't find any books with the genres that you are interested in :(</h5>
+      </div>
+      </div>
       {% endif %}
-      {% if data2 and not data %}
-      <div class="output_rows" style="margin-top:5%">
-      <div class="container text-center" style="width:80%;">
-        <h5>We haven't found any book with the tags you are interested in</h5>
-      </div>
-      </div>
       {% endif %}
     </div>
-    
 
     {% if show_data2 %}
     <div class="output_rows" style="margin-top: 3%">
       <div class="output_rows">
-      <div class="container text-center" style="width:80%;">
-      <h5>Here are some books missing the tags you are looking for, but you may still find them worth reading!</h5>
+      <div class="container text-center" style="width: 80%;">
+      <h5>Here are some books missing the genres you are looking for, but you may still find them worth reading!</h5>
       </div>
       </div>
       <div class="output_rows" style="margin-top: 5%">
-        <div class="container justify-content-center" style="width:80%;">
+        <div class="container justify-content-center" style="width: 80%;">
           <div class="card-columns">
       {% for i in range([data2|length, 8]|min) %}
       <div class="card output-card" data-toggle="modal" data-target="#{{ data2[i]['id'] }}">
@@ -381,6 +382,76 @@
 // Only Chart.js code here
 Chart.plugins.unregister(ChartDataLabels);
 var _data = {{ data | safe }};
+for (var i = 0; i < 8; i++) {
+    var ctx = document.getElementById(_data[i]["id"] + "-chart").getContext("2d");
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: "horizontalBar",
+        // The data for our dataset
+        data: {
+            labels: [
+                ["Average cosine similarity", " with tf-idf on", " book descriptions"],
+                ["Average cosine similarity", " with topic modeling", " on book reviews"],
+                ["Average cosine similarity", " with topic modeling", " on book descriptions"],
+                ["Average Jaccard similarity", " on book tags"]
+            ],
+            datasets: [{
+                label: _data[i]["title"],
+                backgroundColor: [
+                    "rgba(255, 99, 132, 0.2)",
+                    "rgba(255, 159, 64, 0.2)",
+                    "rgba(255, 205, 86, 0.2)",
+                    "rgba(75, 192, 192, 0.2)"],
+                borderColor:[
+                    "rgb(255, 99, 132)",
+                    "rgb(255, 159, 64)",
+                    "rgb(255, 205, 86)",
+                    "rgb(75, 192, 192)"],
+                borderWidth: 1,
+                fill: false,
+                barThickness: 50,
+                data: [
+                    _data[i]["cos_sim_desc"],
+                    _data[i]["cos_sim_tm_reviews"],
+                    _data[i]["cos_sim_tm_books"],
+                    _data[i]["jaccard_sim_tags"]]
+            }]
+        },
+        plugins: [ChartDataLabels],
+        // Configuration options go here
+        options: {
+            layout: {
+                padding: {
+                    right: 40
+                }
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        min: 0.0,
+                        max: 1.0
+                    }
+                }]
+            },
+            plugins: {
+                datalabels: {
+                    align: 'right',
+                    anchor: 'end',
+                    formatter: function(value, context) {
+                        return value.toFixed(2);
+                    }
+                }
+            }
+        }
+    });
+}
+  </script>
+  {% endif %}
+  {% if data2 %}
+  <script>
+// Only Chart.js code here
+Chart.plugins.unregister(ChartDataLabels);
+var _data = {{ data2 | safe }};
 for (var i = 0; i < 8; i++) {
     var ctx = document.getElementById(_data[i]["id"] + "-chart").getContext("2d");
     var chart = new Chart(ctx, {

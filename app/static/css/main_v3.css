@@ -3,6 +3,14 @@ html, body {
   height: 100%;
 }
 
+html {
+  background: linear-gradient(rgba(255, 255, 255, .9), rgba(255, 255, 255, .75), rgba(255, 255, 255, .9)), url('../img/bg.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 .title_text {
   margin-top: 10%;
   text-align: center;
