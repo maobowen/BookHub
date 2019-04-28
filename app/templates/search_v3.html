@@ -393,7 +393,8 @@ for (var i = 0; i < 8; i++) {
                 ["Average cosine similarity", " with tf-idf on", " book descriptions"],
                 ["Average cosine similarity", " with topic modeling", " on book reviews"],
                 ["Average cosine similarity", " with topic modeling", " on book descriptions"],
-                ["Average Jaccard similarity", " on book tags"]
+                ["Average Jaccard similarity", " on book tags"],
+                ["Overall similarity score"]
             ],
             datasets: [{
                 label: _data[i]["title"],
@@ -414,7 +415,8 @@ for (var i = 0; i < 8; i++) {
                     _data[i]["cos_sim_desc"],
                     _data[i]["cos_sim_tm_reviews"],
                     _data[i]["cos_sim_tm_books"],
-                    _data[i]["jaccard_sim_tags"]]
+                    _data[i]["jaccard_sim_tags"],
+                    _data[i]["cos_sim_desc"] * 0.85 + _data[i]["cos_sim_tm_reviews"] * 0.05 + _data[i]["cos_sim_tm_books"] * 0.0 + _data[i]["jaccard_sim_tags"] * 0.1]
             }]
         },
         plugins: [ChartDataLabels],
@@ -463,7 +465,8 @@ for (var i = 0; i < 8; i++) {
                 ["Average cosine similarity", " with tf-idf on", " book descriptions"],
                 ["Average cosine similarity", " with topic modeling", " on book reviews"],
                 ["Average cosine similarity", " with topic modeling", " on book descriptions"],
-                ["Average Jaccard similarity", " on book tags"]
+                ["Average Jaccard similarity", " on book tags"],
+                ["Overall similarity score"]
             ],
             datasets: [{
                 label: _data[i]["title"],
@@ -484,7 +487,8 @@ for (var i = 0; i < 8; i++) {
                     _data[i]["cos_sim_desc"],
                     _data[i]["cos_sim_tm_reviews"],
                     _data[i]["cos_sim_tm_books"],
-                    _data[i]["jaccard_sim_tags"]]
+                    _data[i]["jaccard_sim_tags"],
+                    _data[i]["cos_sim_desc"] * 0.85 + _data[i]["cos_sim_tm_reviews"] * 0.05 + _data[i]["cos_sim_tm_books"] * 0.0 + _data[i]["jaccard_sim_tags"] * 0.1]
             }]
         },
         plugins: [ChartDataLabels],
