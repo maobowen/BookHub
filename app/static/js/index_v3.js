@@ -217,7 +217,8 @@ function clearInput(){
 //function to add a book title
 function addBookLogic(){
     if (next_empty_field === 6 ){
-        document.getElementById('msg').innerHTML = "You can input up to 5 books";
+        $("#msg2").css("color", "red");
+        document.getElementById('msg2').innerHTML = "You can input up to 5 books";
     } else {
         var title_inputed = document.getElementById("input_title").value;
         if (title_inputed !== ""){

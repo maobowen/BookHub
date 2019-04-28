@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@2/dist/tagify.min.css">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main_v3.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -30,7 +31,8 @@
 
 <body>
   <main role="main">
-    <section class="jumbotron text-center" style="margin-top: -3%; margin-bottom: 1%;">
+
+    <section class="jumbotron text-center">
       <div class="container">
         <img class="logo" src="{{ url_for('static', filename='img/icon.png') }}" style="margin-bottom: 5%" />
         <h1>Welcome to BookHub!</h1>
@@ -41,14 +43,17 @@
         </h4>
         <h4 style="font-weight: normal;">Input up to 5 book titles to get book recommendations!</h4>
       </div>
-      <div class="container text-center w-50" style="margin-top: 2%;">
+    </section>
+
+    <section>
+      <div class="container text-center add_book_section" style="margin-top:-3%;">
         <div class="row">
           <div class="col">
             <input type="text" class="form-control" id="input_title" placeholder="Enter a book title here!" aria-label="book title" aria-describedby="clear_icon" sytle="width: 95%;">
           </div>
           <div class="text-left">
-            <button type="button" class="close" id="clear" onclick="clearInput()" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
+            <button type="button" class="" id="clear" onclick="clearInput()" aria-label="Close">
+              Clear
             </button>
           </div>
         </div>
@@ -56,83 +61,77 @@
           <button type="button" id="addBook" onclick="addBookLogic()" class="btn btn-secondary">Add Book</button>
         </div>
       </div>
-      <p>
-        <a href="#collapseExample" class="btn btn-secondary my-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Advanced Search &#x25be;</a>
-      </p>
-      <div id="collapseExample" class="collapse container justify-content-center" style="width: 70%;">
-        <div class="container text-center w-50" style="margin-top: 2%;">
-          <div class="row">
-            <div class="col">
-              <input name="tags" id="tags" class="" placeholder="Write and press enter to add genres!" value="" autofocus data-blacklist="" style="width: 100%">
-          </div>
-        </div>
-        </div>
-        <div class="container text-center w-50" style="margin-top: 2%;">
-        <div class="row justify-content-center" style="margin-top: 2%;">
-          <button type="button" id="addBook" onclick="" class="btn btn-secondary tags--removeAllBtn">Remove all genres</button>
-        </div>
-        </div>
-      </div>
     </section>
 
     <section>
-      <form method="post" action="/?v=3" onsubmit="return validateMyForm();" onkeypress="return event.keyCode !== 13;">
-        <input type="hidden" name="book_ids" id="book_ids" class="form-control hidden">
-        <input type="hidden" name="tags_inputed" id="tags_inputed" class="form-control hidden">
-        <div class="inputs" style="margin-top: -5%">
-          <div class="container justify-content-center">
-            <h4>Books Inputted</h4>
-            <div class="row justify-content-center" style="margin-top: 20px;">
-              {% for i in range(1, 4) %}
-              <div class="col-lg-4 col-md-4 col-sm-12">
-                <div class="card mb-2 input_field justify-content-center text-center" id="card_{{ i }}">
-                  <div class="card-body" style="border-style: none; height:240px">
-                    <button type="button" class="close removeBtn" id="removeBtn_{{ i }}" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    <!--<img class="addSign mx-auto d-block" id="addSign_{{ i }}" src="{{ url_for('static', filename='img/add-sign-dashed.png') }}">-->
-                    <div class="text-center" style="margin-top: 5%;">
-                      <p class="placeholder_text" id="title_placeholder_{{ i }}" style="display: inline-block;"><i>&lt;Book Title&gt;</i></p>
-                      <br/>
-                      <p class="title_text" id="book_title_{{ i }}" style="display: none;"></p>
+        <div class="inputs" style="margin-top: 2%">
+            <div class="container justify-content-center">
+              <h4>Books Inputted</h4>
+              <div class="text-center">
+                  <h4 id="msg2"></h4>
+              </div>
+              <div class="row justify-content-center" style="margin-top: 20px;">
+                {% for i in range(1, 6) %}
+                <div class="col-lg col-md-4 col-sm-12">
+                  <div class="card mb-2 input_field justify-content-center text-center" id="card_{{ i }}">
+                    <!--<img class="card-img-top book-cover" src="../static/img/book-card-v2.png" alt="Card image">-->
+                    <div class="card-body">
+                      <button type="button" class="close removeBtn" id="removeBtn_{{ i }}" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <!--<img class="addSign mx-auto d-block" id="addSign_{{ i }}" src="{{ url_for('static', filename='img/add-sign-dashed.png') }}">-->
+                      <div class="text-center">
+                        <p class="placeholder_text" id="title_placeholder_{{ i }}" style="display: inline-block;"><i>&lt;Book Title&gt;</i></p>
+                        <br/>
+                        <p class="title_text" id="book_title_{{ i }}" style="display: none;"></p>
+                      </div>
+                      <div class="d-flex justify-content-between align-items-center"></div>
                     </div>
-                    <div class="d-flex justify-content-between align-items-center"></div>
                   </div>
                 </div>
+                {% endfor %}
               </div>
-              {% endfor %}
-            </div>
-            <div class="row justify-content-center" style="margin-top: 20px;">
-              {% for i in range(4, 6) %}
-              <div class="col-lg-4 col-md-4 col-sm-12">
-                <div class="card mb-2 input_field justify-content-center text-center" id="card_{{ i }}">
-                  <div class="card-body" style="border-style: none; height:240px">
-                    <button type="button" class="close removeBtn" id="removeBtn_{{ i }}" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    <!--<img class="addSign mx-auto d-block" id="addSign_{{ i }}" src="{{ url_for('static', filename='img/add-sign-dashed.png') }}">-->
-                    <div class="text-center" style="margin-top: 5%;">
-                      <p class="placeholder_text" id="title_placeholder_{{ i }}" style="display: inline-block;"><i>&lt;Book Title&gt;</i></p>
-                      <br/>
-                      <p class="title_text" id="book_title_{{ i }}" style="display: none;"></p>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center"></div>
-                  </div>
-                </div>
-              </div>
-              {% endfor %}
             </div>
           </div>
-        </div>
-
-        <div class="jumbotron text-center">
-          <p>
-            <button class="btn btn-secondary" type="submit">Get Recommendations!</button>
-          </p>
-          <h4 id="msg"></h4>
-        </div>
-      </form>
     </section>
+
+    <section>
+        <div class="text-center" style="margin-top: 3%;">
+        <p>
+          <a href="#collapseExample" class="btn btn-secondary my-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Advanced Search &#x25be;</a>
+        </p>
+        </div>
+        <div id="collapseExample" class="collapse container" style="max-width:100%;">
+          <div class="container justify-content-center">
+          <h4>Tags Inputted</h4>
+          <div class="text-center">
+            <p>You can input up to 10 genres. Write down a genre and press enter to add it!</p>
+          </div>
+          <div class="container text-center" style="width:100%;">
+          <div class="container tagify-box" sytle="margin-top:2%;">
+            <input name="tags" id="tags" class="" placeholder="Write here..." value="" autofocus data-blacklist="" style="width:100%;">
+          </div>
+          <div class="container text-center" style="margin-top:2%;">
+            <button type="button" id="addBook" onclick="" class="btn btn-secondary tags--removeAllBtn">Remove all genres</button>
+          </div>
+        </div>
+        </div>
+        </div>
+    </section>
+
+    <section>
+        <form method="post" action="/?v=3" onsubmit="return validateMyForm();" onkeypress="return event.keyCode !== 13;">
+          <input type="hidden" name="book_ids" id="book_ids" class="form-control hidden">
+          <input type="hidden" name="tags_inputed" id="tags_inputed" class="form-control hidden">
+          <div class="jumbotron text-center">
+            <p>
+              <button class="btn btn-secondary" type="submit">Get Recommendations!</button>
+            </p>
+            <h4 id="msg"></h4>
+          </div>
+        </form>
+    </section>
+
 
     {% set tag_styles = ['primary', 'success', 'info', 'warning', 'danger'] %}
     {% set show_data2 = data|length < 8 and data2 %}
