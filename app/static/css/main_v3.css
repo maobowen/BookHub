@@ -171,3 +171,7 @@ body {
 .tagify {
   background-color: white;
 }
+
+.typewrite {
+  text-decoration: underline;
+}
