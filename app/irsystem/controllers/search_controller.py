@@ -86,6 +86,10 @@ def _get_recommendation(version_idx: int, book_ids: list):
 			for similar_book_id in sim_scores_sums[i]:
 				sim_scores_avg[similar_book_id] += ratio[i] * sim_scores_sums[i][similar_book_id]
 
+		for book in request_books:
+			if str(book.id) in sim_scores_avg:
+				sim_scores_avg.pop(str(book.id))
+
 		result = sorted(sim_scores_avg, key=sim_scores_avg.get, reverse=True)[:MAX_COMPARED]
 		result_scores = defaultdict(list)
 		for similar_book_id in result:
@@ -138,7 +142,7 @@ def _get_recommended_books_detail(version_idx: int, recommended_book_ids: list, 
 		do_boolean_search = not (version_idx == 1 or not preferred_genres or (len(preferred_genres) == 1 and not preferred_genres[0].strip()))
 		assert request_book_ids is None
 		assert recommended_book_scores is not None
-		recommended_books_object = Book.query.filter(Book.id.in_(recommended_book_ids)).all()
+		recommended_books_object = [Book.query.filter_by(id=recommended_book_id).one() for recommended_book_id in recommended_book_ids]
 		recommended_books = []
 		recommended_books2 = []
 		for book in recommended_books_object:
