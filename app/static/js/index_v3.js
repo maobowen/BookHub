@@ -261,6 +261,13 @@ $(document).ready(function() {
             readOnly: true
         });
     });
+
+    // Scroll to result
+    if ($("#results-bookmark").length > 0) {
+        $("#results-bookmark")[0].scrollIntoView({
+            behavior: "smooth"
+        });
+    }
 });
 
 /*
