@@ -21,7 +21,7 @@ body {
 
 .placeholder_text {
   margin-left:10px;
-  margin-top: 10%;
+  margin-top: 20%;
   text-align: center;
 }
 
@@ -36,14 +36,18 @@ body {
 .input_field {
   width: 100%;
   height: 200px;
-  /*
   border-style:none;
   background-color: transparent;
-  */
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url('../img/open-book.png');
+  background-image: url('../img/book_open.png');
+}
+
+.card-body{
+  width:100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hidden {
@@ -98,6 +102,8 @@ body {
   }
 
   .input_field{
+    border-style:default;
+    background-color:#ffffff;
     max-height: 120px;
     background-image:none;
   }
@@ -121,6 +127,11 @@ body {
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
+ 
+  .card-body{
+    margin-top: 5%;
+  }
+
   .card-columns {
     column-count: 3;
   }
@@ -135,6 +146,14 @@ body {
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
+
+  .card-body{
+    width: 80%; 
+    height:100%;
+    margin-left: 10%; 
+    margin-right: 10%;
+    margin-top: 0;
+  }
 
   .add_book_section{
     width:70%;
