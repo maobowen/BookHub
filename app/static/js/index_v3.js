@@ -241,6 +241,14 @@ $('#input_title').keypress(function(event) {
     }
 });
 
+// Collapse advanced search
+$("#collapseExample").on("shown.bs.collapse", function () {
+    $("a[role='button'][aria-controls='collapseExample']").html("Advanced Search &#x25b4;");
+});
+$("#collapseExample").on("hidden.bs.collapse", function () {
+    $("a[role='button'][aria-controls='collapseExample']").html("Advanced Search &#x25be;");
+});
+
 $(document).ready(function() {
     var id_title = localStorage.getItem('id_title_dict');
     if ( id_title != null && id_title !== ""){
