@@ -156,7 +156,11 @@ def _get_recommended_books_detail(version_idx: int, recommended_book_ids: list, 
 		recommended_books_object = [Book.query.filter_by(id=recommended_book_id).one() for recommended_book_id in recommended_book_ids]
 		recommended_books = []
 		recommended_books2 = []
-		request_books_object = Book.query.filter(Book.id.in_(request_book_ids)).all()
+
+		if version_idx > 1:
+			request_books_object = Book.query.filter(Book.id.in_(request_book_ids)).all()
+		else:
+			request_books_object = None
 
 		for book in recommended_books_object:
 			if version_idx == 1:
