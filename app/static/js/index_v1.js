@@ -89,3 +89,7 @@ function check(){
         return false;
     }
 }
+
+$(window).on('load',function(){
+    $('#v1-alert').modal('show');
+});

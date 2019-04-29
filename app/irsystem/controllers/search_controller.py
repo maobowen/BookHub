@@ -4,16 +4,17 @@ from app.irsystem.models.helpers import *
 from app.irsystem.models.helpers import NumpyEncoder as NumpyEncoder
 
 project_name = "BookHub"
-net_id = "Minghao Li: ml922; Bowen Mao: bm644; Lauren Wong: lqw5; Lu Yang: ly298"
+net_id = "Minghao Li (ml922), Bowen Mao (bm644), Lauren Wong (lqw5), Lu Yang (ly298)"
 
 DATA_DIR = [
 	os.path.abspath(os.path.join(__file__, "..", "..", "..", "data", "merged")),
+	os.path.abspath(os.path.join(__file__, "..", "..", "..", "data", "v2")),
 	os.path.abspath(os.path.join(__file__, "..", "..", "..", "data", "v2")),
 ]
 MAX_COMPARED = 20
 MAX_RECOMMEND = 8
 MAX_REVIEWS = 5
-VERSIONS = [1, 2]
+VERSIONS = [1, 2, 3]
 N_FACTORS = 4
 
 
@@ -23,6 +24,8 @@ def _set_version(request) -> int:
 	version_query_string = request.args.get("v", type=str)
 	if version_query_string == "1":
 		session["version"] = VERSIONS[0]
+	elif version_query_string == "2":
+		session["version"] = VERSIONS[1]
 	elif version_query_string:
 		session["version"] = VERSIONS[-1]
 	return VERSIONS.index(session["version"])
@@ -37,7 +40,18 @@ def get_books_id_title():
 		return str(e)
 
 
-def _get_recommendation(version_idx: int, book_ids: list) -> list:
+@irsystem.route("/ajax/tags", methods=["GET"])
+def get_tags():
+	version_idx = _set_version(request)
+	try:
+		with open(os.path.join(DATA_DIR[version_idx], "tags-clean.txt"), "r") as fin:
+			tags = [line.split(",")[0].strip() for line in fin if line]
+		return Response(json.dumps(tags),  mimetype="application/json")
+	except Exception as e:
+		return str(e)
+
+
+def _get_recommendation(version_idx: int, book_ids: list):
 	if version_idx == 0:
 		with open(os.path.join(DATA_DIR[version_idx], "cos-sim-desc.json"), "r") as fin:
 			top_k_cos_sim = json.load(fin)
@@ -72,7 +86,11 @@ def _get_recommendation(version_idx: int, book_ids: list) -> list:
 			for similar_book_id in sim_scores_sums[i]:
 				sim_scores_avg[similar_book_id] += ratio[i] * sim_scores_sums[i][similar_book_id]
 
-		result = sorted(sim_scores_avg, key=sim_scores_avg.get, reverse=True)[:MAX_RECOMMEND]
+		for book in request_books:
+			if str(book.id) in sim_scores_avg:
+				sim_scores_avg.pop(str(book.id))
+
+		result = sorted(sim_scores_avg, key=sim_scores_avg.get, reverse=True)[:MAX_COMPARED]
 		result_scores = defaultdict(list)
 		for similar_book_id in result:
 			for i in range(N_FACTORS):
@@ -93,7 +111,19 @@ def _get_book_reviews(version_idx: int, book_id: str) -> list:
 		return review_texts[:MAX_RECOMMEND]
 
 
-def _get_recommended_books_detail(version_idx: int, recommended_book_ids: list, request_book_ids: list, recommended_book_scores: dict) -> list:
+def _recalc_jaccard_sim_tags(version_idx: int, recommended_book: Book, request_books: list) -> float:
+	if version_idx > 1:
+		score = 0.0
+		recommended_book_tags = json.loads(recommended_book.tags)
+		assert type(recommended_book_tags) == list
+		for request_book in request_books:
+			request_book_tags = json.loads(request_book.tags)
+			assert type(request_book_tags) == list
+			score += len(set(recommended_book_tags).intersection(request_book_tags)) / len(set(recommended_book_tags).union(request_book_tags))
+		return score / len(request_books)
+
+
+def _get_recommended_books_detail(version_idx: int, recommended_book_ids: list, request_book_ids: list, recommended_book_scores: dict, preferred_genres=[]):
 	if version_idx == 0:
 		assert request_book_ids is not None
 		assert recommended_book_scores is None
@@ -120,14 +150,25 @@ def _get_recommended_books_detail(version_idx: int, recommended_book_ids: list, 
 		return recommended_books
 
 	else:
-		assert request_book_ids is None
+		assert type(preferred_genres) == list
+		do_boolean_search = not (version_idx == 1 or not preferred_genres or (len(preferred_genres) == 1 and not preferred_genres[0].strip()))
 		assert recommended_book_scores is not None
-		recommended_books_object = Book.query.filter(Book.id.in_(recommended_book_ids)).all()
+		recommended_books_object = [Book.query.filter_by(id=recommended_book_id).one() for recommended_book_id in recommended_book_ids]
 		recommended_books = []
+		recommended_books2 = []
+
+		if version_idx > 1:
+			request_books_object = Book.query.filter(Book.id.in_(request_book_ids)).all()
+		else:
+			request_books_object = None
+
 		for book in recommended_books_object:
-			reviews = json.loads(book.reviews)
-			review_texts = [review["body"] for review in reviews]
-			recommended_books.append({
+			if version_idx == 1:
+				reviews = json.loads(book.reviews)
+				review_texts = [review["body"] for review in reviews]
+			else:
+				review_texts = sorted(json.loads(book.reviews), key=lambda k: (-k["votes"], -k["rating"], -len(k["body"])))
+			return_book = {
 				"id": "id" + str(book.id),
 				"title": book.title,
 				"isbn13": book.isbn13,
@@ -142,14 +183,34 @@ def _get_recommended_books_detail(version_idx: int, recommended_book_ids: list, 
 				"cos_sim_desc": recommended_book_scores[str(book.id)][0],
 				"cos_sim_tm_reviews": recommended_book_scores[str(book.id)][1],
 				"cos_sim_tm_books": recommended_book_scores[str(book.id)][2],
-				"jaccard_sim_tags": recommended_book_scores[str(book.id)][3],
-			})
-		return recommended_books
+				"jaccard_sim_tags": _recalc_jaccard_sim_tags(version_idx, book, request_books_object),
+			}
+			
+			# No genres preferred
+			if not do_boolean_search:
+				recommended_books.append(return_book)
+			else:
+				book_tags = json.loads(book.tags)
+				assert type(book_tags) == list
+				boolean_search_found = False
+				for preferred_genre in preferred_genres:
+					if preferred_genre in book_tags:
+						boolean_search_found = True
+						recommended_books.append(return_book)
+						break
+				if not boolean_search_found:
+					recommended_books2.append(return_book)
+
+		if version_idx == 1:
+			return recommended_books
+		else:
+			return recommended_books, recommended_books2
 
 
 @irsystem.route("/", methods=["GET", "POST"])
 def search():
 	data = []
+	data2 = []
 	version_idx = _set_version(request)
 
 	if request.method == "POST":
@@ -160,11 +221,20 @@ def search():
 				data = _get_recommended_books_detail(version_idx, recommended_book_ids, request_book_ids, None)
 			else:
 				recommended_book_ids, recommended_book_scores = _get_recommendation(version_idx, request_book_ids)
-				data = _get_recommended_books_detail(version_idx, recommended_book_ids, None, recommended_book_scores)
-	else:
-		data = []
+				if version_idx == 1:
+					data = _get_recommended_books_detail(version_idx, recommended_book_ids, None, recommended_book_scores)
+				else:
+					preferred_genres = request.form.get("tags_inputed", "").split()
+					data, data2 = _get_recommended_books_detail(version_idx, recommended_book_ids, request_book_ids, recommended_book_scores, preferred_genres=preferred_genres)
 
 	if version_idx == 0:
-		return render_template('search_v1.html', name=project_name, netid=net_id, data=data)
+		return render_template('search_v1.html', name=project_name, netid=net_id, data=data, data2=None)
+	elif version_idx == 1:
+		return render_template('search_v2.html', name=project_name, netid=net_id, data=data, data2=None)
 	else:
-		return render_template('search_v2.html', name=project_name, netid=net_id, data=data)
+		return render_template('search_v3.html', name=project_name, netid=net_id, data=data, data2=data2)
+
+
+@irsystem.route("/loaderio-225a9c19534806ae7cc36625a78da4ef/", methods=["GET", "POST"])
+def loaderio_verify():
+	return Response("loaderio-225a9c19534806ae7cc36625a78da4ef",  mimetype="text/plain")

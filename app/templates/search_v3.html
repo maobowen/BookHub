@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{ name }} - A smart book recommendation system.">
+  <meta name="author" content="Team {{ name }}">
+  <meta name="apple-mobile-web-app-title" content="{{ name }}">
+  <title>Bookhub - A smart book recommendation system</title>
+
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js-bootstrap-css/1.2.1/typeaheadjs.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@2/dist/tagify.min.css">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main_v3.css') }}">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.2.1/bloodhound.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/corejs-typeahead/1.2.1/typeahead.jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@2/dist/tagify.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.8.0/js/all.js" integrity="sha384-ukiibbYjFS/1dhODSWD+PrZ6+CGCgf8VbyUH7bQQNUulL+2r59uGYToovytTf4Xm" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <main role="main">
+
+    <section class="jumbotron text-center">
+      <div class="container">
+        <img class="logo" src="{{ url_for('static', filename='img/icon.png') }}" style="margin-bottom: 5%" />
+        <h1>Welcome to BookHub!</h1>
+        <h4 style="font-weight: normal;">Do you like reading
+          <span class="typewrite" data-period="2000">
+            <span class="wrap"></span>
+          </span>?
+        </h4>
+        <h4 style="font-weight: normal;">Input up to 5 book titles to get book recommendations!</h4>
+      </div>
+    </section>
+
+    <section>
+      <div class="container text-center add_book_section" style="margin-top:-3%;">
+        <div class="row">
+          <div class="col">
+            <input type="text" class="form-control" id="input_title" placeholder="Enter a book title here!" aria-label="book title" aria-describedby="clear_icon" sytle="width: 95%;">
+          </div>
+          <div class="text-left">
+            <button type="button" class="" id="clear" onclick="clearInput()" aria-label="Close">
+              Clear
+            </button>
+          </div>
+        </div>
+        <div class="row justify-content-center" style="margin-top: 3%;">
+          <button type="button" id="addBook" onclick="addBookLogic()" class="btn btn-secondary">Add Book</button>
+        </div>
+      </div>
+    </section>
+
+    <section>
+        <div class="inputs" style="margin-top: 2%">
+            <div class="container justify-content-center">
+              <h4>Books Inputted</h4>
+              <div class="text-center">
+                  <h4 id="msg2"></h4>
+              </div>
+              <div class="row justify-content-center" style="margin-top: 20px;">
+                {% for i in range(1, 6) %}
+                <div class="col-lg-4 col-md-4 col-sm-12">
+                  <div class="card mb-2 input_field justify-content-center text-center" id="card_{{ i }}">
+                    <!--<img class="card-img-top book-cover" src="../static/img/book-card-v2.png" alt="Card image">-->
+                    <div class="card-body">
+                      <button type="button" class="close removeBtn" id="removeBtn_{{ i }}" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                      <!--<img class="addSign mx-auto d-block" id="addSign_{{ i }}" src="{{ url_for('static', filename='img/add-sign-dashed.png') }}">-->
+                      <div class="text-center">
+                        <p class="placeholder_text" id="title_placeholder_{{ i }}" style="display: inline-block;"><i>&lt;Book Title&gt;</i></p>
+                        <br/>
+                        <p class="title_text" id="book_title_{{ i }}" style="display: none;"></p>
+                      </div>
+                      <div class="d-flex justify-content-between align-items-center"></div>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+    </section>
+
+    <section>
+        <div class="text-center" style="margin-top: 3%;">
+        <p>
+          <a href="#collapseExample" class="btn btn-secondary my-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Advanced Search <i class="fas fa-caret-down"></i></a>
+        </p>
+        </div>
+        <div id="collapseExample" class="collapse container" style="max-width:100%;">
+          <div class="container justify-content-center">
+          <h4>Tags Inputted</h4>
+          <div class="text-center">
+            <p>You can input up to 10 genres. Write down a genre and press enter to add it!</p>
+          </div>
+          <div class="container text-center" style="width:100%;">
+          <div class="container tagify-box" sytle="margin-top:2%;">
+            <input name="tags" id="tags" class="" placeholder="Write here..." value="" autofocus data-blacklist="" style="width:100%;">
+          </div>
+          <div class="container text-center" style="margin-top:2%;">
+            <button type="button" id="addBook" onclick="" class="btn btn-secondary tags--removeAllBtn">Remove all genres</button>
+          </div>
+        </div>
+        </div>
+        </div>
+    </section>
+
+    <section>
+        <form method="post" action="/?v=3" onsubmit="return validateMyForm();" onkeypress="return event.keyCode !== 13;">
+          <input type="hidden" name="book_ids" id="book_ids" class="form-control hidden">
+          <input type="hidden" name="tags_inputed" id="tags_inputed" class="form-control hidden">
+          <div class="jumbotron text-center">
+            <p>
+              <button class="btn btn-secondary" type="submit">Get Recommendations!</button>
+            </p>
+            <h4 id="msg"></h4>
+          </div>
+        </form>
+    </section>
+
+
+    {% set tag_styles = ['primary', 'success', 'info', 'warning', 'danger'] %}
+    {% set show_data2 = data|length < 8 and data2 %}
+    <div class="outputs" style="margin-top: -5%">
+      {% if data or data2 %}
+      <div class="container justify-content-left" style="width: 80%;">
+        <h1 class="display-5" id="results-bookmark">Results</h1>
+      </div>
+      {% if data %}
+      <div class="output_rows" style="margin-top: 5%;">
+        <div class="container justify-content-center" style="width: 80%;">
+          <div class="card-columns">
+            {% for i in range([data|length, 8]|min) %}
+            <div class="card output-card" data-toggle="modal" data-target="#{{ data[i]['id'] }}">
+              <img class="card-img-top" src="{{ data[i]['image_url'] }}" alt="book" />
+              <div class="card-body">
+                <h5 class="card-title">{{ data[i]['title'] }}</h5>
+                <p class="card-text text-left">Authors: {{ data[i]['authors'] }}</p>
+                <p class="card-text text-left">
+                  Rating: {{ data[i]['average_rating'] }}
+                  <span class="book-rating" data-source="{{ data[i]['average_rating'] }}"></span>
+                </p>
+                <div class="d-flex justify-content-between align-items-center"></div>
+              </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="{{ data[i]['id'] }}" tabindex="-1" role="dialog" aria-labelledby="{{ data[i]['id'] }}title" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="{{ data[i]['id'] }}title">Details of <i>{{ data[i]['title'] }}</i></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container-sm">
+                      <div class="row">
+                        <!--<div class="col-1"></div>-->
+                        <div class="col">
+                          <div class="card mb-3 shadow-sm">
+                            <div class="card-body">
+                              <div class="text-center" style="margin-bottom: 10px;">
+                                <img class="card-img-top review-cover" src="{{ data[i]['image_url']}}" alt="book" />
+                              </div>
+                              <h5 class="card-title text-left">{{ data[i]['title'] }}</h5>
+                              <p class="card-text text-left">Authors: {{ data[i]['authors'] }}</p>
+                              <p class="card-text text-left">
+                                Rating on
+                                <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                                : {{ data[i]['average_rating'] }}
+                                <span class="book-rating" data-source="{{ data[i]['average_rating'] }}"></span>
+                              </p>
+                              <p class="card-text text-left tags">
+                                Genres on
+                                <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                                :
+                                {% set tags = data[i]['tags'].split(',') %}
+                                {% for j in range(tags|length) %}
+                                <span class="{{ tag_styles[j % (tag_styles|length)] }} text-white">{{ tags[j] }}</span>
+                                {% endfor %}
+                              </p>
+                              <p class="card-text text-left">ISBN: {{ data[i]['isbn13'] if data[i]['isbn13'] else 'Not available' }}</p>
+                              <p class="card-text text-left">View on:
+                                <a class="btn" href="{{ data[i]['url'] }}" target="_blank">
+                                  <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                                </a>
+                                <a class="btn" href="{{ data[i]['buy_link'] }}" target="_blank">
+                                  <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/7/70/Amazon_logo_plain.svg" />
+                                </a>
+                                <a class="btn" href="https://google.com/search?q={{ data[i]['isbn13'] if data[i]['isbn13'] else (data[i]['title']|urlencode) }}" target="_blank">
+                                  <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" />
+                                </a>
+                              </p>
+                              <div style="height: 300px;">
+                                <canvas id="{{ data[i]['id']}}-chart"></canvas>
+                              </div>
+                              <div class="d-flex justify-content-between align-items-center"></div>
+                              <div class="d-flex justify-content-between align-items-center"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <!--<div class="col-1"></div>-->
+                      </div>
+                      <h5 class="reviews-header">
+                        Reviews on
+                        <img class="reviews-header-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                      </h5>
+                      {% for review in data[i]['reviews'][0:5] %}
+                      <div class="row">
+                        <!--<div class="col-1"></div>-->
+                        <div class="col">
+                          <div class="card mb-3 shadow-sm">
+                            <div class="card-body">
+                              <p class="card-text text-left">{{ review['body'] }}</p>
+                              <p class="card-text float-right"><span class="book-rating" data-source="{{ review['rating'] }}"></span></p>
+                              <p class="card-text text-left">&#x25B2;&nbsp;{{ review['votes'] }}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <!--<div class="col-1"></div>-->
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% elif data2 %}
+      <div class="output_rows" style="margin-top: 3%">
+      <div class="container text-center" style="width: 80%;">
+        <img class="logo" src="{{ url_for('static', filename='img/sorry.jpg') }}" style="border-radius: 20%; margin-bottom: 10px"/>
+        <h5>Sorry, we didn't find any books with the genres that you are interested in :(</h5>
+      </div>
+      </div>
+      {% endif %}
+      {% endif %}
+    </div>
+
+    {% if show_data2 %}
+    <div class="output_rows" style="margin-top: 3%">
+      <div class="output_rows">
+      <div class="container text-center" style="width: 80%;">
+      <h5>Here are some books missing the genres you are looking for, but you may still find them worth reading!</h5>
+      </div>
+      </div>
+      <div class="output_rows" style="margin-top: 5%">
+        <div class="container justify-content-center" style="width: 80%;">
+          <div class="card-columns">
+      {% for i in range([data2|length, 8]|min) %}
+      <div class="card output-card" data-toggle="modal" data-target="#{{ data2[i]['id'] }}">
+        <img class="card-img-top" src="{{ data2[i]['image_url'] }}" alt="book" />
+        <div class="card-body">
+          <h5 class="card-title">{{ data2[i]['title'] }}</h5>
+          <p class="card-text text-left">Authors: {{ data2[i]['authors'] }}</p>
+          <p class="card-text text-left">
+            Rating: {{ data2[i]['average_rating'] }}
+            <span class="book-rating" data-source="{{ data2[i]['average_rating'] }}"></span>
+          </p>
+          <div class="d-flex justify-content-between align-items-center"></div>
+        </div>
+      </div>
+      <!-- Modal -->
+      <div class="modal fade" id="{{ data2[i]['id'] }}" tabindex="-1" role="dialog" aria-labelledby="{{ data2[i]['id'] }}title" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="{{ data2[i]['id'] }}title">Details of <i>{{ data2[i]['title'] }}</i></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="container-sm">
+                <div class="row">
+                  <!--<div class="col-1"></div>-->
+                  <div class="col">
+                    <div class="card mb-3 shadow-sm">
+                      <div class="card-body">
+                        <div class="text-center" style="margin-bottom: 10px;">
+                          <img class="card-img-top review-cover" src="{{ data2[i]['image_url']}}" alt="book" />
+                        </div>
+                        <h5 class="card-title text-left">{{ data2[i]['title'] }}</h5>
+                        <p class="card-text text-left">Authors: {{ data2[i]['authors'] }}</p>
+                        <p class="card-text text-left">
+                          Rating on
+                          <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                          : {{ data2[i]['average_rating'] }}
+                          <span class="book-rating" data-source="{{ data2[i]['average_rating'] }}"></span>
+                        </p>
+                        <p class="card-text text-left tags">
+                          Genres on
+                          <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                          :
+                          {% set tags = data2[i]['tags'].split(',') %}
+                          {% for j in range(tags|length) %}
+                          <span class="{{ tag_styles[j % (tag_styles|length)] }} text-white">{{ tags[j] }}</span>
+                          {% endfor %}
+                        </p>
+                        <p class="card-text text-left">ISBN: {{ data2[i]['isbn13'] if data2[i]['isbn13'] else 'Not available' }}</p>
+                        <p class="card-text text-left">View on:
+                          <a class="btn" href="{{ data2[i]['url'] }}" target="_blank">
+                            <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                          </a>
+                          <a class="btn" href="{{ data2[i]['buy_link'] }}" target="_blank">
+                            <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/7/70/Amazon_logo_plain.svg" />
+                          </a>
+                          <a class="btn" href="https://google.com/search?q={{ data2[i]['isbn13'] if data2[i]['isbn13'] else (data2[i]['title']|urlencode) }}" target="_blank">
+                            <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" />
+                          </a>
+                        </p>
+                        <div style="height: 300px;">
+                          <canvas id="{{ data2[i]['id']}}-chart"></canvas>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center"></div>
+                        <div class="d-flex justify-content-between align-items-center"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <!--<div class="col-1"></div>-->
+                </div>
+                <h5 class="reviews-header">
+                  Reviews on
+                  <img class="reviews-header-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                </h5>
+                {% for review in data2[i]['reviews'][0:5] %}
+                <div class="row">
+                  <!--<div class="col-1"></div>-->
+                  <div class="col">
+                    <div class="card mb-3 shadow-sm">
+                      <div class="card-body">
+                        <p class="card-text text-left">{{ review['body'] }}</p>
+                        <p class="card-text float-right"><span class="book-rating" data-source="{{ review['rating'] }}"></span></p>
+                        <p class="card-text text-left">&#x25B2;&nbsp;{{ review['votes'] }}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <!--<div class="col-1"></div>-->
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      </div>
+      </div>
+      </div>
+      {% endif %}
+    </div>
+  </main>
+
+  <footer>
+    <p>Versions: <a href="/?v=2">Previous</a> | Next | Latest</p>
+    <p>&copy; 2019 Team {{ name }}: {{ netid }}. All rights reserved.</p>
+    <ul class="list-inline">
+      <li class="list-inline-item"><a href="https://github.com/maobowen/BookHub/" target="_blank"><i class="fab fa-github"></i></a></li>
+      <li class="list-inline-item"><a href="mailto:bookhub.cu@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a></li>
+      <li class="list-inline-item"><a href="https://cornell-cs4300.slack.com/" target="_blank"><i class="fab fa-slack"></i></a></li>
+    </ul>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/index_v3.js') }}"></script>
+  {% if data %}
+  <script>
+// Only Chart.js code here
+Chart.plugins.unregister(ChartDataLabels);
+var _data = {{ data | safe }};
+for (var i = 0; i < 8; i++) {
+    var ctx = document.getElementById(_data[i]["id"] + "-chart").getContext("2d");
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: "horizontalBar",
+        // The data for our dataset
+        data: {
+            labels: [
+                ["Average cosine similarity", " with tf-idf on", " book descriptions"],
+                ["Average cosine similarity", " with topic modeling", " on book reviews"],
+                ["Average cosine similarity", " with topic modeling", " on book descriptions"],
+                ["Average Jaccard similarity", " on book tags", "(recomputed)"],
+                ["Overall similarity score"]
+            ],
+            datasets: [{
+                label: _data[i]["title"],
+                backgroundColor: [
+                    "rgba(255, 99, 132, 0.2)",
+                    "rgba(255, 159, 64, 0.2)",
+                    "rgba(255, 205, 86, 0.2)",
+                    "rgba(75, 192, 192, 0.2)"],
+                borderColor:[
+                    "rgb(255, 99, 132)",
+                    "rgb(255, 159, 64)",
+                    "rgb(255, 205, 86)",
+                    "rgb(75, 192, 192)"],
+                borderWidth: 1,
+                fill: false,
+                barThickness: 50,
+                data: [
+                    _data[i]["cos_sim_desc"],
+                    _data[i]["cos_sim_tm_reviews"],
+                    _data[i]["cos_sim_tm_books"],
+                    _data[i]["jaccard_sim_tags"],
+                    _data[i]["cos_sim_desc"] * 0.85 + _data[i]["cos_sim_tm_reviews"] * 0.05 + _data[i]["cos_sim_tm_books"] * 0.0 + _data[i]["jaccard_sim_tags"] * 0.1]
+            }]
+        },
+        plugins: [ChartDataLabels],
+        // Configuration options go here
+        options: {
+            layout: {
+                padding: {
+                    right: 40
+                }
+            },
+            legend: {
+                display: false
+            },
+            maintainAspectRatio: false,
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        min: 0.0,
+                        max: 1.0
+                    }
+                }]
+            },
+            plugins: {
+                datalabels: {
+                    align: 'right',
+                    anchor: 'end',
+                    formatter: function(value, context) {
+                        return value.toFixed(2);
+                    }
+                }
+            }
+        }
+    });
+}
+  </script>
+  {% endif %}
+  {% if data2 %}
+  <script>
+// Only Chart.js code here
+Chart.plugins.unregister(ChartDataLabels);
+var _data = {{ data2 | safe }};
+for (var i = 0; i < 8; i++) {
+    var ctx = document.getElementById(_data[i]["id"] + "-chart").getContext("2d");
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: "horizontalBar",
+        // The data for our dataset
+        data: {
+            labels: [
+                ["Average cosine similarity", " with tf-idf on", " book descriptions"],
+                ["Average cosine similarity", " with topic modeling", " on book reviews"],
+                ["Average cosine similarity", " with topic modeling", " on book descriptions"],
+                ["Average Jaccard similarity", " on book tags", "(recomputed)"],
+                ["Overall similarity score"]
+            ],
+            datasets: [{
+                label: _data[i]["title"],
+                backgroundColor: [
+                    "rgba(255, 99, 132, 0.2)",
+                    "rgba(255, 159, 64, 0.2)",
+                    "rgba(255, 205, 86, 0.2)",
+                    "rgba(75, 192, 192, 0.2)"],
+                borderColor:[
+                    "rgb(255, 99, 132)",
+                    "rgb(255, 159, 64)",
+                    "rgb(255, 205, 86)",
+                    "rgb(75, 192, 192)"],
+                borderWidth: 1,
+                fill: false,
+                barThickness: 50,
+                data: [
+                    _data[i]["cos_sim_desc"],
+                    _data[i]["cos_sim_tm_reviews"],
+                    _data[i]["cos_sim_tm_books"],
+                    _data[i]["jaccard_sim_tags"],
+                    _data[i]["cos_sim_desc"] * 0.85 + _data[i]["cos_sim_tm_reviews"] * 0.05 + _data[i]["cos_sim_tm_books"] * 0.0 + _data[i]["jaccard_sim_tags"] * 0.1]
+            }]
+        },
+        plugins: [ChartDataLabels],
+        // Configuration options go here
+        options: {
+            layout: {
+                padding: {
+                    right: 40
+                }
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        min: 0.0,
+                        max: 1.0
+                    }
+                }]
+            },
+            legend: {
+                display: false
+            },
+            maintainAspectRatio: false,
+            plugins: {
+                datalabels: {
+                    align: 'right',
+                    anchor: 'end',
+                    formatter: function(value, context) {
+                        return value.toFixed(2);
+                    }
+                }
+            }
+        }
+    });
+}
+  </script>
+  {% endif %}
+</body>
+</html>

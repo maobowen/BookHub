@@ -1,0 +1,312 @@
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background: linear-gradient(rgba(255, 255, 255, .9), rgba(255, 255, 255, .75), rgba(255, 255, 255, .9)), url('../img/bg.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.title_text {
+  text-align: center;
+}
+
+#input_title{
+  width: 100%;
+}
+
+.placeholder_text {
+  margin-left: 10px;
+  margin-top: 20%;
+  text-align: center;
+}
+
+.removeBtn {
+  visibility: hidden;
+}
+
+.add {
+  height: 50%;
+}
+
+.input_field {
+  height: 200px;
+  border-style: none;
+  background-color: transparent;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url('../img/book_open.png');
+}
+
+.card-body{
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.jumbotron {
+  background-color: transparent !important;
+}
+
+.btn-link {
+  color: #b3afaf;
+}
+
+#clear {
+  margin-left: auto;
+}
+
+#msg {
+  color: #dc3545;
+}
+
+.logo {
+  width: 15%;
+}
+
+.output-card {
+  cursor: pointer;
+}
+
+#clear{
+  cursor: pointer;
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+.card-columns {
+  column-count: 1;
+}
+
+@media (max-width: 576px) {
+
+  h1{
+    font-size: x-large;
+  }
+
+  h4{
+    font-size: large;
+  }
+
+  p{
+    font-size: medium;
+  }
+
+  .input_field{
+    border-style: default;
+    background-color: #ffffff;
+    max-height: 120px;
+    background-image: none;
+  }
+
+  .add_book_section{
+    width: 100%;
+  }
+
+  .placeholder_text{
+    margin-top: 0;
+  }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+
+  .card-columns {
+    column-count: 2;
+  }
+  .modal-dialog {
+    max-width: 95%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+  }
+  .input_field {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+ 
+  .card-body{
+    margin-top: 5%;
+  }
+
+  .card-columns {
+    column-count: 3;
+  }
+
+  .modal-dialog {
+    max-width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+  .input_field {
+    width: 100%;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .card-columns {
+    column-count: 4;
+  }
+  .modal-dialog {
+    max-width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+  .input_field {
+    width: 100%;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+
+  .card-body{
+    width: 80%; 
+    height: 100%;
+    margin-left: 10%; 
+    margin-right: 10%;
+    margin-top: 0;
+  }
+
+  .add_book_section{
+    width: 70%;
+  }
+
+  .tagify-box{
+    width: 90%;
+  }
+
+  .card-columns {
+    column-count: 4;
+  }
+
+  .modal-dialog {
+    max-width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+  }
+
+  .input_field {
+    width: 100%;
+  }
+}
+
+.modal {
+  cursor: default;
+}
+
+.review-cover {
+  width: 50%;
+  height: auto;
+  max-width: 250px;
+}
+
+.reviews-header {
+  text-align: center;
+}
+
+.book-rating {
+  padding: 0;
+}
+
+.card-text-image {
+  height: 15px;
+}
+
+.reviews-header-image {
+  height: 18px;
+}
+
+.tags span.primary {
+  background-color: #428BCA;
+  border-color: #357EBD; }
+
+.tags span.success {
+  background-color: #5CB85C;
+  border-color: #4CAE4C; }
+
+.tags span.info {
+  background-color: #5BC0DE;
+  border-color: #46B8DA; }
+
+.tags span.warning {
+  background-color: #F0AD4E;
+  border-color: #EEA236; }
+
+.tags span.danger {
+  background-color: #D9534F;
+  border-color: #D43F3A; }
+
+.tags span {
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  border-radius: 2px;
+  color: white;
+  margin: 0 2px 4px 0;
+  padding: 2px 7px;
+  display: inline-block;
+}
+
+.tagify {
+  background-color: white;
+}
+
+.typewrite {
+  text-decoration: underline;
+}
+
+footer {
+  background-color: #333;
+  padding-top: 50px;
+  padding-bottom: 30px;
+  font-size: 80%;
+  text-align: center;
+  width: 100%;
+  /*position: absolute;*/
+  /*bottom: -150px;*/
+  /*height: 150px;*/
+  position: relative;
+  /*margin-top: 20px;*/
+}
+
+footer p, footer li {
+  margin: 0 auto;
+  color: #888;
+  text-align: center;
+}
+
+footer p {
+  font-size: 1.2em;
+}
+
+footer li {
+  font-size: 1.8em;
+}
+
+footer a:link,
+footer a:visited {
+  color: #D5DFE5;
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: #FFFFFF;
+}
+
+.modal.fade.show{
+  padding-right: 0px !important;
+}

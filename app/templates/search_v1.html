@@ -177,9 +177,30 @@
       <p class="float-right pr-3">
           Versions: Previous | <a href="/?v=2">Next</a> | <a href="/?v=latest">Latest</a>
       </p>
-      <p>&copy; 2019 Team {{ name }} ({{ netid }}).</p>
+      <p>&copy; 2019 Team {{ name }}: {{ netid }}.</p>
     </div>
   </footer>
+
+  <div class="modal fade" id="v1-alert" tabindex="-1" role="dialog" aria-labelledby="v1-alert-title" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="v1-alert-title">Alert</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p><strong style="color: red;">Please do not use this version when we are doing demo.</strong></p>
+          <p>This version is fully functional. However, it will crash the whole application, including all the later versions, when multiple users are searching concurrently, because it loads large files into memory.</p>
+          <p>Click <a href="/?v=latest">here</a> to check out our latest version. Thank you for your cooperation.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="{{ url_for('static', filename='js/index_v1.js') }}"></script>
 </body>
