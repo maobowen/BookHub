@@ -4,7 +4,7 @@ from app.irsystem.models.helpers import *
 from app.irsystem.models.helpers import NumpyEncoder as NumpyEncoder
 
 project_name = "BookHub"
-net_id = "Minghao Li: ml922; Bowen Mao: bm644; Lauren Wong: lqw5; Lu Yang: ly298"
+net_id = "Minghao Li (ml922), Bowen Mao (bm644), Lauren Wong (lqw5), Lu Yang (ly298)"
 
 DATA_DIR = [
 	os.path.abspath(os.path.join(__file__, "..", "..", "..", "data", "merged")),

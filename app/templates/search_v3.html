@@ -14,8 +14,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js-bootstrap-css/1.2.1/typeaheadjs.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@2/dist/tagify.min.css">
+
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main_v3.css') }}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -26,7 +26,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0"></script>
   <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@2/dist/tagify.min.js"></script>
-
+  <script defer src="https://use.fontawesome.com/releases/v5.8.0/js/all.js" integrity="sha384-ukiibbYjFS/1dhODSWD+PrZ6+CGCgf8VbyUH7bQQNUulL+2r59uGYToovytTf4Xm" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -98,7 +98,7 @@
     <section>
         <div class="text-center" style="margin-top: 3%;">
         <p>
-          <a href="#collapseExample" class="btn btn-secondary my-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Advanced Search &#x25be;</a>
+          <a href="#collapseExample" class="btn btn-secondary my-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Advanced Search <i class="fas fa-caret-down"></i></a>
         </p>
         </div>
         <div id="collapseExample" class="collapse container" style="max-width:100%;">
@@ -373,14 +373,14 @@
     </div>
   </main>
 
-  <footer class="text-muted" style="margin-top: 3%;">
-    <div class="container">
-      <p class="float-right"><a href="#">Back to Top</a></p>
-      <p class="float-right pr-3">
-          Versions: <a href="/?v=2">Previous</a> | Next | Latest
-      </p>
-      <p>&copy; 2019 Team {{ name }} ({{ netid }}).</p>
-    </div>
+  <footer>
+    <p>Versions: <a href="/?v=2">Previous</a> | Next | Latest</p>
+    <p>&copy; 2019 Team {{ name }}: {{ netid }}. All rights reserved.</p>
+    <ul class="list-inline">
+      <li class="list-inline-item"><a href="https://github.com/maobowen/BookHub/" target="_blank"><i class="fab fa-github"></i></a></li>
+      <li class="list-inline-item"><a href="mailto:bookhub.cu@gmail.com" target="_blank"><i class="fas fa-envelope"></i></a></li>
+      <li class="list-inline-item"><a href="https://cornell-cs4300.slack.com/" target="_blank"><i class="fab fa-slack"></i></a></li>
+    </ul>
   </footer>
 
   <script src="{{ url_for('static', filename='js/index_v3.js') }}"></script>

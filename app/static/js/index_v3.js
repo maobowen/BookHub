@@ -206,7 +206,7 @@ $("#removeBtn_1, #removeBtn_2, #removeBtn_3, #removeBtn_4, #removeBtn_5").click(
 
         delete_book(count);
         next_empty_field = count;
-})
+});
 
 //clear input function
 function clearInput(){
@@ -244,10 +244,10 @@ $('#input_title').keypress(function(event) {
 
 // Collapse advanced search
 $("#collapseExample").on("shown.bs.collapse", function () {
-    $("a[role='button'][aria-controls='collapseExample']").html("Advanced Search &#x25b4;");
+    $("a[role='button'][aria-controls='collapseExample']").html('Advanced Search <i class="fas fa-caret-up"></i>');
 });
 $("#collapseExample").on("hidden.bs.collapse", function () {
-    $("a[role='button'][aria-controls='collapseExample']").html("Advanced Search &#x25be;");
+    $("a[role='button'][aria-controls='collapseExample']").html('Advanced Search <i class="fas fa-caret-down"></i>');
 });
 
 $(document).ready(function() {
@@ -343,48 +343,3 @@ window.onload = function() {
     css.innerHTML = ".typewrite > .wrap { border-right: 0.08em solid #fff}";
     document.body.appendChild(css);
 };
-
-/*
-// Chainable event listeners
-tagify.on('add', onAddTag)
-      .on('remove', onRemoveTag)
-      .on('input', onInput)
-      .on('edit', onTagEdit)
-      .on('invalid', onInvalidTag)
-      .on('click', onTagClick);
-
-// tag added callback
-function onAddTag(e){
-    console.log("onAddTag: ", e.detail);
-    console.log("original input value: ", input.value)
-    tagify.off('add', onAddTag) // exmaple of removing a custom Tagify event
-}
-
-// tag remvoed callback
-function onRemoveTag(e){
-    console.log(e.detail);
-    console.log("tagify instance value:", tagify.value)
-}
-
-// on character(s) added/removed (user is typing/deleting)
-function onInput(e){
-    console.log(e.detail);
-    console.log("onInput: ", e.detail);
-}
-
-function onTagEdit(e){
-    console.log("onTagEdit: ", e.detail);
-}
-
-// invalid tag added callback
-function onInvalidTag(e){
-    console.log("onInvalidTag: ", e.detail);
-}
-
-// invalid tag added callback
-function onTagClick(e){
-    console.log(e.detail);
-    console.log("onTagClick: ", e.detail);
-}
-
-*/
