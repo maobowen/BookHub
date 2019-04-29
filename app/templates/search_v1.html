@@ -22,7 +22,21 @@
 </head>
 
 <body>
+
   <main role="main">
+      <div class="modal fade" id="v1Alert">
+          <div class="modal-header">
+              <button type="button" id="v1-close" class="close" data-dismiss="modal">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+            <h3>Please stop and switch to the latest version when we are demoing!</h3>
+          </div>
+          <div class="modal-body">
+            <p>Version 1 is functional, but may cause the application to crash when multiple users are using 
+              it due to reading large files.</p>
+          </div>
+      </div>
+
     <section class="jumbotron text-center" style="margin-top: -3%">
       <div class="container">
         <img class="w-25" src="{{ url_for('static', filename='img/icon.png') }}" style="margin-bottom: 5%">

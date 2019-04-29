@@ -25,3 +25,10 @@
 .jumbotron {
   background-color:transparent !important;
 }
+
+#v1Alert{
+  text-align: center;
+  font-size: 150%;
+  color: red;
+  width: 80%;
+}

@@ -89,3 +89,11 @@ function check(){
         return false;
     }
 }
+
+$(window).on('load',function(){
+    $('#v1Alert').modal('show');
+});
+
+$("#v1-close").click(function(){
+    $('#v1Alert').modal('hide');
+});
