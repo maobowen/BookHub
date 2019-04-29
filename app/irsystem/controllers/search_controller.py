@@ -233,8 +233,3 @@ def search():
 		return render_template('search_v2.html', name=project_name, netid=net_id, data=data, data2=None)
 	else:
 		return render_template('search_v3.html', name=project_name, netid=net_id, data=data, data2=data2)
-
-
-@irsystem.route("/loaderio-225a9c19534806ae7cc36625a78da4ef/", methods=["GET", "POST"])
-def loaderio_verify():
-	return Response("loaderio-225a9c19534806ae7cc36625a78da4ef",  mimetype="text/plain")
