@@ -52,13 +52,13 @@
             <input type="text" class="form-control" id="input_title" placeholder="Enter a book title here!" aria-label="book title" aria-describedby="clear_icon" sytle="width: 95%;">
           </div>
           <div class="text-left">
-            <button type="button" class="" id="clear" onclick="clearInput()" aria-label="Close">
-              Clear
+            <button type="button" class="close" id="clear" onclick="clearInput()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
             </button>
           </div>
         </div>
         <div class="row justify-content-center" style="margin-top: 3%;">
-          <button type="button" id="addBook" onclick="addBookLogic()" class="btn btn-secondary">Add Book</button>
+          <button type="button" id="addBook" onclick="addBookLogic()" class="btn btn-primary">Add Book</button>
         </div>
       </div>
     </section>
@@ -98,21 +98,21 @@
     <section>
         <div class="text-center" style="margin-top: 3%;">
         <p>
-          <a href="#collapseExample" class="btn btn-secondary my-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Advanced Search <i class="fas fa-caret-down"></i></a>
+          <a href="#collapseExample" class="btn btn-warning text-white my-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Advanced Search <i class="fas fa-caret-down"></i></a>
         </p>
         </div>
         <div id="collapseExample" class="collapse container" style="max-width:100%;">
           <div class="container justify-content-center">
           <h4>Tags Inputted</h4>
-          <div class="text-center">
-            <p>You can input up to 10 genres. Write down a genre and press enter to add it!</p>
-          </div>
+            <div class="text-center">
+              <p>You can input up to 10 genres. Write down a genre and press enter to add it!</p>
+            </div>
           <div class="container text-center" style="width:100%;">
           <div class="container tagify-box" sytle="margin-top:2%;">
             <input name="tags" id="tags" class="" placeholder="Write here..." value="" autofocus data-blacklist="" style="width:100%;">
           </div>
           <div class="container text-center" style="margin-top:2%;">
-            <button type="button" id="addBook" onclick="" class="btn btn-secondary tags--removeAllBtn">Remove all genres</button>
+            <button type="button" id="addBook" onclick="" class="btn btn-secondary btn-sm tags--removeAllBtn">Remove all genres</button>
           </div>
         </div>
         </div>
@@ -120,16 +120,18 @@
     </section>
 
     <section>
+      <div class="container" style="margin-top: -1%;">
         <form method="post" action="/?v=3" onsubmit="return validateMyForm();" onkeypress="return event.keyCode !== 13;">
           <input type="hidden" name="book_ids" id="book_ids" class="form-control hidden">
           <input type="hidden" name="tags_inputed" id="tags_inputed" class="form-control hidden">
           <div class="jumbotron text-center">
             <p>
-              <button class="btn btn-secondary" type="submit">Get Recommendations!</button>
+              <button class="btn btn-success" type="submit">Get Recommendations!</button>
             </p>
             <h4 id="msg"></h4>
           </div>
         </form>
+      </div>
     </section>
 
 
