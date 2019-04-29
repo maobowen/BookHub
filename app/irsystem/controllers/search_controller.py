@@ -111,6 +111,18 @@ def _get_book_reviews(version_idx: int, book_id: str) -> list:
 		return review_texts[:MAX_RECOMMEND]
 
 
+def _recalc_jaccard_sim_tags(version_idx: int, recommended_book: Book, request_books: list) -> float:
+	if version_idx > 1:
+		score = 0.0
+		recommended_book_tags = json.loads(recommended_book.tags)
+		assert type(recommended_book_tags) == list
+		for request_book in request_books:
+			request_book_tags = json.loads(request_book.tags)
+			assert type(request_book_tags) == list
+			score += len(set(recommended_book_tags).intersection(request_book_tags)) / len(set(recommended_book_tags).union(request_book_tags))
+		return score / len(request_books)
+
+
 def _get_recommended_books_detail(version_idx: int, recommended_book_ids: list, request_book_ids: list, recommended_book_scores: dict, preferred_genres=[]):
 	if version_idx == 0:
 		assert request_book_ids is not None
@@ -140,11 +152,12 @@ def _get_recommended_books_detail(version_idx: int, recommended_book_ids: list, 
 	else:
 		assert type(preferred_genres) == list
 		do_boolean_search = not (version_idx == 1 or not preferred_genres or (len(preferred_genres) == 1 and not preferred_genres[0].strip()))
-		assert request_book_ids is None
 		assert recommended_book_scores is not None
 		recommended_books_object = [Book.query.filter_by(id=recommended_book_id).one() for recommended_book_id in recommended_book_ids]
 		recommended_books = []
 		recommended_books2 = []
+		request_books_object = Book.query.filter(Book.id.in_(request_book_ids)).all()
+
 		for book in recommended_books_object:
 			if version_idx == 1:
 				reviews = json.loads(book.reviews)
@@ -166,7 +179,7 @@ def _get_recommended_books_detail(version_idx: int, recommended_book_ids: list, 
 				"cos_sim_desc": recommended_book_scores[str(book.id)][0],
 				"cos_sim_tm_reviews": recommended_book_scores[str(book.id)][1],
 				"cos_sim_tm_books": recommended_book_scores[str(book.id)][2],
-				"jaccard_sim_tags": recommended_book_scores[str(book.id)][3],
+				"jaccard_sim_tags": _recalc_jaccard_sim_tags(version_idx, book, request_books_object),
 			}
 			
 			# No genres preferred
@@ -208,7 +221,7 @@ def search():
 					data = _get_recommended_books_detail(version_idx, recommended_book_ids, None, recommended_book_scores)
 				else:
 					preferred_genres = request.form.get("tags_inputed", "").split()
-					data, data2 = _get_recommended_books_detail(version_idx, recommended_book_ids, None, recommended_book_scores, preferred_genres=preferred_genres)
+					data, data2 = _get_recommended_books_detail(version_idx, recommended_book_ids, request_book_ids, recommended_book_scores, preferred_genres=preferred_genres)
 
 	if version_idx == 0:
 		return render_template('search_v1.html', name=project_name, netid=net_id, data=data, data2=None)
