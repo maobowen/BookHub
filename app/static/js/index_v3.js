@@ -150,6 +150,7 @@ function add_book(i, title_inputed){
     $(book_id).css("display", "block");
     $(removeBtn).css("visibility", "visible");
     $(card).css("color", "#000000");
+    $(card).css("background-image", "url('../img/book-tile-solid.png')")
 }
 
 //funciton to delete book field
@@ -165,6 +166,7 @@ function delete_book(i){
     $(book_id).css("display", "none");
     $(removeBtn).css("visibility", "hidden");
     $(card).css("color", "#000000")
+    $(card).css("background-image", "url('../img/book-tile-dashed.png')")
 }
 
 //function to update value in book field
