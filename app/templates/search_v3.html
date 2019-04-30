@@ -9,13 +9,13 @@
   <meta name="apple-mobile-web-app-title" content="{{ name }}">
   <title>Bookhub - A smart book recommendation system</title>
 
-
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js-bootstrap-css/1.2.1/typeaheadjs.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@2/dist/tagify.min.css">
-
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main_v3.css') }}">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='img/icon-152x152.png') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/icon-152x152.png') }}">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -52,8 +52,8 @@
             <input type="text" class="form-control" id="input_title" placeholder="Enter a book title here!" aria-label="book title" aria-describedby="clear_icon" sytle="width: 95%;">
           </div>
           <div class="text-left">
-            <button type="button" class="" id="clear" onclick="clearInput()" aria-label="Close">
-              Clear
+            <button type="button" class="close" id="clear" onclick="clearInput()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
             </button>
           </div>
         </div>
@@ -64,72 +64,72 @@
     </section>
 
     <section>
-        <div class="inputs" style="margin-top: 2%">
-            <div class="container justify-content-center">
-              <h4>Books Inputted</h4>
-              <div class="text-center">
-                  <h4 id="msg2"></h4>
-              </div>
-              <div class="row justify-content-center" style="margin-top: 20px;">
-                {% for i in range(1, 6) %}
-                <div class="col-lg-4 col-md-4 col-sm-12">
-                  <div class="card mb-2 input_field justify-content-center text-center" id="card_{{ i }}">
-                    <!--<img class="card-img-top book-cover" src="../static/img/book-card-v2.png" alt="Card image">-->
-                    <div class="card-body">
-                      <button type="button" class="close removeBtn" id="removeBtn_{{ i }}" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                      <!--<img class="addSign mx-auto d-block" id="addSign_{{ i }}" src="{{ url_for('static', filename='img/add-sign-dashed.png') }}">-->
-                      <div class="text-center">
-                        <p class="placeholder_text" id="title_placeholder_{{ i }}" style="display: inline-block;"><i>&lt;Book Title&gt;</i></p>
-                        <br/>
-                        <p class="title_text" id="book_title_{{ i }}" style="display: none;"></p>
-                      </div>
-                      <div class="d-flex justify-content-between align-items-center"></div>
-                    </div>
+      <div class="inputs" style="margin-top: 2%">
+        <div class="container justify-content-center">
+          <h4>Books Inputted</h4>
+          <div class="text-center">
+            <h4 id="msg2"></h4>
+          </div>
+          <div class="row justify-content-center" style="margin-top: 20px;">
+            {% for i in range(1, 6) %}
+            <div class="col-lg col-md-4 col-sm-12">
+              <div class="card mb-2 input_field text-center" id="card_{{ i }}">
+                <div class="card-body">
+                  <button type="button" class="close removeBtn" id="removeBtn_{{ i }}" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <div class="text-center">
+                    <p class="placeholder_text" id="title_placeholder_{{ i }}" style="display: inline-block;"><i>&lt;Book Title&gt;</i></p>
+                    <br/>
+                    <p class="title_text" id="book_title_{{ i }}" style="display: none;"></p>
                   </div>
+                  <div class="d-flex justify-content-between align-items-center"></div>
                 </div>
-                {% endfor %}
               </div>
             </div>
+            {% endfor %}
           </div>
+        </div>
+      </div>
     </section>
 
     <section>
-        <div class="text-center" style="margin-top: 3%;">
+      <div class="text-center" style="margin-top: 3%;">
         <p>
           <a href="#collapseExample" class="btn btn-secondary my-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Advanced Search <i class="fas fa-caret-down"></i></a>
         </p>
-        </div>
-        <div id="collapseExample" class="collapse container" style="max-width:100%;">
-          <div class="container justify-content-center">
+      </div>
+      <div id="collapseExample" class="collapse container" style="max-width:100%;">
+        <div class="container justify-content-center">
           <h4>Tags Inputted</h4>
-          <div class="text-center">
-            <p>You can input up to 10 genres. Write down a genre and press enter to add it!</p>
-          </div>
+            <div class="text-center">
+              <p>You can input up to 10 genres. Write down a genre and press enter to add it!</p>
+            </div>
           <div class="container text-center" style="width:100%;">
-          <div class="container tagify-box" sytle="margin-top:2%;">
-            <input name="tags" id="tags" class="" placeholder="Write here..." value="" autofocus data-blacklist="" style="width:100%;">
+            <div class="container tagify-box" sytle="margin-top:2%;">
+              <input name="tags" id="tags" class="" placeholder="Write here..." value="" autofocus data-blacklist="" style="width:100%;">
+            </div>
+            <div class="container text-center" style="margin-top:2%;">
+              <button type="button" id="addBook" onclick="" class="btn btn-secondary btn-sm tags--removeAllBtn">Remove all genres</button>
+            </div>
           </div>
-          <div class="container text-center" style="margin-top:2%;">
-            <button type="button" id="addBook" onclick="" class="btn btn-secondary tags--removeAllBtn">Remove all genres</button>
-          </div>
         </div>
-        </div>
-        </div>
+      </div>
     </section>
 
     <section>
+      <div class="container" style="margin-top: -1%;">
         <form method="post" action="/?v=3" onsubmit="return validateMyForm();" onkeypress="return event.keyCode !== 13;">
           <input type="hidden" name="book_ids" id="book_ids" class="form-control hidden">
           <input type="hidden" name="tags_inputed" id="tags_inputed" class="form-control hidden">
           <div class="jumbotron text-center">
             <p>
-              <button class="btn btn-secondary" type="submit">Get Recommendations!</button>
+              <button class="btn btn-primary" type="submit">Get Recommendations!</button>
             </p>
             <h4 id="msg"></h4>
           </div>
         </form>
+      </div>
     </section>
 
 
@@ -249,10 +249,10 @@
       </div>
       {% elif data2 %}
       <div class="output_rows" style="margin-top: 3%">
-      <div class="container text-center" style="width: 80%;">
-        <img class="logo" src="{{ url_for('static', filename='img/sorry.jpg') }}" style="border-radius: 20%; margin-bottom: 10px"/>
-        <h5>Sorry, we didn't find any books with the genres that you are interested in :(</h5>
-      </div>
+        <div class="container text-center" style="width: 80%;">
+          <img class="logo" src="{{ url_for('static', filename='img/sorry.jpg') }}" style="border-radius: 20%; margin-bottom: 10px"/>
+          <h5>Sorry, we didn't find any books with the genres that you are interested in :(</h5>
+        </div>
       </div>
       {% endif %}
       {% endif %}
@@ -261,115 +261,115 @@
     {% if show_data2 %}
     <div class="output_rows" style="margin-top: 3%">
       <div class="output_rows">
-      <div class="container text-center" style="width: 80%;">
-      <h5>Here are some books missing the genres you are looking for, but you may still find them worth reading!</h5>
-      </div>
+        <div class="container text-center" style="width: 80%;">
+          <h5>Here are some books missing the genres you are looking for, but you may still find them worth reading!</h5>
+        </div>
       </div>
       <div class="output_rows" style="margin-top: 5%">
         <div class="container justify-content-center" style="width: 80%;">
           <div class="card-columns">
-      {% for i in range([data2|length, 8]|min) %}
-      <div class="card output-card" data-toggle="modal" data-target="#{{ data2[i]['id'] }}">
-        <img class="card-img-top" src="{{ data2[i]['image_url'] }}" alt="book" />
-        <div class="card-body">
-          <h5 class="card-title">{{ data2[i]['title'] }}</h5>
-          <p class="card-text text-left">Authors: {{ data2[i]['authors'] }}</p>
-          <p class="card-text text-left">
-            Rating: {{ data2[i]['average_rating'] }}
-            <span class="book-rating" data-source="{{ data2[i]['average_rating'] }}"></span>
-          </p>
-          <div class="d-flex justify-content-between align-items-center"></div>
-        </div>
-      </div>
-      <!-- Modal -->
-      <div class="modal fade" id="{{ data2[i]['id'] }}" tabindex="-1" role="dialog" aria-labelledby="{{ data2[i]['id'] }}title" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="{{ data2[i]['id'] }}title">Details of <i>{{ data2[i]['title'] }}</i></h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="container-sm">
-                <div class="row">
-                  <!--<div class="col-1"></div>-->
-                  <div class="col">
-                    <div class="card mb-3 shadow-sm">
-                      <div class="card-body">
-                        <div class="text-center" style="margin-bottom: 10px;">
-                          <img class="card-img-top review-cover" src="{{ data2[i]['image_url']}}" alt="book" />
-                        </div>
-                        <h5 class="card-title text-left">{{ data2[i]['title'] }}</h5>
-                        <p class="card-text text-left">Authors: {{ data2[i]['authors'] }}</p>
-                        <p class="card-text text-left">
-                          Rating on
-                          <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
-                          : {{ data2[i]['average_rating'] }}
-                          <span class="book-rating" data-source="{{ data2[i]['average_rating'] }}"></span>
-                        </p>
-                        <p class="card-text text-left tags">
-                          Genres on
-                          <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
-                          :
-                          {% set tags = data2[i]['tags'].split(',') %}
-                          {% for j in range(tags|length) %}
-                          <span class="{{ tag_styles[j % (tag_styles|length)] }} text-white">{{ tags[j] }}</span>
-                          {% endfor %}
-                        </p>
-                        <p class="card-text text-left">ISBN: {{ data2[i]['isbn13'] if data2[i]['isbn13'] else 'Not available' }}</p>
-                        <p class="card-text text-left">View on:
-                          <a class="btn" href="{{ data2[i]['url'] }}" target="_blank">
-                            <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
-                          </a>
-                          <a class="btn" href="{{ data2[i]['buy_link'] }}" target="_blank">
-                            <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/7/70/Amazon_logo_plain.svg" />
-                          </a>
-                          <a class="btn" href="https://google.com/search?q={{ data2[i]['isbn13'] if data2[i]['isbn13'] else (data2[i]['title']|urlencode) }}" target="_blank">
-                            <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" />
-                          </a>
-                        </p>
-                        <div style="height: 300px;">
-                          <canvas id="{{ data2[i]['id']}}-chart"></canvas>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center"></div>
-                        <div class="d-flex justify-content-between align-items-center"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <!--<div class="col-1"></div>-->
-                </div>
-                <h5 class="reviews-header">
-                  Reviews on
-                  <img class="reviews-header-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
-                </h5>
-                {% for review in data2[i]['reviews'][0:5] %}
-                <div class="row">
-                  <!--<div class="col-1"></div>-->
-                  <div class="col">
-                    <div class="card mb-3 shadow-sm">
-                      <div class="card-body">
-                        <p class="card-text text-left">{{ review['body'] }}</p>
-                        <p class="card-text float-right"><span class="book-rating" data-source="{{ review['rating'] }}"></span></p>
-                        <p class="card-text text-left">&#x25B2;&nbsp;{{ review['votes'] }}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <!--<div class="col-1"></div>-->
-                </div>
-                {% endfor %}
+            {% for i in range([data2|length, 8]|min) %}
+            <div class="card output-card" data-toggle="modal" data-target="#{{ data2[i]['id'] }}">
+              <img class="card-img-top" src="{{ data2[i]['image_url'] }}" alt="book" />
+              <div class="card-body">
+                <h5 class="card-title">{{ data2[i]['title'] }}</h5>
+                <p class="card-text text-left">Authors: {{ data2[i]['authors'] }}</p>
+                <p class="card-text text-left">
+                  Rating: {{ data2[i]['average_rating'] }}
+                  <span class="book-rating" data-source="{{ data2[i]['average_rating'] }}"></span>
+                </p>
+                <div class="d-flex justify-content-between align-items-center"></div>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <!-- Modal -->
+            <div class="modal fade" id="{{ data2[i]['id'] }}" tabindex="-1" role="dialog" aria-labelledby="{{ data2[i]['id'] }}title" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="{{ data2[i]['id'] }}title">Details of <i>{{ data2[i]['title'] }}</i></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container-sm">
+                      <div class="row">
+                        <!--<div class="col-1"></div>-->
+                        <div class="col">
+                          <div class="card mb-3 shadow-sm">
+                            <div class="card-body">
+                              <div class="text-center" style="margin-bottom: 10px;">
+                                <img class="card-img-top review-cover" src="{{ data2[i]['image_url']}}" alt="book" />
+                              </div>
+                              <h5 class="card-title text-left">{{ data2[i]['title'] }}</h5>
+                              <p class="card-text text-left">Authors: {{ data2[i]['authors'] }}</p>
+                              <p class="card-text text-left">
+                                Rating on
+                                <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                                : {{ data2[i]['average_rating'] }}
+                                <span class="book-rating" data-source="{{ data2[i]['average_rating'] }}"></span>
+                              </p>
+                              <p class="card-text text-left tags">
+                                Genres on
+                                <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                                :
+                                {% set tags = data2[i]['tags'].split(',') %}
+                                {% for j in range(tags|length) %}
+                                <span class="{{ tag_styles[j % (tag_styles|length)] }} text-white">{{ tags[j] }}</span>
+                                {% endfor %}
+                              </p>
+                              <p class="card-text text-left">ISBN: {{ data2[i]['isbn13'] if data2[i]['isbn13'] else 'Not available' }}</p>
+                              <p class="card-text text-left">View on:
+                                <a class="btn" href="{{ data2[i]['url'] }}" target="_blank">
+                                  <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                                </a>
+                                <a class="btn" href="{{ data2[i]['buy_link'] }}" target="_blank">
+                                  <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/7/70/Amazon_logo_plain.svg" />
+                                </a>
+                                <a class="btn" href="https://google.com/search?q={{ data2[i]['isbn13'] if data2[i]['isbn13'] else (data2[i]['title']|urlencode) }}" target="_blank">
+                                  <img class="card-text-image" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" />
+                                </a>
+                              </p>
+                              <div style="height: 300px;">
+                                <canvas id="{{ data2[i]['id']}}-chart"></canvas>
+                              </div>
+                              <div class="d-flex justify-content-between align-items-center"></div>
+                              <div class="d-flex justify-content-between align-items-center"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <!--<div class="col-1"></div>-->
+                      </div>
+                      <h5 class="reviews-header">
+                        Reviews on
+                        <img class="reviews-header-image" src="https://upload.wikimedia.org/wikipedia/commons/1/1a/Goodreads_logo.svg" />
+                      </h5>
+                      {% for review in data2[i]['reviews'][0:5] %}
+                      <div class="row">
+                        <!--<div class="col-1"></div>-->
+                        <div class="col">
+                          <div class="card mb-3 shadow-sm">
+                            <div class="card-body">
+                              <p class="card-text text-left">{{ review['body'] }}</p>
+                              <p class="card-text float-right"><span class="book-rating" data-source="{{ review['rating'] }}"></span></p>
+                              <p class="card-text text-left">&#x25B2;&nbsp;{{ review['votes'] }}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <!--<div class="col-1"></div>-->
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
             </div>
+            {% endfor %}
           </div>
         </div>
-      </div>
-      {% endfor %}
-      </div>
-      </div>
       </div>
       {% endif %}
     </div>
