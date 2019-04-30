@@ -59,7 +59,7 @@
           </div>
         </div>
         <div class="row justify-content-center" style="margin-top: 3%;">
-          <button type="button" id="addBook" onclick="addBookLogic()" class="btn btn-primary">Add Book</button>
+          <button type="button" id="addBook" onclick="addBookLogic()" class="btn btn-secondary">Add Book</button>
         </div>
       </div>
     </section>
@@ -74,7 +74,7 @@
               <div class="row justify-content-center" style="margin-top: 20px;">
                 {% for i in range(1, 6) %}
                 <div class="col-lg col-md-4 col-sm-12">
-                  <div class="card mb-2 input_field justify-content-center text-center" id="card_{{ i }}">
+                  <div class="card mb-2 input_field text-center" id="card_{{ i }}">
                     <!--<img class="card-img-top book-cover" src="../static/img/book-card-v2.png" alt="Card image">-->
                     <div class="card-body title_font">
                       <button type="button" class="close removeBtn" id="removeBtn_{{ i }}" aria-label="Close">
@@ -99,7 +99,7 @@
     <section>
         <div class="text-center" style="margin-top: 3%;">
         <p>
-          <a href="#collapseExample" class="btn btn-warning text-white my-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Advanced Search <i class="fas fa-caret-down"></i></a>
+          <a href="#collapseExample" class="btn btn-secondary my-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Advanced Search <i class="fas fa-caret-down"></i></a>
         </p>
         </div>
         <div id="collapseExample" class="collapse container" style="max-width:100%;">
@@ -127,7 +127,7 @@
           <input type="hidden" name="tags_inputed" id="tags_inputed" class="form-control hidden">
           <div class="jumbotron text-center">
             <p>
-              <button class="btn btn-success" type="submit">Get Recommendations!</button>
+              <button class="btn btn-primary" type="submit">Get Recommendations!</button>
             </p>
             <h4 id="msg"></h4>
           </div>

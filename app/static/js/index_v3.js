@@ -92,6 +92,15 @@ function getCleanTags(){
     return tags
 }
 
+//function to render card
+function renderCard(card_id){
+    $(card_id).css("border-radius", "10px");
+    $(card_id).css("-webkit-box-shadow", "0 3px 3px #efefef");
+    $(card_id).css("box-shadow", "0 3px 3px #efefef");
+    $(card_id).css("border", "none");
+    $(card_id).css("background-color", "rgba(255, 255, 255, 0.8)");
+}
+
 //check function
 function check(){
     var book_t1 = document.getElementById('book_title_1').innerText,
@@ -149,8 +158,7 @@ function add_book(i, title_inputed){
     $(book_id).text(title_inputed);
     $(book_id).css("display", "block");
     $(removeBtn).css("visibility", "visible");
-    $(card).css("color", "#000000");
-    $(card).css("background-image", "url('../img/book-tile-solid.png')")
+    renderCard(card);
 }
 
 //funciton to delete book field
@@ -165,8 +173,8 @@ function delete_book(i){
     $(book_id).text("");
     $(book_id).css("display", "none");
     $(removeBtn).css("visibility", "hidden");
-    $(card).css("color", "#000000")
-    $(card).css("background-image", "url('../img/book-tile-dashed.png')")
+    $(card).css("border", "black 2px dashed");
+    $(card).css("background-color", "transparent")
 }
 
 //function to update value in book field
@@ -176,7 +184,7 @@ function update_book(i, title_inputed){
     card = "#card_" + num;
     //alert(book_id);
     $(book_id).text(title_inputed);
-    $(card).css("color", "#000000");
+    renderCard(card);
 }
 
 //remove button function

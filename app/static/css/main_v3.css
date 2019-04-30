@@ -1,9 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Dancing+Script|Open+Sans');
-
 html, body {
   width: 100%;
   height: 100%;
-  font-family:'Open Sans', sans-serif;
+  font-family:sans-serif;
 }
 
 body {
@@ -18,17 +16,13 @@ body {
   text-align: center;
 }
 
-.title_font{
-
-}
-
 #input_title{
   width: 100%;
 }
 
 .placeholder_text {
   margin-left: 10px;
-  margin-top: 20%;
+  margin-top: 25%;
   text-align: center;
 }
 
@@ -38,12 +32,15 @@ body {
 
 .input_field {
   height: 200px;
-  border-style: none;
   background-color: transparent;
+  border: 2px dashed black;
+  /*
+  border-style: none;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   background-image: url('../img/book-tile-dashed.png');
+  */
 }
 
 .card-body{
@@ -99,11 +96,8 @@ body {
     font-size: medium;
   }
 
-  .input_field{
-    border-style: default;
-    background-color: #ffffff;
+  .input_field{  
     max-height: 120px;
-    background-image: none;
   }
 
   .add_book_section{
@@ -111,7 +105,7 @@ body {
   }
 
   .placeholder_text{
-    margin-top: 0;
+    margin-top: 7.5%;
   }
 }
 
@@ -135,10 +129,6 @@ body {
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
- 
-  .card-body{
-    margin-top: 5%;
-  }
 
   .card-columns {
     column-count: 3;
@@ -171,14 +161,6 @@ body {
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
-
-  .card-body{
-    width: 80%; 
-    height: 100%;
-    margin-left: 10%; 
-    margin-right: 10%;
-    margin-top: 0;
-  }
 
   .add_book_section{
     width: 70%;
@@ -265,7 +247,6 @@ body {
 }
 
 .typewrite {
-  color:#007bff;
   text-decoration: underline;
 }
 
